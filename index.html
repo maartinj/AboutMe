@@ -137,6 +137,15 @@
             gap: var(--gap);
         }
 
+        .bento--pillmemo {
+            grid-template-columns: repeat(6, 1fr);
+            margin-bottom: var(--gap);
+        }
+
+        .card--pillmemo-top {
+            grid-column: span 2;
+        }
+
         /* ─── Card Base ─── */
         .card {
             position: relative;
@@ -605,6 +614,14 @@
                 gap: 10px;
             }
 
+            .bento--pillmemo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card--pillmemo-top {
+                grid-column: span 1;
+            }
+
             .card__info {
                 padding: 10px 12px;
                 gap: 8px;
@@ -641,6 +658,10 @@
             .bento {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
+            }
+
+            .bento--pillmemo {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .card {
@@ -861,11 +882,11 @@
         <!-- ════════ Portfolio ════════ -->
         <section class="section">
             <h2 class="section__title">Portfolio 🧪</h2>
-            <div class="bento">
+            <div class="bento bento--pillmemo">
 
                 <!-- PillMemo -->
                 <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
+                    class="card card--pillmemo-top">
                     <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M5 15L15 5M15 5H8M15 5v7" />
                     </svg>
@@ -888,8 +909,32 @@
                     </div>
                 </a>
 
+                <!-- PillMemo GitHub -->
+                <a href="./pillmemo-docs.html" target="_blank" rel="noopener noreferrer"
+                    class="card card--pillmemo-top">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="./assets/pillmemo-docs-thumb.png" alt="PillMemo GitHub" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--repo">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.94 0-1.31.47-2.39 1.23-3.23-.12-.31-.53-1.53.12-3.2 0 0 1.01-.32 3.3 1.23a11.53 11.53 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.67.24 2.89.12 3.2.76.84 1.23 1.92 1.23 3.23 0 4.61-2.8 5.64-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0012 .5z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">PillMemo GitHub</div>
+                            <div class="card__subtitle">README-style docs</div>
+                        </div>
+                    </div>
+                </a>
+
                 <!-- PillMemo Website -->
-                <a href="https://pillmemo.framer.ai/" target="_blank" rel="noopener noreferrer" class="card card--2x1">
+                <a href="https://pillmemo.framer.ai/" target="_blank" rel="noopener noreferrer"
+                    class="card card--pillmemo-top">
                     <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M5 15L15 5M15 5H8M15 5v7" />
                     </svg>
@@ -904,8 +949,58 @@
                             </svg>
                         </div>
                         <div class="card__text">
-                            <div class="card__title">PillMemo Website</div>
-                            <div class="card__subtitle">Framer</div>
+                            <div class="card__title">PillMemo Framer</div>
+                            <div class="card__subtitle">Website</div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+            <div class="bento">
+
+                <!-- AquaVibe -->
+                <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/32/7c/cc/327cccbb-da45-8c45-9564-007449d9de76/AppIcon-0-0-1x_U007ephone-0-1-sRGB-85-220.png/1200x630wa.jpg"
+                            alt="AquaVibe" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <path d="M12 2C12 2 7 7.5 7 13a5 5 0 0010 0c0-5.5-5-11-5-11z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">AquaVibe</div>
+                            <div class="card__subtitle">Daily Goals, Healthy Life · App Store</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- AquaVibe Docs -->
+                <a href="./aquavibe-docs.html" target="_blank" rel="noopener noreferrer" class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="./assets/aquavibe-docs-thumb.png" alt="AquaVibe Docs" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--repo">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.94 0-1.31.47-2.39 1.23-3.23-.12-.31-.53-1.53.12-3.2 0 0 1.01-.32 3.3 1.23a11.53 11.53 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.67.24 2.89.12 3.2.76.84 1.23 1.92 1.23 3.23 0 4.61-2.8 5.64-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0012 .5z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">AquaVibe Docs</div>
+                            <div class="card__subtitle">README-style project docs</div>
                         </div>
                     </div>
                 </a>
@@ -1061,50 +1156,52 @@
                     </div>
                 </a>
 
-                <!-- AquaVibe -->
-                <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener noreferrer"
+                <!-- Basic Car Maintenance -->
+                <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener noreferrer"
                     class="card card--2x1">
                     <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M5 15L15 5M15 5H8M15 5v7" />
                     </svg>
                     <div class="card__thumb">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/32/7c/cc/327cccbb-da45-8c45-9564-007449d9de76/AppIcon-0-0-1x_U007ephone-0-1-sRGB-85-220.png/1200x630wa.jpg"
-                            alt="AquaVibe" loading="lazy" />
+                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9vcGVuZ3JhcGguZ2l0aHViYXNzZXRzLmNvbS9hOTEwZjMwMTZlY2IxZGYzZGQxYWFiODIxZjgyOGFmYjVlMjU3YjlmZDczYmFmN2Y2NGU1MDM2NTIzMTFjZmRhL21hYXJ0aW5qL0Jhc2ljLUNhci1NYWludGVuYW5jZQ%3D%3D.jpeg"
+                            alt="Basic Car Maintenance" loading="lazy" />
                     </div>
                     <div class="card__info">
-                        <div class="card__icon icon--blue">
+                        <div class="card__icon icon--repo">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round">
-                                <path d="M12 2C12 2 7 7.5 7 13a5 5 0 0010 0c0-5.5-5-11-5-11z" />
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
                             </svg>
                         </div>
                         <div class="card__text">
-                            <div class="card__title">AquaVibe</div>
-                            <div class="card__subtitle">Daily Goals, Healthy Life · App Store</div>
+                            <div class="card__title">Basic Car Maintenance</div>
+                            <div class="card__subtitle">Open source · Hacktoberfest 2023</div>
                         </div>
                     </div>
                 </a>
 
-                <!-- AquaVibe Docs -->
-                <a href="https://maartinj.notion.site/AquaVibe-10387c79476f805ea83bf6a6da996e86" target="_blank"
-                    rel="noopener noreferrer" class="card card--2x1">
+                <!-- CarListingApp -->
+                <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
                     <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M5 15L15 5M15 5H8M15 5v7" />
                     </svg>
                     <div class="card__thumb">
-                        <img src="https://storage.googleapis.com/creatorspace-public/users%2Fclqxt53sl000qsg01kgwo4wm3%2FuwQTvZpLpgGO3TEI-Light.png"
-                            alt="AquaVibe Docs" loading="lazy" />
+                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9vcGVuZ3JhcGguZ2l0aHViYXNzZXRzLmNvbS9iZGY4OTFiNDc5YWJkNTMzZWMzNTliZGRjNmM2MTFlNzI4NmI2N2JmNGI1ZmE1YmY0ZmVlZDVkODZmMWY4NmI4L21hYXJ0aW5qL0Nhckxpc3RpbmdBcHA%3D.jpeg"
+                            alt="CarListingApp" loading="lazy" />
                     </div>
                     <div class="card__info">
-                        <div class="card__icon icon--notion">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
+                        <div class="card__icon icon--repo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
                                 <path
-                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
                             </svg>
                         </div>
                         <div class="card__text">
-                            <div class="card__title">AquaVibe Docs</div>
-                            <div class="card__subtitle">Project Documentation · Notion</div>
+                            <div class="card__title">CarListingApp</div>
+                            <div class="card__subtitle">Community App Challenge</div>
                         </div>
                     </div>
                 </a>
@@ -1208,56 +1305,6 @@
                         <div class="card__text">
                             <div class="card__title">@maartin_j</div>
                             <div class="card__subtitle">123 following</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Basic Car Maintenance -->
-                <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9vcGVuZ3JhcGguZ2l0aHViYXNzZXRzLmNvbS9hOTEwZjMwMTZlY2IxZGYzZGQxYWFiODIxZjgyOGFmYjVlMjU3YjlmZDczYmFmN2Y2NGU1MDM2NTIzMTFjZmRhL21hYXJ0aW5qL0Jhc2ljLUNhci1NYWludGVuYW5jZQ%3D%3D.jpeg"
-                            alt="Basic Car Maintenance" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--repo">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <path
-                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">Basic Car Maintenance</div>
-                            <div class="card__subtitle">Open source · Hacktoberfest 2023</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- CarListingApp -->
-                <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9vcGVuZ3JhcGguZ2l0aHViYXNzZXRzLmNvbS9iZGY4OTFiNDc5YWJkNTMzZWMzNTliZGRjNmM2MTFlNzI4NmI2N2JmNGI1ZmE1YmY0ZmVlZDVkODZmMWY4NmI4L21hYXJ0aW5qL0Nhckxpc3RpbmdBcHA%3D.jpeg"
-                            alt="CarListingApp" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--repo">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <path
-                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">CarListingApp</div>
-                            <div class="card__subtitle">Community App Challenge</div>
                         </div>
                     </div>
                 </a>

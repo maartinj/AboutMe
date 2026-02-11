@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PillMemo Docs</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface-2: #0f1722;
+            --border: #30363d;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --accent: #2f81f7;
+            --success: #238636;
+            --code-bg: #010409;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 24px;
+        }
+
+        .wrap {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .repo-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .repo-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .badge {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: var(--muted);
+            background: var(--surface-2);
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        h1,
+        h2 {
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-top: 2px;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-top: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        ul {
+            margin: 10px 0 10px 18px;
+        }
+
+        li+li {
+            margin-top: 6px;
+        }
+
+        a {
+            color: var(--accent);
+        }
+
+        .intro {
+            font-size: 18px;
+            color: #d0d7de;
+        }
+
+        .repo-highlights {
+            border: 1px solid var(--border);
+            background: rgba(35, 134, 54, 0.12);
+            border-left: 4px solid var(--success);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-top: 10px;
+        }
+
+        pre {
+            margin-top: 12px;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow-x: auto;
+            padding: 14px;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .media {
+            margin-top: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--surface-2);
+        }
+
+        .media--phone {
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .media img {
+            width: 100%;
+            display: block;
+        }
+
+        .media video {
+            width: 100%;
+            display: block;
+            background: #000;
+        }
+
+        .media__caption {
+            padding: 10px 12px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 14px;
+            }
+
+            .content {
+                padding: 16px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="topbar">
+            <a class="back" href="./index.html" aria-label="Back to portfolio">← Back to portfolio</a>
+        </div>
+
+        <article class="card">
+            <header class="repo-header">
+                <div class="repo-title">💊 PillMemo</div>
+            </header>
+
+            <section class="content">
+                <h1>💊 PillMemo</h1>
+                <p class="intro">PillMemo is an easy-to-use application that helps users remember to take their medicine 🏥</p>
+                <p>The application allows users to set reminders for different types of medicine and at different times of the
+                    day/week/month 📅</p>
+
+                <h2>👨‍💻 Technology Used</h2>
+                <ul>
+                    <li>SwiftUI</li>
+                    <li>Core Data</li>
+                    <li>CloudKit</li>
+                    <li>User Notifications</li>
+                    <li>UICalendarView</li>
+                </ul>
+
+                <h2>📌 What Changed In The Repo</h2>
+                <div class="repo-highlights">
+                    The key change was introducing unique medicine identity and separate save paths for entries with reminder vs
+                    without reminder. This removed duplicate-reference collisions and fixed crashes when saving multiple pills for the
+                    same date.
+                </div>
+
+                <h2>🎥 PillMemo In Action</h2>
+                <div class="media media--phone">
+                    <video controls preload="metadata" playsinline>
+                        <source src="./assets/pillmemo-demo.m4v" type="video/mp4">
+                        <source src="./assets/pillmemo-demo.mov" type="video/quicktime">
+                        Your browser does not support embedded video.
+                    </video>
+                    <div class="media__caption">PillMemo demo video</div>
+                </div>
+
+                <h2>🏆 Standout Success</h2>
+                <p>Distinguish to save pill data with and without notifications.</p>
+                <p>Sounds trivial, but the real challenge was to create functionality to save pill data in Core Data and be read
+                    correctly by app, where each pill needed to be unique. Why? Because earlier, every next pill was saved, but
+                    remembered with the same reference, for the same date, where for the same date can be taken more than one pill.
+                    Without this change, app crashed every time when I wanted to save new pill with the same exact date.</p>
+
+                <pre><code class="language-swift">func addMedicine(context: NSManagedObjectContext) async -&gt; Bool {
+
+    // MARK: Editing Data
+    var medicine: Medicine!
+    if let editMedicines = editMedicines {
+        await context.perform {
+            medicine = editMedicines
+
+            // MARK: Remove All Pending Notifications
+            UNUserNotificationCenter.current()
+                .removePendingNotificationRequests(withIdentifiers: medicine.medicineNotificationIDs ?? [])
+            medicine.medicineTitle = self.title
+            medicine.medicineColor = self.medicineColor
+            medicine.medicineWeekdays = self.weekDays
+            medicine.medicineType = self.medicineType
+            medicine.medicineTakePartOne = self.takeMedicinePartOne
+            medicine.medicineTakePartTwo = self.takeMedicinePartTwo
+            medicine.medicineIsReminderOn = self.isReminderOn
+            medicine.medicineReminderText = self.title
+            medicine.medicineNotificationDate = self.reminderDate
+            medicine.medicineNotificationIDs = []
+            medicine.medicineQuantity = self.quantityMedicine
+            medicine.medicineCalendarIcon = self.calendarIcon
+        }
+
+        // Check if reminder is turn on here
+        if isReminderOn {
+
+            // MARK: Notifications Are Going To Be Scheduled
+            if let ids = try? await scheduleNotification() {
+                await context.perform {
+                    medicine.medicineNotificationIDs = ids
+                    try? context.save()
+                    TelemetryManager.send("Edited medicine with reminder", with: ["Name": self.title])
+                }
+                return true
+            }
+        } else {
+
+            // MARK: Add Data To Be Saved Without Reminder
+            await context.perform {
+                try? context.save()
+                TelemetryManager.send("Edited medicine without reminder", with: ["Name": self.title])
+            }
+            return true
+        }
+    } else {
+        await context.perform {
+
+            // MARK: Fetch Existing Event Records
+            let fetchRequest: NSFetchRequest&lt;Medicine&gt; = Medicine.fetchRequest()
+
+            do {
+                let existingMedicines = try self.moc.fetch(fetchRequest)
+
+                // Determine the count of existing medicine
+                let medicineCount = existingMedicines.count
+                print(medicineCount)
+
+                medicine = Medicine(context: context)
+
+                // Add a number to be as a uniqal reference for each medicine
+                medicine.medicineNumber = Int32(medicineCount + 1)
+
+                medicine.medicineTitle = self.title
+                medicine.medicineColor = self.medicineColor
+                medicine.medicineWeekdays = self.weekDays
+                medicine.medicineType = self.medicineType
+                medicine.medicineTakePartOne = self.takeMedicinePartOne
+                medicine.medicineTakePartTwo = self.takeMedicinePartTwo
+                medicine.medicineIsReminderOn = self.isReminderOn
+                medicine.medicineReminderText = self.title
+                medicine.medicineNotificationDate = self.reminderDate
+                medicine.medicineNotificationIDs = []
+                medicine.medicineQuantity = self.quantityMedicine
+                medicine.medicineCalendarIcon = self.calendarIcon
+            } catch {
+                print("Failed to insert event: \\(error.localizedDescription)")
+            }
+        }
+
+        // Check if reminder is turn on here
+        if isReminderOn {
+
+            // MARK: Notifications Are Going To Be Scheduled
+            if let ids = try? await scheduleNotification() {
+                await context.perform {
+                    medicine.medicineNotificationIDs = ids
+                    try? context.save()
+                    self.medicines.append(medicine)
+                    self.changedMedicine = medicine
+                    TelemetryManager.send("Added medicine with reminder", with: ["Name": self.title])
+                }
+                return true
+            }
+        } else {
+
+            // MARK: Add Data To Be Saved Without Reminder
+            await context.perform {
+                try? context.save()
+                self.medicines.append(medicine)
+                self.changedMedicine = medicine
+                TelemetryManager.send("Added medicine without reminder", with: ["Name": self.title])
+            }
+            return true
+        }
+    }
+    return false
+}</code></pre>
+
+                <div class="media media--phone">
+                    <img src="./assets/pillmemo-screenshot.png"
+                        alt="PillMemo app screenshot">
+                    <div class="media__caption">PillMemo UI preview</div>
+                </div>
+
+                <h2>🧩 Entireness</h2>
+                <p>Nevertheless, while creating this simple medicine reminder app, I have also included the following:</p>
+                <ul>
+                    <li>In-App Purchases</li>
+                    <li>TipKit</li>
+                    <li>WishKit</li>
+                    <li>Concurrency</li>
+                    <li>Error handling &amp; alerts</li>
+                    <li>Onboarding</li>
+                    <li>PDF Generator</li>
+                    <li>Unit Tests</li>
+                    <li>UI Tests</li>
+                    <li>CI/CD (Xcode Cloud)</li>
+                    <li>Project organization (VOODO Architecture)</li>
+                    <li>Privacy Manifest</li>
+                    <li>Published in App Store (04/2024)</li>
+                </ul>
+
+                <h2>ℹ️ License</h2>
+                <p>The PillMemo is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this
+                    application is strictly prohibited.</p>
+
+                <p class="footer">®️ 2026 All rights reserved by Marcin Jędrzejak.</p>
+            </section>
+        </article>
+    </div>
+</body>
+
+</html>
