@@ -130,14 +130,14 @@
             padding: 0 4px 14px;
         }
 
-        /* ─── Bento Grid ─── */
-        .bento {
+        /* ─── Portfolio Grid ─── */
+        .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: var(--gap);
         }
 
-        .bento--pillmemo {
+        .portfolio-grid--pillmemo {
             grid-template-columns: repeat(6, 1fr);
             margin-bottom: var(--gap);
         }
@@ -609,12 +609,12 @@
                 padding: 24px 14px 60px;
             }
 
-            .bento {
+            .portfolio-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
 
-            .bento--pillmemo {
+            .portfolio-grid--pillmemo {
                 grid-template-columns: repeat(2, 1fr);
             }
 
@@ -655,12 +655,12 @@
         }
 
         @media (max-width: 420px) {
-            .bento {
+            .portfolio-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
             }
 
-            .bento--pillmemo {
+            .portfolio-grid--pillmemo {
                 grid-template-columns: repeat(2, 1fr);
             }
 
@@ -882,7 +882,7 @@
         <!-- ════════ Portfolio ════════ -->
         <section class="section">
             <h2 class="section__title">Portfolio 🧪</h2>
-            <div class="bento bento--pillmemo">
+            <div class="portfolio-grid portfolio-grid--pillmemo">
 
                 <!-- PillMemo -->
                 <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener noreferrer"
@@ -957,7 +957,7 @@
 
             </div>
 
-            <div class="bento">
+            <div class="portfolio-grid">
 
                 <!-- AquaVibe -->
                 <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener noreferrer"
@@ -1206,40 +1206,13 @@
                     </div>
                 </a>
 
-                <!-- App Gallery -->
-                <a href="https://appgallery.io/maartinj" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9hcHBnYWxsZXJ5LmlvL3NoYXJlLWNhcmQucGhwP3VzZXJuYW1lPW1hYXJ0aW5q.jpeg"
-                            alt="App Gallery" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--pink">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <rect x="3" y="3" width="7" height="7" rx="1.5" />
-                                <rect x="14" y="3" width="7" height="7" rx="1.5" />
-                                <rect x="3" y="14" width="7" height="7" rx="1.5" />
-                                <rect x="14" y="14" width="7" height="7" rx="1.5" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">App Gallery</div>
-                            <div class="card__subtitle">Full Portfolio</div>
-                        </div>
-                    </div>
-                </a>
-
             </div>
         </section>
 
         <!-- ════════ About Me ════════ -->
         <section class="section">
             <h2 class="section__title">About Me 👨‍💻</h2>
-            <div class="bento">
+            <div class="portfolio-grid">
 
                 <!-- LinkedIn -->
                 <a href="https://www.linkedin.com/in/marcinjedrzejak/" target="_blank" rel="noopener noreferrer"
