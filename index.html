@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self'; upgrade-insecure-requests">
+    <meta name="referrer" content="no-referrer">
+    <title>Marcin Jędrzejak</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg: #f0f0f3;
+            --surface: #ffffff;
+            --surface-hover: #f8f8fa;
+            --border: rgba(0, 0, 0, 0.06);
+            --border-hover: rgba(0, 0, 0, 0.12);
+            --text: #1a1a2e;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --accent: #7c3aed;
+            --radius: 20px;
+            --radius-sm: 12px;
+            --gap: 14px;
+            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --thumb-bg: #0a0a0c;
+            --heatmap-bg: rgba(0, 0, 0, 0.02);
+            --heatmap-cell: rgba(0, 0, 0, 0.05);
+            --card-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            --repo-icon-bg: #f3f4f6;
+            --repo-icon-color: #374151;
+            --notion-icon-bg: #fff;
+            --notion-icon-border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg: #050505;
+            --surface: #111113;
+            --surface-hover: #19191d;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --text: #f0f0f2;
+            --text-secondary: #8e8e93;
+            --text-tertiary: #5e5e63;
+            --accent: #a78bfa;
+            --thumb-bg: #0a0a0c;
+            --heatmap-bg: rgba(255, 255, 255, 0.02);
+            --heatmap-cell: rgba(255, 255, 255, 0.04);
+            --card-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            --repo-icon-bg: rgba(255, 255, 255, 0.06);
+            --repo-icon-color: #9ca3af;
+            --notion-icon-bg: #fff;
+            --notion-icon-border: none;
+        }
+
+        html {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 40px 20px 80px;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -20%, rgba(124, 58, 237, 0.05) 0%, transparent 70%),
+                var(--bg);
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* ─── Profile Header ─── */
+        .profile {
+            text-align: center;
+            padding: 20px 0 36px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .profile__avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border);
+            margin-bottom: 16px;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+        }
+
+        .profile__name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .profile__bio {
+            font-size: 0.925rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ─── Sections ─── */
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section__title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-tertiary);
+            padding: 0 4px 14px;
+        }
+
+        /* ─── Bento Grid ─── */
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--gap);
+        }
+
+        /* ─── Card Base ─── */
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--text);
+            overflow: hidden;
+            transition:
+                transform var(--transition),
+                border-color var(--transition),
+                box-shadow var(--transition),
+                background var(--transition);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-3px) scale(1.01);
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* ─── Card Sizes ─── */
+        .card--2x1 {
+            grid-column: span 2;
+        }
+
+        .card--1x1 {
+            grid-column: span 1;
+        }
+
+        .card--2x2 {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        /* ─── Card Thumbnail ─── */
+        .card__thumb {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: var(--thumb-bg);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .card__thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card__thumb img {
+            transform: scale(1.04);
+        }
+
+        /* For 1x1 cards, make thumbnail squarish */
+        .card--1x1 .card__thumb {
+            aspect-ratio: 4 / 3;
+        }
+
+        /* For 2x2 cards, fill more space */
+        .card--2x2 .card__thumb {
+            aspect-ratio: auto;
+            flex: 1;
+            min-height: 0;
+        }
+
+        /* ─── Card Info Bar ─── */
+        .card__info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+        }
+
+        .card__icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .card__icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .card__text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card__title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card__subtitle {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card__arrow {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            color: #fff;
+            opacity: 0;
+            transform: translate(-4px, 4px);
+            transition: opacity var(--transition), transform var(--transition);
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 50%;
+            padding: 4px;
+            backdrop-filter: blur(8px);
+        }
+
+        .card:hover .card__arrow {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        /* ─── Icon-only cards (no thumbnail) ─── */
+        .card--noimg {
+            justify-content: space-between;
+            padding-top: 20px;
+        }
+
+        .card__icon-lg {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin: 0 16px;
+        }
+
+        .card__icon-lg svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        /* ─── Platform Icon Colors ─── */
+        .icon--purple {
+            background: linear-gradient(135deg, #7C3AED, #A855F7);
+        }
+
+        .icon--purple svg {
+            color: #fff;
+        }
+
+        .icon--blue {
+            background: linear-gradient(135deg, #06B6D4, #3B82F6);
+        }
+
+        .icon--blue svg {
+            color: #fff;
+        }
+
+        .icon--orange {
+            background: linear-gradient(135deg, #F97316, #EF4444);
+        }
+
+        .icon--orange svg {
+            color: #fff;
+        }
+
+        .icon--green {
+            background: linear-gradient(135deg, #10B981, #059669);
+        }
+
+        .icon--green svg {
+            color: #fff;
+        }
+
+        .icon--christmas {
+            background: linear-gradient(135deg, #C0392B, #8B4513);
+        }
+
+        .icon--christmas svg {
+            color: #fff;
+        }
+
+        .icon--framer {
+            background: #0055FF;
+        }
+
+        .icon--framer svg {
+            color: #fff;
+        }
+
+        .icon--notion {
+            background: var(--notion-icon-bg);
+            border: var(--notion-icon-border);
+        }
+
+        .icon--notion svg {
+            color: #000;
+        }
+
+        .icon--pink {
+            background: linear-gradient(135deg, #EC4899, #8B5CF6);
+        }
+
+        .icon--pink svg {
+            color: #fff;
+        }
+
+        .icon--linkedin {
+            background: #0A66C2;
+        }
+
+        .icon--linkedin svg {
+            color: #fff;
+        }
+
+        .icon--github {
+            background: #24292f;
+        }
+
+        .icon--github svg {
+            color: #fff;
+        }
+
+        .icon--twitter {
+            background: #14171a;
+        }
+
+        .icon--twitter svg {
+            color: #fff;
+        }
+
+        .icon--repo {
+            background: var(--repo-icon-bg);
+        }
+
+        .icon--repo svg {
+            color: var(--repo-icon-color);
+        }
+
+        .icon--craft {
+            background: linear-gradient(135deg, #FF6D3A, #FF4500);
+        }
+
+        .icon--craft svg {
+            color: #fff;
+        }
+
+        /* ─── Special Card: LinkedIn ─── */
+        .card--linkedin {
+            background: linear-gradient(145deg, #0A66C2, #004182);
+            border-color: rgba(10, 102, 194, 0.3);
+        }
+
+        .card--linkedin:hover {
+            background: linear-gradient(145deg, #0B73D6, #004D99);
+            border-color: rgba(10, 102, 194, 0.5);
+        }
+
+        .card--linkedin .card__title,
+        .card--linkedin .card__subtitle {
+            color: #fff;
+        }
+
+        .card--linkedin .card__subtitle {
+            opacity: 0.8;
+        }
+
+        /* ─── Special Card: Twitter ─── */
+        .card--twitter {
+            background: #14171a;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .card--twitter:hover {
+            background: #1a1d21;
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .card--twitter .card__title,
+        .card--twitter .card__subtitle {
+            color: #fff;
+        }
+
+        .card--twitter .card__subtitle {
+            opacity: 0.7;
+        }
+
+        /* ─── Special Card: Resume ─── */
+        .card--resume {
+            border-color: rgba(255, 109, 58, 0.2);
+        }
+
+        .card--resume:hover {
+            border-color: rgba(255, 109, 58, 0.4);
+            box-shadow:
+                0 12px 40px -8px rgba(0, 0, 0, 0.08),
+                0 0 40px -10px rgba(255, 109, 58, 0.1);
+        }
+
+        /* ─── GitHub Heatmap (inside GitHub card) ─── */
+        .github-extras {
+            padding: 0 16px 12px;
+        }
+
+        .github-stats {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .github-stats__item {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .github-stats__num {
+            font-weight: 700;
+            color: var(--text);
+            margin-right: 2px;
+        }
+
+        .heatmap {
+            display: grid;
+            grid-template-columns: repeat(26, 1fr);
+            grid-template-rows: repeat(7, 1fr);
+            gap: 2px;
+            padding: 6px;
+            background: var(--heatmap-bg);
+            border-radius: 8px;
+        }
+
+        .heatmap__cell {
+            aspect-ratio: 1;
+            border-radius: 2px;
+            background: var(--heatmap-cell);
+        }
+
+        .heatmap__cell--l1 {
+            background: rgba(124, 58, 237, 0.2);
+        }
+
+        .heatmap__cell--l2 {
+            background: rgba(124, 58, 237, 0.4);
+        }
+
+        .heatmap__cell--l3 {
+            background: rgba(124, 58, 237, 0.6);
+        }
+
+        .heatmap__cell--l4 {
+            background: rgba(124, 58, 237, 0.85);
+        }
+
+        /* ─── Stagger Animations ─── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .section:nth-child(3) {
+            animation-delay: 0.25s;
+        }
+
+        .card {
+            animation: fadeUp 0.45s ease both;
+        }
+
+        .section:nth-child(2) .card:nth-child(1) {
+            animation-delay: 0.12s;
+        }
+
+        .section:nth-child(2) .card:nth-child(2) {
+            animation-delay: 0.17s;
+        }
+
+        .section:nth-child(2) .card:nth-child(3) {
+            animation-delay: 0.22s;
+        }
+
+        .section:nth-child(2) .card:nth-child(4) {
+            animation-delay: 0.27s;
+        }
+
+        .section:nth-child(2) .card:nth-child(5) {
+            animation-delay: 0.32s;
+        }
+
+        .section:nth-child(2) .card:nth-child(6) {
+            animation-delay: 0.37s;
+        }
+
+        .section:nth-child(2) .card:nth-child(7) {
+            animation-delay: 0.42s;
+        }
+
+        .section:nth-child(3) .card:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .section:nth-child(3) .card:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+
+        .section:nth-child(3) .card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .section:nth-child(3) .card:nth-child(4) {
+            animation-delay: 0.45s;
+        }
+
+        .section:nth-child(3) .card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .section:nth-child(3) .card:nth-child(6) {
+            animation-delay: 0.55s;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 700px) {
+            body {
+                padding: 24px 14px 60px;
+            }
+
+            .bento {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .card__info {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+
+            .card__icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .card__icon svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .card__title {
+                font-size: 0.78rem;
+            }
+
+            .card__subtitle {
+                font-size: 0.68rem;
+            }
+
+            .profile__name {
+                font-size: 1.3rem;
+            }
+
+            .section__title {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .bento {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .card {
+                border-radius: 16px;
+            }
+
+            .card__info {
+                padding: 8px 10px;
+            }
+
+            .heatmap {
+                display: none;
+            }
+
+            .github-extras {
+                padding: 0 10px 8px;
+            }
+        }
+
+        /* ─── Footer ─── */
+        .footer {
+            text-align: center;
+            padding: 32px 0 0;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .footer__link {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: color 0.2s ease, text-decoration-color 0.2s ease;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 2px;
+        }
+
+        .footer__link:hover {
+            color: var(--text-secondary);
+            text-decoration-color: var(--text-secondary);
+        }
+
+        /* ─── Theme Toggle ─── */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition:
+                background var(--transition),
+                border-color var(--transition),
+                box-shadow var(--transition),
+                transform var(--transition);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(12px);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.08);
+            border-color: var(--border-hover);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .theme-toggle:hover svg {
+            transform: rotate(20deg);
+        }
+
+        .theme-toggle .icon-sun,
+        .theme-toggle .icon-moon {
+            position: absolute;
+            transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Light mode: show moon (click to go dark) */
+        .theme-toggle .icon-sun {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.5);
+        }
+
+        .theme-toggle .icon-moon {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+
+        /* Dark mode: show sun (click to go light) */
+        [data-theme="dark"] .theme-toggle .icon-sun {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+
+        [data-theme="dark"] .theme-toggle .icon-moon {
+            opacity: 0;
+            transform: rotate(90deg) scale(0.5);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .theme-toggle:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ─── Dark mode body gradient ─── */
+        [data-theme="dark"] body {
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -20%, rgba(167, 139, 250, 0.06) 0%, transparent 70%),
+                var(--bg);
+        }
+
+        /* ─── Dark mode special card tweaks ─── */
+        [data-theme="dark"] .icon--github {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] .icon--twitter {
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        [data-theme="dark"] .card--twitter {
+            background: #000;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        [data-theme="dark"] .card--twitter:hover {
+            background: #0a0a0a;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        [data-theme="dark"] .card--resume:hover {
+            box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.5), 0 0 40px -10px rgba(255, 109, 58, 0.08);
+        }
+
+        /* Smooth transition for theme change */
+        html,
+        body,
+        .card,
+        .card__info,
+        .theme-toggle,
+        .section__title,
+        .profile__bio,
+        .github-stats__item,
+        .card__subtitle,
+        .heatmap,
+        .heatmap__cell {
+            transition-property: background, background-color, color, border-color, box-shadow;
+            transition-duration: 0.4s;
+            transition-timing-function: ease;
+        }
+
+        /* Prevent FOUC */
+        html {
+            opacity: 0;
+            animation: pageIn 0.3s ease 0.05s forwards;
+        }
+
+        @keyframes pageIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+    </button>
+
+    <div class="container">
+
+        <!-- Profile Header -->
+        <header class="profile">
+            <img class="profile__avatar"
+                src="https://storage.googleapis.com/creatorspace-public/users%2Fclqxt53sl000qsg01kgwo4wm3%2FBqqurgjWTWCGTF9I-mewwdc25-bento.png"
+                alt="Marcin Jędrzejak" loading="eager" />
+            <h1 class="profile__name">Marcin Jędrzejak</h1>
+            <p class="profile__bio">Want to be iOS Developer 📱 &nbsp;🇵🇱</p>
+        </header>
+
+        <!-- ════════ Portfolio ════════ -->
+        <section class="section">
+            <h2 class="section__title">Portfolio 🧪</h2>
+            <div class="bento">
+
+                <!-- PillMemo -->
+                <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/eb/c7/72/ebc772fb-cc99-ea44-1c9a-d163b9577487/AppIcon-0-0-1x_U007ephone-0-0-0-1-0-sRGB-85-220.png/1200x630wa.jpg"
+                            alt="PillMemo" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <rect x="6" y="3" width="12" height="18" rx="3" />
+                                <line x1="6" y1="12" x2="18" y2="12" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">PillMemo</div>
+                            <div class="card__subtitle">Med Timer & Pill Counter · App Store</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- PillMemo Website -->
+                <a href="https://pillmemo.framer.ai/" target="_blank" rel="noopener noreferrer" class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9mcmFtZXJ1c2VyY29udGVudC5jb20vYXNzZXRzL2NqWmh6SnIySkZVSVR0bDBGbWpMNlh1TFUucG5n.png"
+                            alt="PillMemo Website" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--framer">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M4 0h16v8h-8zm0 8h8l8 8H4zm0 8h8v8z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">PillMemo Website</div>
+                            <div class="card__subtitle">Framer</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- MedScan -->
+                <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a5/73/45/a57345d7-03aa-d698-6f37-2dadf0f0ad96/Placeholder.mill/1200x630wa.jpg"
+                            alt="MedScan" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3" />
+                                <rect x="7" y="7" width="10" height="10" rx="1" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">MedScan</div>
+                            <div class="card__subtitle">Check meds before you take · App Store</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- MedScan Docs -->
+                <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank"
+                    rel="noopener noreferrer" class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://maartinj.notion.site/image/attachment%3Aa1e50a95-a956-4f84-a2c8-24505299e751%3ALight.png?table=block&id=22187c79-476f-80f9-afa2-df68966ae789"
+                            alt="MedScan Docs" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--notion">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">MedScan Docs</div>
+                            <div class="card__subtitle">Project Documentation · Notion</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- ShotDocu -->
+                <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a4/ef/6e/a4ef6ea9-3744-5512-508d-bbdb16d4fda8/Placeholder.mill/1200x630wa.jpg"
+                            alt="ShotDocu" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <circle cx="12" cy="12" r="3" />
+                                <path d="M3 9h2M19 9h2" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">ShotDocu</div>
+                            <div class="card__subtitle">Convert image into PDFs easily · App Store</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- ShotDocu Docs -->
+                <a href="https://maartinj.notion.site/ShotDocu-28c87c79476f801690a2f080029095e5" target="_blank"
+                    rel="noopener noreferrer" class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://maartinj.notion.site/image/attachment%3A5dd26c50-947a-4495-a2a0-8fbfcabaeb92%3ACol.png?table=block&id=28c87c79-476f-8087-ab2f-f974987baeed"
+                            alt="ShotDocu Docs" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--notion">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">ShotDocu Docs</div>
+                            <div class="card__subtitle">Project Documentation · Notion</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- TinyGifts -->
+                <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/ca/ae/31caae15-8496-810a-376d-ecb0095a805a/AppIcon-0-0-1x_U007ephone-0-0-0-1-0-sRGB-85-220.png/1200x630wa.jpg"
+                            alt="TinyGifts" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--christmas">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 12v10H4V12" />
+                                <path d="M2 7h20v5H2z" />
+                                <path d="M12 22V7" />
+                                <path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" />
+                                <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">TinyGifts</div>
+                            <div class="card__subtitle">Open daily advent surprises · App Store</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- TinyGifts Docs -->
+                <a href="https://maartinj.notion.site/TinyGifts-2b287c79476f809980c9dacee4b2d1c0" target="_blank"
+                    rel="noopener noreferrer" class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://maartinj.notion.site/image/attachment%3A7b6e4137-3cb7-4cd3-93b3-98f3aba9326a%3AtinyGiftsPromo.png?table=block&id=2b287c79-476f-80e5-b0bb-d8bae3829efa"
+                            alt="TinyGifts Docs" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--notion">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">TinyGifts Docs</div>
+                            <div class="card__subtitle">Project Documentation · Notion</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- AquaVibe -->
+                <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/32/7c/cc/327cccbb-da45-8c45-9564-007449d9de76/AppIcon-0-0-1x_U007ephone-0-1-sRGB-85-220.png/1200x630wa.jpg"
+                            alt="AquaVibe" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <path d="M12 2C12 2 7 7.5 7 13a5 5 0 0010 0c0-5.5-5-11-5-11z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">AquaVibe</div>
+                            <div class="card__subtitle">Daily Goals, Healthy Life · App Store</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- AquaVibe Docs -->
+                <a href="https://maartinj.notion.site/AquaVibe-10387c79476f805ea83bf6a6da996e86" target="_blank"
+                    rel="noopener noreferrer" class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://storage.googleapis.com/creatorspace-public/users%2Fclqxt53sl000qsg01kgwo4wm3%2FuwQTvZpLpgGO3TEI-Light.png"
+                            alt="AquaVibe Docs" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--notion">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">AquaVibe Docs</div>
+                            <div class="card__subtitle">Project Documentation · Notion</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- App Gallery -->
+                <a href="https://appgallery.io/maartinj" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9hcHBnYWxsZXJ5LmlvL3NoYXJlLWNhcmQucGhwP3VzZXJuYW1lPW1hYXJ0aW5q.jpeg"
+                            alt="App Gallery" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--pink">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                                <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                                <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                                <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">App Gallery</div>
+                            <div class="card__subtitle">Full Portfolio</div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- ════════ About Me ════════ -->
+        <section class="section">
+            <h2 class="section__title">About Me 👨‍💻</h2>
+            <div class="bento">
+
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/marcinjedrzejak/" target="_blank" rel="noopener noreferrer"
+                    class="card card--1x1 card--linkedin card--noimg">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__icon-lg icon--linkedin">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </div>
+                    <div class="card__info">
+                        <div class="card__text">
+                            <div class="card__title">LinkedIn</div>
+                            <div class="card__subtitle">Connect</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- GitHub Profile -->
+                <a href="https://github.com/maartinj" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1 card--github card--noimg">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__icon-lg icon--github">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </div>
+                    <div class="card__info" style="padding-top:0">
+                        <div class="card__text">
+                            <div class="card__title">GitHub</div>
+                            <div class="card__subtitle">@maartinj</div>
+                        </div>
+                    </div>
+                    <div class="github-extras">
+                        <div class="github-stats">
+                            <span class="github-stats__item"><span class="github-stats__num">121</span>repos</span>
+                            <span class="github-stats__item"><span
+                                    class="github-stats__num">995</span>contributions</span>
+                        </div>
+                        <div class="heatmap" id="heatmap"></div>
+                    </div>
+                </a>
+
+                <!-- Twitter / X -->
+                <a href="https://twitter.com/maartin_j" target="_blank" rel="noopener noreferrer"
+                    class="card card--1x1 card--twitter card--noimg">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__icon-lg icon--twitter">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </div>
+                    <div class="card__info">
+                        <div class="card__text">
+                            <div class="card__title">@maartin_j</div>
+                            <div class="card__subtitle">123 following</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Basic Car Maintenance -->
+                <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9vcGVuZ3JhcGguZ2l0aHViYXNzZXRzLmNvbS9hOTEwZjMwMTZlY2IxZGYzZGQxYWFiODIxZjgyOGFmYjVlMjU3YjlmZDczYmFmN2Y2NGU1MDM2NTIzMTFjZmRhL21hYXJ0aW5qL0Jhc2ljLUNhci1NYWludGVuYW5jZQ%3D%3D.jpeg"
+                            alt="Basic Car Maintenance" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--repo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">Basic Car Maintenance</div>
+                            <div class="card__subtitle">Open source · Hacktoberfest 2023</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- CarListingApp -->
+                <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x1">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9vcGVuZ3JhcGguZ2l0aHViYXNzZXRzLmNvbS9iZGY4OTFiNDc5YWJkNTMzZWMzNTliZGRjNmM2MTFlNzI4NmI2N2JmNGI1ZmE1YmY0ZmVlZDVkODZmMWY4NmI4L21hYXJ0aW5qL0Nhckxpc3RpbmdBcHA%3D.jpeg"
+                            alt="CarListingApp" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--repo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">CarListingApp</div>
+                            <div class="card__subtitle">Community App Challenge</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Resume -->
+                <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" target="_blank" rel="noopener noreferrer"
+                    class="card card--2x2 card--resume">
+                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M5 15L15 5M15 5H8M15 5v7" />
+                    </svg>
+                    <div class="card__thumb">
+                        <img src="https://storage.googleapis.com/creatorspace-public/sites%2Fogimages%2FaHR0cHM6Ly9hcGkuY3JhZnQuZG8vcmVuZGVyL3ByZXZpZXcvRU5aQndDNmFZcTR6QzQ%3D.jpeg"
+                            alt="Resume" loading="lazy" />
+                    </div>
+                    <div class="card__info">
+                        <div class="card__icon icon--craft">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <line x1="10" y1="9" x2="8" y2="9" />
+                            </svg>
+                        </div>
+                        <div class="card__text">
+                            <div class="card__title">Marcin Jędrzejak Resume</div>
+                            <div class="card__subtitle">View on Craft</div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 All rights reserved by <a href="mailto:mjedrzejak@icloud.com" class="footer__link">Marcin
+                    Jędrzejak</a>.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Theme toggle
+        (function () {
+            var toggle = document.getElementById('themeToggle');
+            var saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            toggle.addEventListener('click', function () {
+                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        })();
+
+        // Generate GitHub-style contribution heatmap
+        (function () {
+            const heatmap = document.getElementById('heatmap');
+            if (!heatmap) return;
+            const levels = ['', '--l1', '--l2', '--l3', '--l4'];
+            const pattern = [
+                0, 0, 1, 0, 1, 2, 0, 1, 0, 0, 2, 1, 3, 0, 1, 0, 2, 1, 0, 0, 1, 4, 2, 0, 1, 0,
+                1, 0, 0, 2, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 0, 1, 0, 2, 1, 0, 3, 2, 1, 0, 0, 1,
+                0, 1, 2, 1, 0, 0, 2, 1, 3, 2, 0, 1, 0, 0, 1, 2, 0, 1, 3, 1, 0, 0, 2, 1, 0, 0,
+                2, 0, 1, 0, 3, 1, 0, 2, 1, 0, 1, 0, 2, 1, 0, 0, 1, 3, 2, 0, 1, 4, 1, 0, 1, 2,
+                0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 2, 0, 1, 0, 1, 0, 0, 2, 1, 0, 0, 1, 0, 2, 0, 0,
+                1, 2, 0, 0, 1, 0, 2, 3, 1, 0, 0, 1, 0, 2, 0, 1, 3, 0, 1, 0, 2, 0, 1, 0, 0, 1,
+                0, 1, 0, 0, 0, 1, 0, 1, 0, 2, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 0, 0, 1, 0, 0
+            ];
+            pattern.forEach(function (l) {
+                var d = document.createElement('div');
+                d.className = 'heatmap__cell' + (l ? ' heatmap__cell' + levels[l] : '');
+                heatmap.appendChild(d);
+            });
+        })();
+    </script>
+</body>
+
+</html>
