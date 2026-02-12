@@ -408,6 +408,46 @@
             </section>
         </article>
     </div>
+    <script>
+        (function () {
+            const back = document.querySelector(".back");
+            if (!back) return;
+
+            back.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                if (window.opener && !window.opener.closed) {
+                    try {
+                        window.opener.focus();
+                        window.close();
+                        setTimeout(function () {
+                            if (!window.closed) {
+                                try {
+                                    window.opener.focus();
+                                } catch (error) {
+                                }
+                                window.location.href = "./index.html";
+                            }
+                        }, 80);
+                        return;
+                    } catch (error) {
+                    }
+                }
+
+                if (window.history.length > 1) {
+                    window.history.back();
+                    return;
+                }
+
+                if (document.referrer) {
+                    window.location.href = document.referrer;
+                    return;
+                }
+
+                window.location.href = "./index.html";
+            });
+        })();
+    </script>
 </body>
 
 </html>
