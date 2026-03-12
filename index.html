@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self'; upgrade-insecure-requests">
+        content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https://github-contributions-api.deno.dev https://r.jina.ai; upgrade-insecure-requests">
     <meta name="referrer" content="no-referrer">
     <title>Marcin Jędrzejak</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -904,7 +904,7 @@
                         </div>
                         <div class="card__text">
                             <div class="card__title">PillMemo</div>
-                            <div class="card__subtitle">Med Timer & Pill Counter · App Store</div>
+                            <div class="card__subtitle">Med Timer &amp; Pill Counter</div>
                         </div>
                     </div>
                 </a>
@@ -950,7 +950,7 @@
                         </div>
                         <div class="card__text">
                             <div class="card__title">PillMemo Framer</div>
-                            <div class="card__subtitle">Website</div>
+                            <div class="card__subtitle">Landing page</div>
                         </div>
                     </div>
                 </a>
@@ -978,7 +978,7 @@
                         </div>
                         <div class="card__text">
                             <div class="card__title">AquaVibe</div>
-                            <div class="card__subtitle">Daily Goals, Healthy Life · App Store</div>
+                            <div class="card__subtitle">Daily Goals, Healthy Life</div>
                         </div>
                     </div>
                 </a>
@@ -1026,7 +1026,7 @@
                         </div>
                         <div class="card__text">
                             <div class="card__title">MedScan</div>
-                            <div class="card__subtitle">Check meds before you take · App Store</div>
+                            <div class="card__subtitle">Check meds before you take</div>
                         </div>
                     </div>
                 </a>
@@ -1076,7 +1076,7 @@
                         </div>
                         <div class="card__text">
                             <div class="card__title">ShotDocu</div>
-                            <div class="card__subtitle">Convert image into PDFs easily · App Store</div>
+                            <div class="card__subtitle">Convert image into PDFs easily</div>
                         </div>
                     </div>
                 </a>
@@ -1128,7 +1128,7 @@
                         </div>
                         <div class="card__text">
                             <div class="card__title">TinyGifts</div>
-                            <div class="card__subtitle">Open daily advent surprises · App Store</div>
+                            <div class="card__subtitle">Open daily advent surprises</div>
                         </div>
                     </div>
                 </a>
@@ -1177,7 +1177,7 @@
                         </div>
                         <div class="card__text">
                             <div class="card__title">Basic Car Maintenance</div>
-                            <div class="card__subtitle">Open source · Hacktoberfest 2023</div>
+                            <div class="card__subtitle">Open source repository</div>
                         </div>
                     </div>
                 </a>
@@ -1255,9 +1255,9 @@
                     </div>
                     <div class="github-extras">
                         <div class="github-stats">
-                            <span class="github-stats__item"><span class="github-stats__num">121</span>repos</span>
-                            <span class="github-stats__item"><span
-                                    class="github-stats__num">995</span>contributions</span>
+                            <span class="github-stats__item"><span class="github-stats__num">122</span>repos</span>
+                            <span class="github-stats__item"><span id="githubContributions"
+                                    class="github-stats__num">886</span>contributions</span>
                         </div>
                         <div class="heatmap" id="heatmap"></div>
                     </div>
@@ -1278,7 +1278,7 @@
                     <div class="card__info">
                         <div class="card__text">
                             <div class="card__title">@maartin_j</div>
-                            <div class="card__subtitle">123 following</div>
+                            <div class="card__subtitle"><span id="xFollowing">125</span> following</div>
                         </div>
                     </div>
                 </a>
@@ -1342,25 +1342,57 @@
             });
         })();
 
-        // Generate GitHub-style contribution heatmap
+        // Fetch current GitHub contributions and X following.
         (function () {
+            const githubContributions = document.getElementById('githubContributions');
             const heatmap = document.getElementById('heatmap');
-            if (!heatmap) return;
-            const levels = ['', '--l1', '--l2', '--l3', '--l4'];
-            const pattern = [
-                0, 0, 1, 0, 1, 2, 0, 1, 0, 0, 2, 1, 3, 0, 1, 0, 2, 1, 0, 0, 1, 4, 2, 0, 1, 0,
-                1, 0, 0, 2, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 0, 1, 0, 2, 1, 0, 3, 2, 1, 0, 0, 1,
-                0, 1, 2, 1, 0, 0, 2, 1, 3, 2, 0, 1, 0, 0, 1, 2, 0, 1, 3, 1, 0, 0, 2, 1, 0, 0,
-                2, 0, 1, 0, 3, 1, 0, 2, 1, 0, 1, 0, 2, 1, 0, 0, 1, 3, 2, 0, 1, 4, 1, 0, 1, 2,
-                0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 2, 0, 1, 0, 1, 0, 0, 2, 1, 0, 0, 1, 0, 2, 0, 0,
-                1, 2, 0, 0, 1, 0, 2, 3, 1, 0, 0, 1, 0, 2, 0, 1, 3, 0, 1, 0, 2, 0, 1, 0, 0, 1,
-                0, 1, 0, 0, 0, 1, 0, 1, 0, 2, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 0, 0, 1, 0, 0
-            ];
-            pattern.forEach(function (l) {
-                var d = document.createElement('div');
-                d.className = 'heatmap__cell' + (l ? ' heatmap__cell' + levels[l] : '');
-                heatmap.appendChild(d);
-            });
+            const xFollowing = document.getElementById('xFollowing');
+            const levels = {
+                NONE: '',
+                FIRST_QUARTILE: '--l1',
+                SECOND_QUARTILE: '--l2',
+                THIRD_QUARTILE: '--l3',
+                FOURTH_QUARTILE: '--l4'
+            };
+
+            function renderHeatmap(days) {
+                if (!heatmap) return;
+                heatmap.innerHTML = '';
+                days.slice(-182).forEach(function (day) {
+                    var d = document.createElement('div');
+                    var suffix = levels[day.contributionLevel] || '';
+                    d.className = 'heatmap__cell' + (suffix ? ' heatmap__cell' + suffix : '');
+                    d.title = day.date + ': ' + day.contributionCount + ' contributions';
+                    heatmap.appendChild(d);
+                });
+            }
+
+            fetch('https://github-contributions-api.deno.dev/maartinj.json')
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                    var days = (data.contributions || []).flat();
+                    if (!days.length) return;
+                    var total = days.reduce(function (sum, day) {
+                        return sum + (day.contributionCount || 0);
+                    }, 0);
+                    if (githubContributions) {
+                        githubContributions.textContent = String(total);
+                    }
+                    renderHeatmap(days);
+                })
+                .catch(function () {
+                });
+
+            fetch('https://r.jina.ai/http://x.com/maartin_j')
+                .then(function (response) { return response.text(); })
+                .then(function (text) {
+                    var match = text.match(/\[(\d[\d,]*) Following\]\(https:\/\/x\.com\/maartin_j\/following\)/i);
+                    if (match && xFollowing) {
+                        xFollowing.textContent = match[1];
+                    }
+                })
+                .catch(function () {
+                });
         })();
 
         // Open local docs in a script-opened tab so Back button can return to the previous tab reliably.
