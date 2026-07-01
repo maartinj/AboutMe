@@ -16,6 +16,24 @@
             --accent: #2f81f7;
             --success: #238636;
             --code-bg: #010409;
+            --bg-grad: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
+            --intro: #d0d7de;
+            --highlight-bg: rgba(35, 134, 54, 0.12);
+        }
+
+        html[data-theme="light"] {
+            --bg: #f6f8fa;
+            --surface: #ffffff;
+            --surface-2: #f6f8fa;
+            --border: #d0d7de;
+            --text: #1f2328;
+            --muted: #656d76;
+            --accent: #0969da;
+            --success: #1a7f37;
+            --code-bg: #f6f8fa;
+            --bg-grad: linear-gradient(180deg, #f6f8fa 0%, #eef2f6 100%);
+            --intro: #57606a;
+            --highlight-bg: rgba(26, 127, 55, 0.08);
         }
 
         * {
@@ -27,10 +45,11 @@
         body {
             font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             color: var(--text);
-            background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
+            background: var(--bg-grad);
             min-height: 100vh;
             line-height: 1.6;
             padding: 24px;
+            transition: background .25s ease, color .25s ease;
         }
 
         .wrap {
@@ -58,6 +77,43 @@
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background .2s, transform .15s;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .toggle-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .lang-btn {
+            width: auto;
+            padding: 0 12px;
         }
 
         .card {
@@ -134,25 +190,62 @@
 
         .intro {
             font-size: 18px;
-            color: #d0d7de;
+            color: var(--intro);
         }
 
         .repo-highlights {
             border: 1px solid var(--border);
-            background: rgba(35, 134, 54, 0.12);
+            background: var(--highlight-bg);
             border-left: 4px solid var(--success);
             border-radius: 8px;
             padding: 12px 14px;
             margin-top: 10px;
         }
 
-        pre {
+        .code-block {
+            position: relative;
             margin-top: 12px;
+        }
+
+        pre {
             background: var(--code-bg);
             border: 1px solid var(--border);
             border-radius: 10px;
             overflow-x: auto;
             padding: 14px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background .2s, color .2s, border-color .2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .copy-btn.copied {
+            color: var(--success);
+            border-color: var(--success);
         }
 
         code {
@@ -219,7 +312,13 @@
 <body>
     <div class="wrap">
         <div class="topbar">
-            <a class="back" href="./index.html" aria-label="Back to portfolio">← Back to portfolio</a>
+            <a class="back" href="./index.html" aria-label="Back to portfolio"><span data-i18n="back">← Back to portfolio</span></a>
+            <div class="topbar-actions">
+                <button class="toggle-btn lang-btn" id="langToggle" aria-label="Switch language">EN</button>
+                <button class="toggle-btn" id="themeToggle" aria-label="Switch theme">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+                </button>
+            </div>
         </div>
 
         <article class="card">
@@ -230,43 +329,57 @@
 
             <section class="content">
                 <h1>💊 PillMemo</h1>
-                <p class="intro">PillMemo is an easy-to-use medication reminder app, currently published in the App Store as Medisafe Carezone: PillMemo 🏥</p>
-                <p>The application allows users to set reminders for different types of medicine and at different times of the
-                    day/week/month 📅</p>
+                <p class="intro" data-i18n="intro">PillMemo is an easy-to-use iOS application that helps users remember to take their medicine, track their treatment, and stay connected with people who care about them 🏥</p>
+                <p data-i18n="intro-2">The application allows users to set smart reminders for different types of medicine, log every dose, monitor daily progress, track refills, and generate doctor-ready reports 📅</p>
 
-                <h2>👨‍💻 Technology Used</h2>
+                <h2 data-i18n="h-tech">👨‍💻 Technology Used</h2>
                 <ul>
                     <li>SwiftUI</li>
                     <li>Core Data</li>
-                    <li>CloudKit</li>
+                    <li>CloudKit / iCloud Sync</li>
+                    <li>HealthKit</li>
                     <li>User Notifications</li>
-                    <li>UICalendarView</li>
+                    <li>AlarmKit</li>
+                    <li>WidgetKit</li>
+                    <li>ActivityKit / Live Activities</li>
+                    <li>App Intents</li>
+                    <li>TipKit</li>
+                    <li>StoreKit / In-App Purchases</li>
+                    <li>Supabase</li>
+                    <li>AI-powered medicine scanning</li>
+                    <li>PDF generation</li>
+                    <li>VIPER Architecture</li>
                 </ul>
 
-                <h2>📌 What Changed In The Repo</h2>
-                <div class="repo-highlights">
+                <h2 data-i18n="h-repo">📌 What Changed In The Repo</h2>
+                <div class="repo-highlights" data-i18n="repo-highlights">
                     The key change was introducing unique medicine identity and separate save paths for entries with reminder vs
                     without reminder. This removed duplicate-reference collisions and fixed crashes when saving multiple pills for the
                     same date.
                 </div>
 
-                <h2>🎥 PillMemo In Action</h2>
+                <h2 data-i18n="h-action">🎥 PillMemo In Action</h2>
                 <div class="media media--phone">
                     <video controls preload="metadata" playsinline>
                         <source src="./assets/pillmemo-demo.m4v" type="video/mp4">
-                        <source src="./assets/pillmemo-demo.mov" type="video/quicktime">
+                        <source src="./assets/portfolioVideo.mov" type="video/quicktime">
                         Your browser does not support embedded video.
                     </video>
-                    <div class="media__caption">PillMemo demo video</div>
+                    <div class="media__caption" data-i18n="caption-video">PillMemo demo video</div>
                 </div>
 
-                <h2>🏆 Standout Success</h2>
-                <p>Distinguish to save pill data with and without notifications.</p>
-                <p>Sounds trivial, but the real challenge was to create functionality to save pill data in Core Data and be read
+                <h2 data-i18n="h-success">🏆 Standout Success</h2>
+                <p data-i18n="success-1">Distinguish to save pill data with and without notifications.</p>
+                <p data-i18n="success-2">Sounds trivial, but the real challenge was to create functionality to save pill data in Core Data and be read
                     correctly by app, where each pill needed to be unique. Why? Because earlier, every next pill was saved, but
                     remembered with the same reference, for the same date, where for the same date can be taken more than one pill.
                     Without this change, app crashed every time when I wanted to save new pill with the same exact date.</p>
 
+                <div class="code-block">
+                    <button class="copy-btn" id="copyCode" aria-label="Copy code">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span id="copyCodeLabel">Copy</span>
+                    </button>
                 <pre><code class="language-swift">func addMedicine(context: NSManagedObjectContext) async -&gt; Bool {
 
     // MARK: Editing Data
@@ -376,36 +489,37 @@
     }
     return false
 }</code></pre>
+                </div>
 
                 <div class="media media--phone">
                     <img src="./assets/pillmemo-screenshot.png"
                         alt="PillMemo app screenshot">
-                    <div class="media__caption">PillMemo UI preview</div>
+                    <div class="media__caption" data-i18n="caption-ui">PillMemo UI preview</div>
                 </div>
 
-                <h2>🧩 Entireness</h2>
-                <p>Nevertheless, while creating this simple medicine reminder app, I have also included the following:</p>
+                <h2 data-i18n="h-entireness">🧩 Entireness</h2>
+                <p data-i18n="entireness-intro">Nevertheless, while creating this simple medicine reminder app, I have also included the following:</p>
                 <ul>
                     <li>In-App Purchases</li>
                     <li>TipKit</li>
                     <li>WishKit</li>
                     <li>Concurrency</li>
-                    <li>Error handling &amp; alerts</li>
+                    <li data-i18n="li-errors">Error handling &amp; alerts</li>
                     <li>Onboarding</li>
-                    <li>PDF Generator</li>
-                    <li>Unit Tests</li>
-                    <li>UI Tests</li>
+                    <li data-i18n="li-pdf">PDF Generator</li>
+                    <li data-i18n="li-unit">Unit Tests</li>
+                    <li data-i18n="li-ui">UI Tests</li>
                     <li>CI/CD (Xcode Cloud)</li>
-                    <li>Project organization (VOODO Architecture)</li>
+                    <li data-i18n="li-arch">Project organization (VOODO Architecture)</li>
                     <li>Privacy Manifest</li>
-                    <li>Current App Store release: v1.4.6 (09/2025)</li>
+                    <li data-i18n="li-release">Current App Store release: v1.4.6 (09/2025)</li>
                 </ul>
 
-                <h2>ℹ️ License</h2>
-                <p>PillMemo is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this
+                <h2 data-i18n="h-license">ℹ️ License</h2>
+                <p data-i18n="license">PillMemo is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this
                     application is strictly prohibited.</p>
 
-                <p class="footer">®️ 2026 All rights reserved by Marcin Jędrzejak.</p>
+                <p class="footer" data-i18n="copyright">®️ 2026 All rights reserved by Marcin Jędrzejak.</p>
             </section>
         </article>
     </div>
@@ -446,6 +560,163 @@
                 }
 
                 window.location.href = "./index.html";
+            });
+        })();
+
+        /* ---- THEME TOGGLE ---- */
+        (function () {
+            const sunIcon = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>';
+            const moonIcon = '<path d="M21 11.966A6.5 6.5 0 1 1 12.035 3H12a9 9 0 1 0 9 9z"></path>';
+            const themeBtn = document.getElementById("themeToggle");
+            const themeIcon = document.getElementById("themeIcon");
+
+            function applyTheme(theme) {
+                document.documentElement.setAttribute("data-theme", theme);
+                themeIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
+                localStorage.setItem("mj-theme", theme);
+            }
+
+            const savedTheme = localStorage.getItem("mj-theme") ||
+                (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            applyTheme(savedTheme);
+
+            themeBtn.addEventListener("click", function () {
+                const current = document.documentElement.getAttribute("data-theme");
+                applyTheme(current === "dark" ? "light" : "dark");
+            });
+        })();
+
+        /* ---- COPY CODE ---- */
+        (function () {
+            const labels = {
+                en: { copy: "Copy", copied: "Copied!" },
+                pl: { copy: "Kopiuj", copied: "Skopiowano!" }
+            };
+            const btn = document.getElementById("copyCode");
+            const label = document.getElementById("copyCodeLabel");
+            if (!btn) return;
+            let resetTimer = null;
+
+            function currentLabels() {
+                return labels[document.documentElement.getAttribute("lang")] || labels.en;
+            }
+
+            // Keep the label in sync when the language is toggled
+            window.updateCopyLabel = function () {
+                if (!btn.classList.contains("copied")) {
+                    label.textContent = currentLabels().copy;
+                }
+            };
+
+            btn.addEventListener("click", function () {
+                const code = document.querySelector(".code-block pre code");
+                if (!code) return;
+
+                function onCopied() {
+                    btn.classList.add("copied");
+                    label.textContent = currentLabels().copied;
+                    clearTimeout(resetTimer);
+                    resetTimer = setTimeout(function () {
+                        btn.classList.remove("copied");
+                        label.textContent = currentLabels().copy;
+                    }, 2000);
+                }
+
+                function fallbackCopy() {
+                    const range = document.createRange();
+                    range.selectNodeContents(code);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    document.execCommand("copy");
+                    selection.removeAllRanges();
+                    onCopied();
+                }
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(code.innerText).then(onCopied).catch(fallbackCopy);
+                } else {
+                    fallbackCopy();
+                }
+            });
+        })();
+
+        /* ---- LANGUAGE TOGGLE ---- */
+        (function () {
+            const translations = {
+                en: {
+                    'back': '← Back to portfolio',
+                    'intro': 'PillMemo is an easy-to-use iOS application that helps users remember to take their medicine, track their treatment, and stay connected with people who care about them 🏥',
+                    'intro-2': 'The application allows users to set smart reminders for different types of medicine, log every dose, monitor daily progress, track refills, and generate doctor-ready reports 📅',
+                    'h-tech': '👨‍💻 Technology Used',
+                    'h-repo': '📌 What Changed In The Repo',
+                    'repo-highlights': 'The key change was introducing unique medicine identity and separate save paths for entries with reminder vs without reminder. This removed duplicate-reference collisions and fixed crashes when saving multiple pills for the same date.',
+                    'h-action': '🎥 PillMemo In Action',
+                    'caption-video': 'PillMemo demo video',
+                    'h-success': '🏆 Standout Success',
+                    'success-1': 'Distinguish to save pill data with and without notifications.',
+                    'success-2': 'Sounds trivial, but the real challenge was to create functionality to save pill data in Core Data and be read correctly by app, where each pill needed to be unique. Why? Because earlier, every next pill was saved, but remembered with the same reference, for the same date, where for the same date can be taken more than one pill. Without this change, app crashed every time when I wanted to save new pill with the same exact date.',
+                    'caption-ui': 'PillMemo UI preview',
+                    'h-entireness': '🧩 Entireness',
+                    'entireness-intro': 'Nevertheless, while creating this simple medicine reminder app, I have also included the following:',
+                    'li-errors': 'Error handling &amp; alerts',
+                    'li-pdf': 'PDF Generator',
+                    'li-unit': 'Unit Tests',
+                    'li-ui': 'UI Tests',
+                    'li-arch': 'Project organization (VOODO Architecture)',
+                    'li-release': 'Current App Store release: v1.4.6 (09/2025)',
+                    'h-license': 'ℹ️ License',
+                    'license': 'PillMemo is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this application is strictly prohibited.',
+                    'copyright': '®️ 2026 All rights reserved by Marcin Jędrzejak.'
+                },
+                pl: {
+                    'back': '← Wróć do portfolio',
+                    'intro': 'PillMemo to prosta w obsłudze aplikacja na iOS, która pomaga użytkownikom pamiętać o zażywaniu leków, śledzić leczenie i pozostawać w kontakcie z osobami, którym na nich zależy 🏥',
+                    'intro-2': 'Aplikacja pozwala użytkownikom ustawiać inteligentne przypomnienia dla różnych rodzajów leków, rejestrować każdą dawkę, monitorować dzienne postępy, śledzić zapasy opakowań i generować raporty gotowe do pokazania lekarzowi 📅',
+                    'h-tech': '👨‍💻 Użyte technologie',
+                    'h-repo': '📌 Co zmieniło się w repozytorium',
+                    'repo-highlights': 'Kluczową zmianą było wprowadzenie unikalnej tożsamości leku oraz osobnych ścieżek zapisu dla wpisów z przypomnieniem i bez niego. Wyeliminowało to kolizje zduplikowanych referencji i naprawiło awarie przy zapisywaniu wielu leków na tę samą datę.',
+                    'h-action': '🎥 PillMemo w akcji',
+                    'caption-video': 'Wideo demonstracyjne PillMemo',
+                    'h-success': '🏆 Największy sukces',
+                    'success-1': 'Rozróżnienie zapisu danych leku z powiadomieniami i bez nich.',
+                    'success-2': 'Brzmi trywialnie, ale prawdziwym wyzwaniem było stworzenie funkcjonalności zapisu danych leku w Core Data tak, aby aplikacja odczytywała je poprawnie, a każdy lek był unikalny. Dlaczego? Ponieważ wcześniej każdy kolejny lek był zapisywany, ale zapamiętywany z tą samą referencją dla tej samej daty, a na tę samą datę można przyjąć więcej niż jeden lek. Bez tej zmiany aplikacja zawieszała się za każdym razem, gdy chciałem zapisać nowy lek z dokładnie tą samą datą.',
+                    'caption-ui': 'Podgląd interfejsu PillMemo',
+                    'h-entireness': '🧩 Całość',
+                    'entireness-intro': 'Ponadto, tworząc tę prostą aplikację przypominającą o lekach, uwzględniłem również:',
+                    'li-errors': 'Obsługa błędów i alerty',
+                    'li-pdf': 'Generator PDF',
+                    'li-unit': 'Testy jednostkowe',
+                    'li-ui': 'Testy UI',
+                    'li-arch': 'Organizacja projektu (architektura VOODO)',
+                    'li-release': 'Aktualna wersja w App Store: v1.4.6 (09/2025)',
+                    'h-license': 'ℹ️ Licencja',
+                    'license': 'PillMemo jest własnością Marcina Jędrzejaka. Nieautoryzowane kopiowanie, rozpowszechnianie lub modyfikowanie tej aplikacji jest surowo zabronione.',
+                    'copyright': '®️ 2026 Wszystkie prawa zastrzeżone przez Marcina Jędrzejaka.'
+                }
+            };
+
+            const langBtn = document.getElementById("langToggle");
+
+            function applyLang(lang) {
+                document.documentElement.setAttribute("lang", lang);
+                document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                    const key = el.getAttribute("data-i18n");
+                    if (translations[lang][key] !== undefined) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+                langBtn.textContent = lang.toUpperCase();
+                localStorage.setItem("mj-lang", lang);
+                if (window.updateCopyLabel) window.updateCopyLabel();
+            }
+
+            const savedLang = localStorage.getItem("mj-lang") || "pl";
+            applyLang(savedLang);
+
+            langBtn.addEventListener("click", function () {
+                const current = document.documentElement.getAttribute("lang");
+                applyLang(current === "pl" ? "en" : "pl");
             });
         })();
     </script>
