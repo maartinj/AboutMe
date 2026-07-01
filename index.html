@@ -118,6 +118,7 @@
     display:inline-flex; align-items:center; gap:8px; transition:transform .15s, box-shadow .15s;
   }
   .btn:hover{transform:translateY(-1px);}
+  .btn svg{width:16px; height:16px; flex-shrink:0;}
   .btn-primary{background:var(--ink); color:var(--bg) !important; box-shadow:0 4px 14px rgba(0,0,0,.15);}
   .btn-ghost{background:var(--surface); color:var(--ink) !important; border:1px solid var(--line);}
 
@@ -189,7 +190,8 @@
   }
   .oss-card h3{font-size:15px; margin-bottom:6px;}
   .oss-card p{font-size:13.5px; color:var(--ink-soft); margin-bottom:12px;}
-  .oss-card a{font-size:13px; font-weight:600; color:var(--ios-blue);}
+  .oss-card a{font-size:13px; font-weight:600; color:var(--ios-blue); display:inline-flex; align-items:center; gap:4px;}
+  .ext-icon{width:13px; height:13px; flex-shrink:0;}
 
   /* STACK — Xcode style */
   .stack-panel{
@@ -260,8 +262,14 @@
     <p class="lede" data-i18n="hero-lede">5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI. Od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.</p>
     <div class="hero-actions">
       <a href="#apps" class="btn btn-primary" data-i18n="hero-btn-apps">Zobacz aplikacje ↓</a>
-      <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" class="btn btn-ghost" target="_blank" rel="noopener">CV</a>
-      <a href="https://github.com/maartinj" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" class="btn btn-ghost" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2.058V3.2c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C16.28 8 17.12 8 18.8 8h1.142M14 2.058C13.607 2 13.136 2 12.349 2H10.4c-2.24 0-3.36 0-4.216.436a4 4 0 0 0-1.748 1.748C4 5.04 4 6.16 4 8.4v7.2c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C7.04 22 8.16 22 10.4 22h3.2c2.24 0 3.36 0 4.216-.436a4 4 0 0 0 1.748-1.748C20 18.96 20 17.84 20 15.6V9.651c0-.787 0-1.257-.058-1.651M14 2.058q.143.02.277.053c.408.098.798.26 1.156.478.404.248.75.594 1.442 1.286l1.25 1.25c.692.692 1.038 1.038 1.286 1.442a4 4 0 0 1 .479 1.156q.031.134.052.277M8 13h8m-8 4h5"/></svg>
+        CV
+      </a>
+      <a href="https://github.com/maartinj" class="btn btn-ghost" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 15a3.72 3.72 0 0 0-1 2.58V21m5-6a3.72 3.72 0 0 1 1 2.58V21m-6-1.95a5.7 5.7 0 0 1-2.82.36c-1.52-.52-1.12-1.9-1.9-2.47A2.37 2.37 0 0 0 3 16.5m16-6.75c0 3-1.95 5.25-7 5.25s-7-2.25-7-5.25a6.3 6.3 0 0 1 .68-3c-.34-1.47-.21-3.28.52-3.64s2.27.3 3.54 1.15a13 13 0 0 1 2.26-.2 13 13 0 0 1 2.26.18c1.27-.85 2.88-1.48 3.54-1.15s.86 2.17.52 3.64A6.3 6.3 0 0 1 19 9.75Z"/></svg>
+        GitHub
+      </a>
     </div>
   </div>
 </header>
@@ -316,9 +324,9 @@
         <p class="detail-desc" data-i18n="pillmemo-desc">Przypomina o zażyciu leków i pilnuje zapasu opakowań, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii. Lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.</p>
         <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Core Data</span><span class="tag">UserNotifications</span><span class="tag">CloudKit Sharing</span><span class="tag">VIPER</span></div>
         <div class="detail-links">
-          <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener">App Store ↗</a>
-          <a href="https://maartinj.github.io/AboutMe/pillmemo-docs.html" target="_blank" rel="noopener" data-i18n="link-docs">Dokumentacja ↗</a>
-          <a href="https://trypillmemo.com/" target="_blank" rel="noopener" data-i18n="link-product">Strona produktu ↗</a>
+          <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+          <a href="https://maartinj.github.io/AboutMe/pillmemo-docs.html" target="_blank" rel="noopener" data-i18n="link-docs">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+          <a href="https://trypillmemo.com/" target="_blank" rel="noopener" data-i18n="link-product">Strona produktu <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
         </div>
       </div>
 
@@ -330,8 +338,8 @@
         <p class="detail-desc" data-i18n="medscan-desc">Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, efektywnym sprawdzeniu. Bez zakładania konta, ważne informacje natychmiast.</p>
         <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">GPT-4 Vision</span><span class="tag">MVVM</span></div>
         <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener">App Store ↗</a>
-          <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank" rel="noopener" data-i18n="link-docs3">Dokumentacja ↗</a>
+          <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+          <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank" rel="noopener" data-i18n="link-docs3">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
         </div>
       </div>
 
@@ -343,8 +351,8 @@
         <p class="detail-desc" data-i18n="aquavibe-desc">Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.</p>
         <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">HealthKit</span><span class="tag">State of Mind</span><span class="tag">Swift Charts</span><span class="tag">WidgetKit</span></div>
         <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener">App Store ↗</a>
-          <a href="https://maartinj.github.io/AboutMe/aquavibe-docs.html" target="_blank" rel="noopener" data-i18n="link-docs2">Dokumentacja ↗</a>
+          <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+          <a href="https://maartinj.github.io/AboutMe/aquavibe-docs.html" target="_blank" rel="noopener" data-i18n="link-docs2">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
         </div>
       </div>
 
@@ -356,8 +364,8 @@
         <p class="detail-desc" data-i18n="shotdocu-desc">Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.</p>
         <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">VisionKit</span><span class="tag">PDFKit</span></div>
         <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener">App Store ↗</a>
-          <a href="https://maartinj.notion.site/ShotDocu-28c87c79476f801690a2f080029095e5" target="_blank" rel="noopener" data-i18n="link-docs4">Dokumentacja ↗</a>
+          <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+          <a href="https://maartinj.notion.site/ShotDocu-28c87c79476f801690a2f080029095e5" target="_blank" rel="noopener" data-i18n="link-docs4">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
         </div>
       </div>
 
@@ -369,8 +377,8 @@
         <p class="detail-desc" data-i18n="tinygifts-desc">Cyfrowy kalendarz adwentowy. Codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających się świąt.</p>
         <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">EventKit</span><span class="tag">AVFoundation</span></div>
         <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener">App Store ↗</a>
-          <a href="https://maartinj.notion.site/TinyGifts-2b287c79476f809980c9dacee4b2d1c0" target="_blank" rel="noopener" data-i18n="link-docs5">Dokumentacja ↗</a>
+          <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+          <a href="https://maartinj.notion.site/TinyGifts-2b287c79476f809980c9dacee4b2d1c0" target="_blank" rel="noopener" data-i18n="link-docs5">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
         </div>
       </div>
     </div>
@@ -387,12 +395,12 @@
       <div class="oss-card">
         <h3>Basic Car Maintenance</h3>
         <p data-i18n="oss1-desc">Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.</p>
-        <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener" data-i18n="oss-link">Zobacz na GitHub ↗</a>
+        <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener" data-i18n="oss-link">Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
       </div>
       <div class="oss-card">
         <h3>CarListingApp</h3>
         <p data-i18n="oss2-desc">Aplikacja stworzona w ramach Community App Challenge.</p>
-        <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener" data-i18n="oss-link2">Zobacz na GitHub ↗</a>
+        <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener" data-i18n="oss-link2">Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
       </div>
     </div>
   </div>
@@ -503,8 +511,8 @@
   document.querySelector('[data-app="pillmemo"]').classList.add('active');
 
   /* ---- THEME TOGGLE ---- */
-  const sunIcon = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>';
-  const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+  const sunIcon = '<g clip-path="url(#theme-icon-clip)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 23v-1m-7.778-2.222.707-.707M1 12h1m2.222-7.778.707.707M12 2V1m7.071 3.929.707-.707M22 12h1m-3.929 7.071.707.707M18 12a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" fill="none"/></g><defs><clipPath id="theme-icon-clip"><path fill="none" d="M0 0h24v24H0z"/></clipPath></defs>';
+  const moonIcon = '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 11.966A6.5 6.5 0 1 1 12.035 3H12a9 9 0 1 0 9 9z" fill="none"/>';
   const themeBtn = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');
   function applyTheme(theme){
@@ -536,12 +544,12 @@
       'aquavibe-desc':'Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.',
       'shotdocu-desc':'Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.',
       'tinygifts-desc':'Cyfrowy kalendarz adwentowy. Codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających się świąt.',
-      'link-docs':'Dokumentacja ↗','link-docs2':'Dokumentacja ↗','link-docs3':'Dokumentacja ↗','link-docs4':'Dokumentacja ↗','link-docs5':'Dokumentacja ↗',
-      'link-product':'Strona produktu ↗',
+      'link-docs':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs2':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs3':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs4':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs5':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+      'link-product':'Strona produktu <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
       'oss-tag':'Nauka &amp; Open Source','oss-title':'Projekty edukacyjne',
       'oss1-desc':'Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.',
       'oss2-desc':'Aplikacja stworzona w ramach Community App Challenge.',
-      'oss-link':'Zobacz na GitHub ↗','oss-link2':'Zobacz na GitHub ↗',
+      'oss-link':'Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','oss-link2':'Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
       'stack-title':'Z czym pracuję',
       'stack-comment1':'// jezyki i frameworki','stack-comment2':'// narzedzia i procesy',
       'stack-swift-comment':'// 5 &amp; 6, concurrency',
@@ -567,12 +575,12 @@
       'aquavibe-desc':'Tracks hydration and daily health habits with simple, visual daily goals. Focused on motivation through small, consistent wins instead of overwhelming stats.',
       'shotdocu-desc':'Turns document photos into clear, cropped PDFs. Scans in seconds, with no unnecessary settings. Built for fast, repeatable workflows.',
       'tinygifts-desc':'A digital Advent calendar. A daily surprise unlocks at midnight. A light, seasonal app focused on polished animation and a sense of the approaching holidays.',
-      'link-docs':'Documentation ↗','link-docs2':'Documentation ↗','link-docs3':'Documentation ↗','link-docs4':'Documentation ↗','link-docs5':'Documentation ↗',
-      'link-product':'Product page ↗',
+      'link-docs':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs2':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs3':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs4':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs5':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+      'link-product':'Product page <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
       'oss-tag':'Learning &amp; Open Source','oss-title':'Learning projects',
       'oss1-desc':'Open-source repository for practicing SwiftUI architecture and best practices.',
       'oss2-desc':'App built as part of a Community App Challenge.',
-      'oss-link':'View on GitHub ↗','oss-link2':'View on GitHub ↗',
+      'oss-link':'View on GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','oss-link2':'View on GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
       'stack-title':'What I work with',
       'stack-comment1':'// languages &amp; frameworks','stack-comment2':'// tools &amp; process',
       'stack-swift-comment':'// 5 &amp; 6, concurrency',
