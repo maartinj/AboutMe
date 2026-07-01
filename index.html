@@ -1,1417 +1,606 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' https: data:; font-src 'self' https://fonts.gstatic.com data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https://github-contributions-api.deno.dev https://r.jina.ai; upgrade-insecure-requests">
-    <meta name="referrer" content="no-referrer">
-    <title>Marcin Jędrzejak</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <style>
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box
-        }
-
-        :root {
-            --bg: #f0f0f3;
-            --surface: #ffffff;
-            --surface-hover: #f8f8fa;
-            --border: rgba(0, 0, 0, 0.06);
-            --border-hover: rgba(0, 0, 0, 0.12);
-            --text: #1a1a2e;
-            --text-secondary: #6b7280;
-            --text-tertiary: #9ca3af;
-            --accent: #7c3aed;
-            --radius: 20px;
-            --radius-sm: 12px;
-            --gap: 14px;
-            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --thumb-bg: #0a0a0c;
-            --heatmap-bg: rgba(0, 0, 0, 0.02);
-            --heatmap-cell: rgba(0, 0, 0, 0.05);
-            --card-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.04);
-            --repo-icon-bg: #f3f4f6;
-            --repo-icon-color: #374151;
-            --notion-icon-bg: #fff;
-            --notion-icon-border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        [data-theme="dark"] {
-            --bg: #050505;
-            --surface: #111113;
-            --surface-hover: #19191d;
-            --border: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(255, 255, 255, 0.12);
-            --text: #f0f0f2;
-            --text-secondary: #8e8e93;
-            --text-tertiary: #5e5e63;
-            --accent: #a78bfa;
-            --thumb-bg: #0a0a0c;
-            --heatmap-bg: rgba(255, 255, 255, 0.02);
-            --heatmap-cell: rgba(255, 255, 255, 0.04);
-            --card-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            --repo-icon-bg: rgba(255, 255, 255, 0.06);
-            --repo-icon-color: #9ca3af;
-            --notion-icon-bg: #fff;
-            --notion-icon-border: none;
-        }
-
-        html {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            min-height: 100vh;
-            padding: 40px 20px 80px;
-            background:
-                radial-gradient(ellipse 80% 60% at 50% -20%, rgba(124, 58, 237, 0.05) 0%, transparent 70%),
-                var(--bg);
-        }
-
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        /* ─── Profile Header ─── */
-        .profile {
-            text-align: center;
-            padding: 20px 0 36px;
-            animation: fadeUp 0.6s ease both;
-        }
-
-        .profile__avatar {
-            width: 96px;
-            height: 96px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--border);
-            margin-bottom: 16px;
-            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
-        }
-
-        .profile__name {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 6px;
-        }
-
-        .profile__bio {
-            font-size: 0.925rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* ─── Sections ─── */
-        .section {
-            margin-bottom: 32px;
-        }
-
-        .section__title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-tertiary);
-            padding: 0 4px 14px;
-        }
-
-        /* ─── Portfolio Grid ─── */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--gap);
-        }
-
-        .portfolio-grid--pillmemo {
-            grid-template-columns: repeat(6, 1fr);
-            margin-bottom: var(--gap);
-        }
-
-        .card--pillmemo-top {
-            grid-column: span 2;
-        }
-
-        /* ─── Card Base ─── */
-        .card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-decoration: none;
-            color: var(--text);
-            overflow: hidden;
-            transition:
-                transform var(--transition),
-                border-color var(--transition),
-                box-shadow var(--transition),
-                background var(--transition);
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-3px) scale(1.01);
-            border-color: var(--border-hover);
-            background: var(--surface-hover);
-            box-shadow: var(--card-shadow);
-        }
-
-        /* ─── Card Sizes ─── */
-        .card--2x1 {
-            grid-column: span 2;
-        }
-
-        .card--1x1 {
-            grid-column: span 1;
-        }
-
-        .card--2x2 {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-
-        /* ─── Card Thumbnail ─── */
-        .card__thumb {
-            width: 100%;
-            aspect-ratio: 16 / 10;
-            overflow: hidden;
-            background: var(--thumb-bg);
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .card__thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-
-        .card:hover .card__thumb img {
-            transform: scale(1.04);
-        }
-
-        /* For 1x1 cards, make thumbnail squarish */
-        .card--1x1 .card__thumb {
-            aspect-ratio: 4 / 3;
-        }
-
-        /* For 2x2 cards, fill more space */
-        .card--2x2 .card__thumb {
-            aspect-ratio: auto;
-            flex: 1;
-            min-height: 0;
-        }
-
-        /* ─── Card Info Bar ─── */
-        .card__info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-        }
-
-        .card__icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .card__icon svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .card__text {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .card__title {
-            font-size: 0.82rem;
-            font-weight: 700;
-            line-height: 1.3;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card__subtitle {
-            font-size: 0.72rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card__arrow {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 24px;
-            height: 24px;
-            color: #fff;
-            opacity: 0;
-            transform: translate(-4px, 4px);
-            transition: opacity var(--transition), transform var(--transition);
-            z-index: 2;
-            background: rgba(0, 0, 0, 0.35);
-            border-radius: 50%;
-            padding: 4px;
-            backdrop-filter: blur(8px);
-        }
-
-        .card:hover .card__arrow {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        /* ─── Icon-only cards (no thumbnail) ─── */
-        .card--noimg {
-            justify-content: space-between;
-            padding-top: 20px;
-        }
-
-        .card__icon-lg {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin: 0 16px;
-        }
-
-        .card__icon-lg svg {
-            width: 26px;
-            height: 26px;
-        }
-
-        /* ─── Platform Icon Colors ─── */
-        .icon--purple {
-            background: linear-gradient(135deg, #7C3AED, #A855F7);
-        }
-
-        .icon--purple svg {
-            color: #fff;
-        }
-
-        .icon--blue {
-            background: linear-gradient(135deg, #06B6D4, #3B82F6);
-        }
-
-        .icon--blue svg {
-            color: #fff;
-        }
-
-        .icon--orange {
-            background: linear-gradient(135deg, #F97316, #EF4444);
-        }
-
-        .icon--orange svg {
-            color: #fff;
-        }
-
-        .icon--green {
-            background: linear-gradient(135deg, #10B981, #059669);
-        }
-
-        .icon--green svg {
-            color: #fff;
-        }
-
-        .icon--christmas {
-            background: linear-gradient(135deg, #C0392B, #8B4513);
-        }
-
-        .icon--christmas svg {
-            color: #fff;
-        }
-
-        .icon--framer {
-            background: #0055FF;
-        }
-
-        .icon--framer svg {
-            color: #fff;
-        }
-
-        .icon--notion {
-            background: var(--notion-icon-bg);
-            border: var(--notion-icon-border);
-        }
-
-        .icon--notion svg {
-            color: #000;
-        }
-
-        .icon--pink {
-            background: linear-gradient(135deg, #EC4899, #8B5CF6);
-        }
-
-        .icon--pink svg {
-            color: #fff;
-        }
-
-        .icon--linkedin {
-            background: #0A66C2;
-        }
-
-        .icon--linkedin svg {
-            color: #fff;
-        }
-
-        .icon--github {
-            background: #24292f;
-        }
-
-        .icon--github svg {
-            color: #fff;
-        }
-
-        .icon--twitter {
-            background: #14171a;
-        }
-
-        .icon--twitter svg {
-            color: #fff;
-        }
-
-        .icon--repo {
-            background: var(--repo-icon-bg);
-        }
-
-        .icon--repo svg {
-            color: var(--repo-icon-color);
-        }
-
-        .icon--craft {
-            background: linear-gradient(135deg, #FF6D3A, #FF4500);
-        }
-
-        .icon--craft svg {
-            color: #fff;
-        }
-
-        /* ─── Special Card: LinkedIn ─── */
-        .card--linkedin {
-            background: linear-gradient(145deg, #0A66C2, #004182);
-            border-color: rgba(10, 102, 194, 0.3);
-        }
-
-        .card--linkedin:hover {
-            background: linear-gradient(145deg, #0B73D6, #004D99);
-            border-color: rgba(10, 102, 194, 0.5);
-        }
-
-        .card--linkedin .card__title,
-        .card--linkedin .card__subtitle {
-            color: #fff;
-        }
-
-        .card--linkedin .card__subtitle {
-            opacity: 0.8;
-        }
-
-        /* ─── Special Card: Twitter ─── */
-        .card--twitter {
-            background: #14171a;
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .card--twitter:hover {
-            background: #1a1d21;
-            border-color: rgba(0, 0, 0, 0.15);
-        }
-
-        .card--twitter .card__title,
-        .card--twitter .card__subtitle {
-            color: #fff;
-        }
-
-        .card--twitter .card__subtitle {
-            opacity: 0.7;
-        }
-
-        /* ─── Special Card: Resume ─── */
-        .card--resume {
-            border-color: rgba(255, 109, 58, 0.2);
-        }
-
-        .card--resume:hover {
-            border-color: rgba(255, 109, 58, 0.4);
-            box-shadow:
-                0 12px 40px -8px rgba(0, 0, 0, 0.08),
-                0 0 40px -10px rgba(255, 109, 58, 0.1);
-        }
-
-        /* ─── GitHub Heatmap (inside GitHub card) ─── */
-        .github-extras {
-            padding: 0 16px 12px;
-        }
-
-        .github-stats {
-            display: flex;
-            gap: 14px;
-            margin-bottom: 8px;
-        }
-
-        .github-stats__item {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-        }
-
-        .github-stats__num {
-            font-weight: 700;
-            color: var(--text);
-            margin-right: 2px;
-        }
-
-        .heatmap {
-            display: grid;
-            grid-template-columns: repeat(26, 1fr);
-            grid-template-rows: repeat(7, 1fr);
-            gap: 2px;
-            padding: 6px;
-            background: var(--heatmap-bg);
-            border-radius: 8px;
-        }
-
-        .heatmap__cell {
-            aspect-ratio: 1;
-            border-radius: 2px;
-            background: var(--heatmap-cell);
-        }
-
-        .heatmap__cell--l1 {
-            background: rgba(124, 58, 237, 0.2);
-        }
-
-        .heatmap__cell--l2 {
-            background: rgba(124, 58, 237, 0.4);
-        }
-
-        .heatmap__cell--l3 {
-            background: rgba(124, 58, 237, 0.6);
-        }
-
-        .heatmap__cell--l4 {
-            background: rgba(124, 58, 237, 0.85);
-        }
-
-        /* ─── Stagger Animations ─── */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section {
-            animation: fadeUp 0.5s ease both;
-        }
-
-        .section:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-
-        .section:nth-child(3) {
-            animation-delay: 0.25s;
-        }
-
-        .card {
-            animation: fadeUp 0.45s ease both;
-        }
-
-        .section:nth-child(2) .card:nth-child(1) {
-            animation-delay: 0.12s;
-        }
-
-        .section:nth-child(2) .card:nth-child(2) {
-            animation-delay: 0.17s;
-        }
-
-        .section:nth-child(2) .card:nth-child(3) {
-            animation-delay: 0.22s;
-        }
-
-        .section:nth-child(2) .card:nth-child(4) {
-            animation-delay: 0.27s;
-        }
-
-        .section:nth-child(2) .card:nth-child(5) {
-            animation-delay: 0.32s;
-        }
-
-        .section:nth-child(2) .card:nth-child(6) {
-            animation-delay: 0.37s;
-        }
-
-        .section:nth-child(2) .card:nth-child(7) {
-            animation-delay: 0.42s;
-        }
-
-        .section:nth-child(3) .card:nth-child(1) {
-            animation-delay: 0.3s;
-        }
-
-        .section:nth-child(3) .card:nth-child(2) {
-            animation-delay: 0.35s;
-        }
-
-        .section:nth-child(3) .card:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        .section:nth-child(3) .card:nth-child(4) {
-            animation-delay: 0.45s;
-        }
-
-        .section:nth-child(3) .card:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        .section:nth-child(3) .card:nth-child(6) {
-            animation-delay: 0.55s;
-        }
-
-        /* ─── Responsive ─── */
-        @media (max-width: 700px) {
-            body {
-                padding: 24px 14px 60px;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-
-            .portfolio-grid--pillmemo {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .card--pillmemo-top {
-                grid-column: span 1;
-            }
-
-            .card__info {
-                padding: 10px 12px;
-                gap: 8px;
-            }
-
-            .card__icon {
-                width: 28px;
-                height: 28px;
-            }
-
-            .card__icon svg {
-                width: 14px;
-                height: 14px;
-            }
-
-            .card__title {
-                font-size: 0.78rem;
-            }
-
-            .card__subtitle {
-                font-size: 0.68rem;
-            }
-
-            .profile__name {
-                font-size: 1.3rem;
-            }
-
-            .section__title {
-                font-size: 0.75rem;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-
-            .portfolio-grid--pillmemo {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .card {
-                border-radius: 16px;
-            }
-
-            .card__info {
-                padding: 8px 10px;
-            }
-
-            .heatmap {
-                display: none;
-            }
-
-            .github-extras {
-                padding: 0 10px 8px;
-            }
-        }
-
-        /* ─── Footer ─── */
-        .footer {
-            text-align: center;
-            padding: 32px 0 0;
-            color: var(--text-tertiary);
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .footer__link {
-            color: var(--text-tertiary);
-            text-decoration: none;
-            transition: color 0.2s ease, text-decoration-color 0.2s ease;
-            text-decoration: underline;
-            text-decoration-color: transparent;
-            text-underline-offset: 2px;
-        }
-
-        .footer__link:hover {
-            color: var(--text-secondary);
-            text-decoration-color: var(--text-secondary);
-        }
-
-        /* ─── Theme Toggle ─── */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition:
-                background var(--transition),
-                border-color var(--transition),
-                box-shadow var(--transition),
-                transform var(--transition);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(12px);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.08);
-            border-color: var(--border-hover);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        .theme-toggle:active {
-            transform: scale(0.95);
-        }
-
-        .theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .theme-toggle:hover svg {
-            transform: rotate(20deg);
-        }
-
-        .theme-toggle .icon-sun,
-        .theme-toggle .icon-moon {
-            position: absolute;
-            transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        /* Light mode: show moon (click to go dark) */
-        .theme-toggle .icon-sun {
-            opacity: 0;
-            transform: rotate(-90deg) scale(0.5);
-        }
-
-        .theme-toggle .icon-moon {
-            opacity: 1;
-            transform: rotate(0) scale(1);
-        }
-
-        /* Dark mode: show sun (click to go light) */
-        [data-theme="dark"] .theme-toggle .icon-sun {
-            opacity: 1;
-            transform: rotate(0) scale(1);
-        }
-
-        [data-theme="dark"] .theme-toggle .icon-moon {
-            opacity: 0;
-            transform: rotate(90deg) scale(0.5);
-        }
-
-        [data-theme="dark"] .theme-toggle {
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        [data-theme="dark"] .theme-toggle:hover {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        /* ─── Dark mode body gradient ─── */
-        [data-theme="dark"] body {
-            background:
-                radial-gradient(ellipse 80% 60% at 50% -20%, rgba(167, 139, 250, 0.06) 0%, transparent 70%),
-                var(--bg);
-        }
-
-        /* ─── Dark mode special card tweaks ─── */
-        [data-theme="dark"] .icon--github {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        [data-theme="dark"] .icon--twitter {
-            background: #000;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-
-        [data-theme="dark"] .card--twitter {
-            background: #000;
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        [data-theme="dark"] .card--twitter:hover {
-            background: #0a0a0a;
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        [data-theme="dark"] .card--resume:hover {
-            box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.5), 0 0 40px -10px rgba(255, 109, 58, 0.08);
-        }
-
-        /* Smooth transition for theme change */
-        html,
-        body,
-        .card,
-        .card__info,
-        .theme-toggle,
-        .section__title,
-        .profile__bio,
-        .github-stats__item,
-        .card__subtitle,
-        .heatmap,
-        .heatmap__cell {
-            transition-property: background, background-color, color, border-color, box-shadow;
-            transition-duration: 0.4s;
-            transition-timing-function: ease;
-        }
-
-        /* Prevent FOUC */
-        html {
-            opacity: 0;
-            animation: pageIn 0.3s ease 0.05s forwards;
-        }
-
-        @keyframes pageIn {
-            to {
-                opacity: 1;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcin Jędrzejak — iOS Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F7F5;
+    --surface:#FFFFFF;
+    --ink:#1D1D1F;
+    --ink-soft:#6E6E73;
+    --line:#E5E5E2;
+    --swift:#FA7343;
+    --swift-tint:#FFF1EA;
+    --swift-tint-line:#FFDCC7;
+    --ios-blue:#0071E3;
+    --dark:#1E1E28;
+    --dark-2:#2A2A38;
+    --tag-bg:#F1F1EF;
+    --spring-1:#EDEDEA;
+    --spring-2:#E4E4E0;
+    --spring-line:#D8D8D4;
+    --nav-bg:rgba(247,247,245,0.85);
+  }
+  html[data-theme="dark"]{
+    --bg:#121214;
+    --surface:#1B1B1E;
+    --ink:#F2F2F2;
+    --ink-soft:#9B9BA1;
+    --line:#2C2C30;
+    --swift:#FF8A5C;
+    --swift-tint:#2A1D16;
+    --swift-tint-line:#4A2E1C;
+    --ios-blue:#4DA3FF;
+    --dark:#0C0C0E;
+    --dark-2:#18181B;
+    --tag-bg:#232326;
+    --spring-1:#1B1B1E;
+    --spring-2:#151517;
+    --spring-line:#2C2C30;
+    --nav-bg:rgba(18,18,20,0.85);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    transition:background .25s ease, color .25s ease;
+  }
+  h1,h2,h3{font-family:'Sora',sans-serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:980px; margin:0 auto; padding:0 28px;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:var(--nav-bg);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px; gap:16px;}
+  .logo{
+    width:36px; height:36px; border-radius:10px; flex-shrink:0;
+    display:block; object-fit:cover;
+  }
+  .nav-links{display:flex; gap:28px; font-size:14px; font-weight:500; flex:1;}
+  .nav-links a{color:var(--ink-soft); transition:color .2s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-right{display:flex; align-items:center; gap:10px;}
+  .toggle-btn{
+    width:36px; height:36px; border-radius:10px; border:1px solid var(--line);
+    background:var(--surface); color:var(--ink); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600;
+    transition:background .2s, transform .15s;
+  }
+  .toggle-btn:hover{transform:translateY(-1px);}
+  .toggle-btn svg{width:18px; height:18px;}
+  .lang-btn{width:auto; padding:0 12px; gap:0;}
+  .nav-cta{
+    background:var(--ink); color:var(--bg) !important; padding:8px 16px; border-radius:20px;
+    font-size:13px; font-weight:600; white-space:nowrap;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .nav-cta svg{width:14px; height:14px; flex-shrink:0;}
+  @media (max-width:640px){ .nav-links{display:none;} }
+
+  /* HERO */
+  header.hero{padding:96px 0 64px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--swift);
+    background:var(--swift-tint); border:1px solid var(--swift-tint-line); padding:6px 12px; border-radius:20px;
+    margin-bottom:24px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--swift); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.3;}}
+  h1.name{font-size:clamp(38px,6vw,64px); font-weight:800; letter-spacing:-0.02em; line-height:1.05;}
+  h1.name .role{
+    display:block; font-size:0.55em; font-weight:700; color:var(--ink-soft); margin-top:10px;
+  }
+  h1.name .role em{
+    font-style:normal; color:var(--swift); border-bottom:3px solid var(--swift-tint-line);
+  }
+  .lede{
+    max-width:600px; margin-top:24px; font-size:17px; color:var(--ink-soft);
+  }
+  .hero-actions{display:flex; gap:12px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    padding:12px 22px; border-radius:10px; font-weight:600; font-size:14px;
+    display:inline-flex; align-items:center; gap:8px; transition:transform .15s, box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--ink); color:var(--bg) !important; box-shadow:0 4px 14px rgba(0,0,0,.15);}
+  .btn-ghost{background:var(--surface); color:var(--ink) !important; border:1px solid var(--line);}
+
+  /* SECTION LABEL */
+  .section{padding:64px 0;}
+  .section-head{margin-bottom:32px;}
+  .section-tag{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; display:block;
+  }
+  .section-title{font-size:28px; font-weight:700; letter-spacing:-0.01em;}
+  .section-sub{color:var(--ink-soft); margin-top:8px; font-size:15px; max-width:520px;}
+
+  /* SPRINGBOARD */
+  .springboard{
+    background:linear-gradient(180deg,var(--spring-1),var(--spring-2));
+    border-radius:28px; padding:36px 24px 20px;
+    border:1px solid var(--spring-line);
+  }
+  .grid{
+    display:grid; grid-template-columns:repeat(5,1fr); gap:32px 24px;
+  }
+  @media (max-width:640px){ .grid{grid-template-columns:repeat(3,1fr);} }
+  .app-icon{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    cursor:pointer; background:none; border:none; font-family:inherit;
+  }
+  .icon-square{
+    width:100%; aspect-ratio:1; border-radius:23%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.12);
+    transition:transform .18s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .app-icon:hover .icon-square, .app-icon.active .icon-square{transform:scale(1.08) translateY(-2px);}
+  .app-icon.active .icon-square{outline:3px solid var(--ink); outline-offset:3px;}
+  .icon-square img{width:100%; height:100%; object-fit:cover; display:block;}
+  .app-label{font-size:11px; font-weight:600; text-align:center; color:var(--ink-soft);}
+
+  .detail-card{
+    display:none; background:var(--surface); border-radius:16px; padding:24px;
+    margin-top:20px; border:1px solid var(--line); box-shadow:0 8px 24px rgba(0,0,0,.06);
+  }
+  .detail-card.open{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .detail-top{display:flex; align-items:flex-start; gap:16px; margin-bottom:12px;}
+  .detail-top .icon-square{width:56px; flex-shrink:0; box-shadow:none;}
+  .detail-title{font-size:19px; font-weight:700; font-family:'Sora',sans-serif;}
+  .detail-tagline{color:var(--ink-soft); font-size:14px; margin-top:2px;}
+  .detail-desc{font-size:14.5px; color:var(--ink); opacity:0.85; margin:14px 0;}
+  .tech-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--tag-bg);
+    border:1px solid var(--line); padding:4px 10px; border-radius:6px; color:var(--ink-soft);
+  }
+  .detail-links{display:flex; gap:10px; flex-wrap:wrap;}
+  .detail-links a{
+    font-size:13px; font-weight:600; padding:8px 14px; border-radius:8px;
+    background:var(--tag-bg); border:1px solid var(--line); display:inline-flex; align-items:center; gap:6px;
+  }
+  .detail-links a:hover{background:var(--line);}
+
+  /* OSS */
+  .oss-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .oss-card{
+    flex:1; min-width:240px; background:var(--surface); border:1px solid var(--line);
+    border-radius:14px; padding:20px;
+  }
+  .oss-card h3{font-size:15px; margin-bottom:6px;}
+  .oss-card p{font-size:13.5px; color:var(--ink-soft); margin-bottom:12px;}
+  .oss-card a{font-size:13px; font-weight:600; color:var(--ios-blue);}
+
+  /* STACK — Xcode style */
+  .stack-panel{
+    background:var(--dark); border-radius:16px; padding:0; overflow:hidden;
+    border:1px solid #34343f;
+  }
+  .stack-header{
+    background:var(--dark-2); padding:10px 18px; display:flex; align-items:center; gap:8px;
+    border-bottom:1px solid #34343f;
+  }
+  .stack-header span{width:11px; height:11px; border-radius:50%; display:inline-block;}
+  .stack-body{padding:22px 24px; font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#D4D4E0;}
+  .stack-body .comment{color:#6A6A7C;}
+  .stack-body .kw{color:#FF7AB2;}
+  .stack-body .type{color:#7EE0C4;}
+  .stack-grid{display:grid; grid-template-columns:1fr 1fr; gap:4px 24px; margin-top:4px;}
+  @media (max-width:640px){ .stack-grid{grid-template-columns:1fr;} }
+
+  /* ABOUT */
+  .about-text{font-size:16px; color:var(--ink); opacity:0.85; max-width:640px;}
+  .about-text p + p{margin-top:14px;}
+
+  /* FOOTER */
+  footer{padding:56px 0 48px; border-top:1px solid var(--line); margin-top:32px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;}
+  .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
+  .foot-links a{font-size:14px; font-weight:600; color:var(--ink); display:inline-flex; align-items:center; gap:7px;}
+  .foot-links a span{color:var(--ink-soft); font-weight:400; font-family:'JetBrains Mono',monospace; font-size:12px;}
+  .foot-links a svg{width:17px; height:17px; flex-shrink:0;}
+  .copyright{font-size:12.5px; color:var(--ink-soft); margin-top:24px;}
+  .btn-primary svg{width:16px; height:16px; flex-shrink:0;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
 </head>
-
 <body>
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <circle cx="12" cy="12" r="5" />
-            <line x1="12" y1="1" x2="12" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" />
-            <line x1="21" y1="12" x2="23" y2="12" />
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-    </button>
 
-    <div class="container">
+<nav>
+  <div class="wrap">
+    <a href="#top"><img src="./assets/avatar.jpg" alt="Marcin Jędrzejak" class="logo"></a>
+    <div class="nav-links">
+      <a href="#apps" data-i18n="nav-apps">Aplikacje</a>
+      <a href="#stack" data-i18n="nav-stack">Stack</a>
+      <a href="#about" data-i18n="nav-about">O mnie</a>
+      <a href="#contact" data-i18n="nav-contact">Kontakt</a>
+    </div>
+    <div class="nav-right">
+      <button class="toggle-btn lang-btn" id="langToggle" aria-label="Switch language">PL</button>
+      <button class="toggle-btn" id="themeToggle" aria-label="Switch theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+      </button>
+      <a href="mailto:mjedrzejak@icloud.com" class="nav-cta">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5"/></svg>
+        <span data-i18n="nav-cta">Napisz do mnie</span>
+      </a>
+    </div>
+  </div>
+</nav>
 
-        <!-- Profile Header -->
-        <header class="profile">
-            <img class="profile__avatar"
-                src="./assets/avatar.jpg"
-                alt="Marcin Jędrzejak" loading="eager" />
-            <h1 class="profile__name">Marcin Jędrzejak</h1>
-            <p class="profile__bio">Want to be iOS Developer 📱 &nbsp;🇵🇱</p>
-        </header>
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">Otwarty na projekty B2B · Warszawa, PL</span></div>
+    <h1 class="name">Marcin Jędrzejak
+      <span class="role" data-i18n="hero-role">Buduję i wypuszczam aplikacje na <em>iOS &amp; macOS</em></span>
+    </h1>
+    <p class="lede" data-i18n="hero-lede">5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI — od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.</p>
+    <div class="hero-actions">
+      <a href="#apps" class="btn btn-primary" data-i18n="hero-btn-apps">Zobacz aplikacje ↓</a>
+      <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" class="btn btn-ghost" target="_blank" rel="noopener">CV</a>
+      <a href="https://github.com/maartinj" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</header>
 
-        <!-- ════════ Portfolio ════════ -->
-        <section class="section">
-            <h2 class="section__title">Portfolio 🧪</h2>
-            <div class="portfolio-grid portfolio-grid--pillmemo">
-
-                <!-- PillMemo -->
-                <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener noreferrer"
-                    class="card card--pillmemo-top">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/eb/c7/72/ebc772fb-cc99-ea44-1c9a-d163b9577487/AppIcon-0-0-1x_U007ephone-0-0-0-1-0-sRGB-85-220.png/1200x630wa.jpg"
-                            alt="PillMemo" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--purple">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <rect x="6" y="3" width="12" height="18" rx="3" />
-                                <line x1="6" y1="12" x2="18" y2="12" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">PillMemo</div>
-                            <div class="card__subtitle">Med Timer &amp; Pill Counter</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- PillMemo GitHub -->
-                <a href="./pillmemo-docs.html" target="_blank" class="card card--pillmemo-top js-opener-doc"
-                    data-doc-link="true">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="./assets/pillmemo-docs-thumb.png" alt="PillMemo GitHub" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--repo">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.94 0-1.31.47-2.39 1.23-3.23-.12-.31-.53-1.53.12-3.2 0 0 1.01-.32 3.3 1.23a11.53 11.53 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.67.24 2.89.12 3.2.76.84 1.23 1.92 1.23 3.23 0 4.61-2.8 5.64-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0012 .5z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">PillMemo GitHub</div>
-                            <div class="card__subtitle">README-style docs</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- PillMemo Website -->
-                <a href="https://pillmemo.framer.ai/" target="_blank" rel="noopener noreferrer"
-                    class="card card--pillmemo-top">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="./assets/pillmemo-screenshot.png"
-                            alt="PillMemo Website" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--framer">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M4 0h16v8h-8zm0 8h8l8 8H4zm0 8h8v8z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">PillMemo Framer</div>
-                            <div class="card__subtitle">Landing page</div>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-
-            <div class="portfolio-grid">
-
-                <!-- AquaVibe -->
-                <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/32/7c/cc/327cccbb-da45-8c45-9564-007449d9de76/AppIcon-0-0-1x_U007ephone-0-1-sRGB-85-220.png/1200x630wa.jpg"
-                            alt="AquaVibe" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--blue">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <path d="M12 2C12 2 7 7.5 7 13a5 5 0 0010 0c0-5.5-5-11-5-11z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">AquaVibe</div>
-                            <div class="card__subtitle">Daily Goals, Healthy Life</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- AquaVibe Docs -->
-                <a href="./aquavibe-docs.html" target="_blank" class="card card--2x1 js-opener-doc"
-                    data-doc-link="true">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="./assets/aquavibe-docs-thumb.png" alt="AquaVibe Docs" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--repo">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.83 1.23 1.83 1.23 1.07 1.84 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.94 0-1.31.47-2.39 1.23-3.23-.12-.31-.53-1.53.12-3.2 0 0 1.01-.32 3.3 1.23a11.53 11.53 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.67.24 2.89.12 3.2.76.84 1.23 1.92 1.23 3.23 0 4.61-2.8 5.64-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0012 .5z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">AquaVibe Docs</div>
-                            <div class="card__subtitle">README-style project docs</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- MedScan -->
-                <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a5/73/45/a57345d7-03aa-d698-6f37-2dadf0f0ad96/Placeholder.mill/1200x630wa.jpg"
-                            alt="MedScan" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--green">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3" />
-                                <rect x="7" y="7" width="10" height="10" rx="1" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">MedScan</div>
-                            <div class="card__subtitle">Check meds before you take</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- MedScan Docs -->
-                <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank"
-                    rel="noopener noreferrer" class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://maartinj.notion.site/image/attachment%3Aa1e50a95-a956-4f84-a2c8-24505299e751%3ALight.png?table=block&id=22187c79-476f-80f9-afa2-df68966ae789"
-                            alt="MedScan Docs" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--notion">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">MedScan Docs</div>
-                            <div class="card__subtitle">Project Documentation · Notion</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- ShotDocu -->
-                <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a4/ef/6e/a4ef6ea9-3744-5512-508d-bbdb16d4fda8/Placeholder.mill/1200x630wa.jpg"
-                            alt="ShotDocu" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--orange">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" />
-                                <circle cx="12" cy="12" r="3" />
-                                <path d="M3 9h2M19 9h2" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">ShotDocu</div>
-                            <div class="card__subtitle">Convert image into PDFs easily</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- ShotDocu Docs -->
-                <a href="https://maartinj.notion.site/ShotDocu-28c87c79476f801690a2f080029095e5" target="_blank"
-                    rel="noopener noreferrer" class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://maartinj.notion.site/image/attachment%3A5dd26c50-947a-4495-a2a0-8fbfcabaeb92%3ACol.png?table=block&id=28c87c79-476f-8087-ab2f-f974987baeed"
-                            alt="ShotDocu Docs" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--notion">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">ShotDocu Docs</div>
-                            <div class="card__subtitle">Project Documentation · Notion</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- TinyGifts -->
-                <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/ca/ae/31caae15-8496-810a-376d-ecb0095a805a/AppIcon-0-0-1x_U007ephone-0-0-0-1-0-sRGB-85-220.png/1200x630wa.jpg"
-                            alt="TinyGifts" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--christmas">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 12v10H4V12" />
-                                <path d="M2 7h20v5H2z" />
-                                <path d="M12 22V7" />
-                                <path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" />
-                                <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">TinyGifts</div>
-                            <div class="card__subtitle">Open daily advent surprises</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- TinyGifts Docs -->
-                <a href="https://maartinj.notion.site/TinyGifts-2b287c79476f809980c9dacee4b2d1c0" target="_blank"
-                    rel="noopener noreferrer" class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="https://maartinj.notion.site/image/attachment%3A7b6e4137-3cb7-4cd3-93b3-98f3aba9326a%3AtinyGiftsPromo.png?table=block&id=2b287c79-476f-80e5-b0bb-d8bae3829efa"
-                            alt="TinyGifts Docs" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--notion">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.29c-.42-.326-.98-.7-2.055-.607L3.48 2.84c-.466.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.166V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V8.858L7.058 8.72c-.093-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.513.28-.886.747-.932zM2.8 1.166l13.588-.933c1.681-.14 2.101.093 2.801.606l3.876 2.753c.467.327.607.747.607 1.26v16.063c0 1.027-.374 1.634-1.681 1.727L6.597 23.58c-.98.047-1.448-.093-1.962-.747l-3.13-4.06c-.56-.747-.793-1.306-.793-1.96V2.893c0-.84.374-1.54 1.587-1.727z" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">TinyGifts Docs</div>
-                            <div class="card__subtitle">Project Documentation · Notion</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Basic Car Maintenance -->
-                <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="./assets/car-maintenance-thumb.jpeg"
-                            alt="Basic Car Maintenance" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--repo">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <path
-                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">Basic Car Maintenance</div>
-                            <div class="card__subtitle">Open source repository</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- CarListingApp -->
-                <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="./assets/car-listing-thumb.jpeg"
-                            alt="CarListingApp" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--repo">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <path
-                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">CarListingApp</div>
-                            <div class="card__subtitle">Community App Challenge</div>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- ════════ About Me ════════ -->
-        <section class="section">
-            <h2 class="section__title">About Me 👨‍💻</h2>
-            <div class="portfolio-grid">
-
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/in/marcinjedrzejak/" target="_blank" rel="noopener noreferrer"
-                    class="card card--1x1 card--linkedin card--noimg">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__icon-lg icon--linkedin">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                        </svg>
-                    </div>
-                    <div class="card__info">
-                        <div class="card__text">
-                            <div class="card__title">LinkedIn</div>
-                            <div class="card__subtitle">Connect</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- GitHub Profile -->
-                <a href="https://github.com/maartinj" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x1 card--github card--noimg">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__icon-lg icon--github">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                        </svg>
-                    </div>
-                    <div class="card__info" style="padding-top:0">
-                        <div class="card__text">
-                            <div class="card__title">GitHub</div>
-                            <div class="card__subtitle">@maartinj</div>
-                        </div>
-                    </div>
-                    <div class="github-extras">
-                        <div class="github-stats">
-                            <span class="github-stats__item"><span class="github-stats__num">122</span>repos</span>
-                            <span class="github-stats__item"><span id="githubContributions"
-                                    class="github-stats__num">886</span>contributions</span>
-                        </div>
-                        <div class="heatmap" id="heatmap"></div>
-                    </div>
-                </a>
-
-                <!-- Twitter / X -->
-                <a href="https://twitter.com/maartin_j" target="_blank" rel="noopener noreferrer"
-                    class="card card--1x1 card--twitter card--noimg">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__icon-lg icon--twitter">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg>
-                    </div>
-                    <div class="card__info">
-                        <div class="card__text">
-                            <div class="card__title">@maartin_j</div>
-                            <div class="card__subtitle"><span id="xFollowing">125</span> following</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Resume -->
-                <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" target="_blank" rel="noopener noreferrer"
-                    class="card card--2x2 card--resume">
-                    <svg class="card__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M5 15L15 5M15 5H8M15 5v7" />
-                    </svg>
-                    <div class="card__thumb">
-                        <img src="./assets/resume-thumb.jpeg"
-                            alt="Resume" loading="lazy" />
-                    </div>
-                    <div class="card__info">
-                        <div class="card__icon icon--craft">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round">
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                                <polyline points="14 2 14 8 20 8" />
-                                <line x1="16" y1="13" x2="8" y2="13" />
-                                <line x1="16" y1="17" x2="8" y2="17" />
-                                <line x1="10" y1="9" x2="8" y2="9" />
-                            </svg>
-                        </div>
-                        <div class="card__text">
-                            <div class="card__title">Marcin Jędrzejak Resume</div>
-                            <div class="card__subtitle">View on Craft</div>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2026 All rights reserved by <a href="mailto:mjedrzejak@icloud.com" class="footer__link">Marcin
-                    Jędrzejak</a>.</p>
-        </footer>
-
+<section class="section" id="apps">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag" data-i18n="apps-tag">Portfolio</span>
+      <h2 class="section-title" data-i18n="apps-title">Wypuszczone aplikacje</h2>
+      <p class="section-sub" data-i18n="apps-sub">Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i linki.</p>
     </div>
 
-    <script>
-        // Theme toggle
-        (function () {
-            var toggle = document.getElementById('themeToggle');
-            var saved = localStorage.getItem('theme');
-            if (saved === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
-            toggle.addEventListener('click', function () {
-                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                if (isDark) {
-                    document.documentElement.removeAttribute('data-theme');
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                }
-            });
-        })();
+    <div class="springboard">
+      <div class="grid">
+        <button class="app-icon" data-app="pillmemo">
+          <div class="icon-square">
+            <img src="./assets/pillmemo-icon.png" alt="PillMemo" loading="lazy">
+          </div>
+          <span class="app-label">PillMemo</span>
+        </button>
+        <button class="app-icon" data-app="aquavibe">
+          <div class="icon-square">
+            <img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy">
+          </div>
+          <span class="app-label">AquaVibe</span>
+        </button>
+        <button class="app-icon" data-app="medscan">
+          <div class="icon-square">
+            <img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy">
+          </div>
+          <span class="app-label">MedScan</span>
+        </button>
+        <button class="app-icon" data-app="shotdocu">
+          <div class="icon-square">
+            <img src="./assets/shotdocu-icon.png" alt="ShotDocu" loading="lazy">
+          </div>
+          <span class="app-label">ShotDocu</span>
+        </button>
+        <button class="app-icon" data-app="tinygifts">
+          <div class="icon-square">
+            <img src="./assets/tinygifts-icon.png" alt="TinyGifts" loading="lazy">
+          </div>
+          <span class="app-label">TinyGifts</span>
+        </button>
+      </div>
 
-        // Fetch current GitHub contributions and X following.
-        (function () {
-            const githubContributions = document.getElementById('githubContributions');
-            const heatmap = document.getElementById('heatmap');
-            const xFollowing = document.getElementById('xFollowing');
-            const levels = {
-                NONE: '',
-                FIRST_QUARTILE: '--l1',
-                SECOND_QUARTILE: '--l2',
-                THIRD_QUARTILE: '--l3',
-                FOURTH_QUARTILE: '--l4'
-            };
+      <div class="detail-card" id="detail-pillmemo">
+        <div class="detail-top">
+          <div class="icon-square"><img src="./assets/pillmemo-icon.png" alt="PillMemo" loading="lazy"></div>
+          <div><div class="detail-title">PillMemo</div><div class="detail-tagline">Med Timer &amp; Pill Counter</div></div>
+        </div>
+        <p class="detail-desc" data-i18n="pillmemo-desc">Przypomina o zażyciu leków i pilnuje zapasu opakowania, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii — lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">SwiftData</span><span class="tag">UserNotifications</span><span class="tag">App Store Connect API</span></div>
+        <div class="detail-links">
+          <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener">App Store ↗</a>
+          <a href="https://maartinj.github.io/AboutMe/pillmemo-docs.html" target="_blank" rel="noopener" data-i18n="link-docs">Dokumentacja ↗</a>
+          <a href="https://pillmemo.framer.ai/" target="_blank" rel="noopener" data-i18n="link-product">Strona produktu ↗</a>
+        </div>
+      </div>
 
-            function renderHeatmap(days) {
-                if (!heatmap) return;
-                heatmap.innerHTML = '';
-                days.slice(-182).forEach(function (day) {
-                    var d = document.createElement('div');
-                    var suffix = levels[day.contributionLevel] || '';
-                    d.className = 'heatmap__cell' + (suffix ? ' heatmap__cell' + suffix : '');
-                    d.title = day.date + ': ' + day.contributionCount + ' contributions';
-                    heatmap.appendChild(d);
-                });
-            }
+      <div class="detail-card" id="detail-aquavibe">
+        <div class="detail-top">
+          <div class="icon-square"><img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy"></div>
+          <div><div class="detail-title">AquaVibe</div><div class="detail-tagline">Daily Goals, Healthy Life</div></div>
+        </div>
+        <p class="detail-desc" data-i18n="aquavibe-desc">Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Swift Charts</span><span class="tag">WidgetKit</span></div>
+        <div class="detail-links">
+          <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener">App Store ↗</a>
+          <a href="https://maartinj.github.io/AboutMe/aquavibe-docs.html" target="_blank" rel="noopener" data-i18n="link-docs2">Dokumentacja ↗</a>
+        </div>
+      </div>
 
-            fetch('https://github-contributions-api.deno.dev/maartinj.json')
-                .then(function (response) { return response.json(); })
-                .then(function (data) {
-                    var days = (data.contributions || []).flat();
-                    if (!days.length) return;
-                    var total = days.reduce(function (sum, day) {
-                        return sum + (day.contributionCount || 0);
-                    }, 0);
-                    if (githubContributions) {
-                        githubContributions.textContent = String(total);
-                    }
-                    renderHeatmap(days);
-                })
-                .catch(function () {
-                });
+      <div class="detail-card" id="detail-medscan">
+        <div class="detail-top">
+          <div class="icon-square"><img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy"></div>
+          <div><div class="detail-title">MedScan</div><div class="detail-tagline">Check meds before you take</div></div>
+        </div>
+        <p class="detail-desc" data-i18n="medscan-desc">Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, jednorazowym sprawdzeniu — bez zakładania konta, bez tarcia.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Vision</span><span class="tag">On-device ML</span></div>
+        <div class="detail-links">
+          <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener">App Store ↗</a>
+          <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank" rel="noopener" data-i18n="link-docs3">Dokumentacja ↗</a>
+        </div>
+      </div>
 
-            fetch('https://r.jina.ai/http://x.com/maartin_j')
-                .then(function (response) { return response.text(); })
-                .then(function (text) {
-                    var match = text.match(/\[(\d[\d,]*) Following\]\(https:\/\/x\.com\/maartin_j\/following\)/i);
-                    if (match && xFollowing) {
-                        xFollowing.textContent = match[1];
-                    }
-                })
-                .catch(function () {
-                });
-        })();
+      <div class="detail-card" id="detail-shotdocu">
+        <div class="detail-top">
+          <div class="icon-square"><img src="./assets/shotdocu-icon.png" alt="ShotDocu" loading="lazy"></div>
+          <div><div class="detail-title">ShotDocu</div><div class="detail-tagline">Convert image into PDFs easily</div></div>
+        </div>
+        <p class="detail-desc" data-i18n="shotdocu-desc">Zamienia zdjęcia dokumentów w czyste, przycięte pliki PDF — skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">VisionKit</span><span class="tag">PDFKit</span></div>
+        <div class="detail-links">
+          <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener">App Store ↗</a>
+          <a href="https://maartinj.notion.site/ShotDocu-28c87c79476f801690a2f080029095e5" target="_blank" rel="noopener" data-i18n="link-docs4">Dokumentacja ↗</a>
+        </div>
+      </div>
 
-        // Open local docs in a script-opened tab so Back button can return to the previous tab reliably.
-        (function () {
-            const docLinks = document.querySelectorAll('a.js-opener-doc[data-doc-link="true"]');
-            if (!docLinks.length) return;
+      <div class="detail-card" id="detail-tinygifts">
+        <div class="detail-top">
+          <div class="icon-square"><img src="./assets/tinygifts-icon.png" alt="TinyGifts" loading="lazy"></div>
+          <div><div class="detail-title">TinyGifts</div><div class="detail-tagline">Open daily advent surprises</div></div>
+        </div>
+        <p class="detail-desc" data-i18n="tinygifts-desc">Cyfrowy kalendarz adwentowy — codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu okazji.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Custom Animations</span><span class="tag">StoreKit 2</span></div>
+        <div class="detail-links">
+          <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener">App Store ↗</a>
+          <a href="https://maartinj.notion.site/TinyGifts-2b287c79476f809980c9dacee4b2d1c0" target="_blank" rel="noopener" data-i18n="link-docs5">Dokumentacja ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            docLinks.forEach(function (link) {
-                link.addEventListener('click', function (event) {
-                    if (event.defaultPrevented) return;
-                    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+<section class="section" id="oss">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag" data-i18n="oss-tag">Nauka &amp; Open Source</span>
+      <h2 class="section-title" data-i18n="oss-title">Projekty edukacyjne</h2>
+    </div>
+    <div class="oss-row">
+      <div class="oss-card">
+        <h3>Basic Car Maintenance</h3>
+        <p data-i18n="oss1-desc">Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.</p>
+        <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener" data-i18n="oss-link">Zobacz na GitHub ↗</a>
+      </div>
+      <div class="oss-card">
+        <h3>CarListingApp</h3>
+        <p data-i18n="oss2-desc">Aplikacja stworzona w ramach Community App Challenge.</p>
+        <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener" data-i18n="oss-link2">Zobacz na GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-                    event.preventDefault();
-                    const newTab = window.open(link.href, '_blank');
-                    if (newTab) newTab.focus();
-                });
-            });
-        })();
-    </script>
+<section class="section" id="stack">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Stack</span>
+      <h2 class="section-title" data-i18n="stack-title">Czym pracuję</h2>
+    </div>
+    <div class="stack-panel">
+      <div class="stack-header">
+        <span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span style="background:#28C840"></span>
+      </div>
+      <div class="stack-body">
+        <div class="comment" data-i18n="stack-comment1">// jezyki i frameworki</div>
+        <div class="stack-grid">
+          <div><span class="kw">import</span> <span class="type">SwiftUI</span></div>
+          <div><span class="kw">import</span> <span class="type">Swift</span> <span class="comment" data-i18n="stack-swift-comment">// 5 &amp; 6, concurrency</span></div>
+          <div><span class="kw">import</span> <span class="type">SwiftData</span></div>
+          <div><span class="kw">import</span> <span class="type">CloudKit</span></div>
+          <div><span class="kw">import</span> <span class="type">GRDB</span></div>
+          <div><span class="kw">import</span> <span class="type">VisionKit</span></div>
+          <div><span class="kw">import</span> <span class="type">StoreKit2</span></div>
+          <div><span class="kw">import</span> <span class="type">WidgetKit</span></div>
+          <div><span class="kw">import</span> <span class="type">AlarmKit</span></div>
+          <div><span class="kw">import</span> <span class="type">Charts</span></div>
+        </div>
+        <div class="comment" style="margin-top:16px;" data-i18n="stack-comment2">// narzedzia i procesy</div>
+        <div class="stack-grid">
+          <div>App Store Connect API</div>
+          <div data-i18n="stack-aso">ASO &amp; lokalizacja (7 języków)</div>
+          <div>VIPER, TCA, MVVM</div>
+          <div>Xcode Cloud / fastlane</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag" data-i18n="about-tag">O mnie</span>
+      <h2 class="section-title" data-i18n="about-title">Krótko</h2>
+    </div>
+    <div class="about-text">
+      <p data-i18n="about-p1">Od kilku lat samodzielnie projektuję, buduję i wypuszczam aplikacje na iOS i macOS — od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale swobodnie poruszam się też w UIKit, gdy sytuacja tego wymaga.</p>
+      <p data-i18n="about-p2">Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na współpracę B2B przy projektach iOS — kontraktowo lub w modelu zdalnym.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row">
+      <div>
+        <h2 class="section-title" style="margin-bottom:6px;" data-i18n="foot-title">Porozmawiajmy o projekcie</h2>
+        <p class="section-sub" data-i18n="foot-sub">Odpowiadam zwykle w ciągu jednego dnia roboczego.</p>
+      </div>
+      <a href="mailto:mjedrzejak@icloud.com" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5"/></svg>
+        mjedrzejak@icloud.com
+      </a>
+    </div>
+    <div class="foot-links" style="margin-top:36px;">
+      <a href="https://www.linkedin.com/in/marcinjedrzejak/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17v-3.5a2.5 2.5 0 0 0-5 0m0 0V17m0-3.5v-3m-4 0V17M8 7v.01"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.4c0-2.24 0-3.36.436-4.216a4 4 0 0 1 1.748-1.748C6.04 3 7.16 3 9.4 3h5.2c2.24 0 3.36 0 4.216.436a4 4 0 0 1 1.748 1.748C21 6.04 21 7.16 21 9.4v5.2c0 2.24 0 3.36-.436 4.216a4 4 0 0 1-1.748 1.748C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.436a4 4 0 0 1-1.748-1.748C3 17.96 3 16.84 3 14.6z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/maartinj" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 15a3.72 3.72 0 0 0-1 2.58V21m5-6a3.72 3.72 0 0 1 1 2.58V21m-6-1.95a5.7 5.7 0 0 1-2.82.36c-1.52-.52-1.12-1.9-1.9-2.47A2.37 2.37 0 0 0 3 16.5m16-6.75c0 3-1.95 5.25-7 5.25s-7-2.25-7-5.25a6.3 6.3 0 0 1 .68-3c-.34-1.47-.21-3.28.52-3.64s2.27.3 3.54 1.15a13 13 0 0 1 2.26-.2 13 13 0 0 1 2.26.18c1.27-.85 2.88-1.48 3.54-1.15s.86 2.17.52 3.64A6.3 6.3 0 0 1 19 9.75Z"/></svg>
+        GitHub <span>@maartinj</span>
+      </a>
+      <a href="https://twitter.com/maartin_j" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m18.667 4-5.527 6.316M4.667 20l5.895-6.737m2.578-2.947L9.304 4.9c-.233-.33-.35-.494-.5-.613a1.3 1.3 0 0 0-.45-.233C8.169 4 7.967 4 7.564 4H6.063c-.667 0-1 0-1.18.138a.67.67 0 0 0-.26.502c-.009.227.184.499.57 1.043l5.369 7.58m2.578-2.947 5.668 8c.385.545.578.817.569 1.044a.67.67 0 0 1-.26.502c-.18.138-.513.138-1.18.138h-1.5c-.404 0-.606 0-.79-.054a1.3 1.3 0 0 1-.45-.233c-.151-.119-.268-.284-.501-.613l-4.134-5.837"/></svg>
+        X <span>@maartin_j</span>
+      </a>
+      <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2.058V3.2c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C16.28 8 17.12 8 18.8 8h1.142M14 2.058C13.607 2 13.136 2 12.349 2H10.4c-2.24 0-3.36 0-4.216.436a4 4 0 0 0-1.748 1.748C4 5.04 4 6.16 4 8.4v7.2c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C7.04 22 8.16 22 10.4 22h3.2c2.24 0 3.36 0 4.216-.436a4 4 0 0 0 1.748-1.748C20 18.96 20 17.84 20 15.6V9.651c0-.787 0-1.257-.058-1.651M14 2.058q.143.02.277.053c.408.098.798.26 1.156.478.404.248.75.594 1.442 1.286l1.25 1.25c.692.692 1.038 1.038 1.286 1.442a4 4 0 0 1 .479 1.156q.031.134.052.277M8 13h8m-8 4h5"/></svg>
+        CV
+      </a>
+    </div>
+    <p class="copyright" data-i18n="copyright">© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.app-icon').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.app;
+      const card = document.getElementById('detail-' + id);
+      const wasOpen = card.classList.contains('open');
+      document.querySelectorAll('.detail-card').forEach(c => c.classList.remove('open'));
+      document.querySelectorAll('.app-icon').forEach(b => b.classList.remove('active'));
+      if(!wasOpen){
+        card.classList.add('open');
+        btn.classList.add('active');
+        card.scrollIntoView({behavior:'smooth', block:'nearest'});
+      }
+    });
+  });
+  document.getElementById('detail-pillmemo').classList.add('open');
+  document.querySelector('[data-app="pillmemo"]').classList.add('active');
+
+  /* ---- THEME TOGGLE ---- */
+  const sunIcon = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>';
+  const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+  const themeBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    themeIcon.innerHTML = theme === 'dark' ? moonIcon : sunIcon;
+    localStorage.setItem('mj-theme', theme);
+  }
+  const savedTheme = localStorage.getItem('mj-theme') ||
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---- LANGUAGE TOGGLE ---- */
+  const translations = {
+    pl: {
+      'nav-apps':'Aplikacje','nav-stack':'Stack','nav-about':'O mnie','nav-contact':'Kontakt',
+      'nav-cta':'Napisz do mnie',
+      'eyebrow':'Otwarty na projekty B2B · Warszawa, PL',
+      'hero-role':'Buduję i wypuszczam aplikacje na <em>iOS &amp; macOS</em>',
+      'hero-lede':'5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI — od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.',
+      'hero-btn-apps':'Zobacz aplikacje ↓',
+      'apps-tag':'Portfolio','apps-title':'Wypuszczone aplikacje',
+      'apps-sub':'Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i linki.',
+      'pillmemo-desc':'Przypomina o zażyciu leków i pilnuje zapasu opakowania, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii — lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.',
+      'aquavibe-desc':'Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.',
+      'medscan-desc':'Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, jednorazowym sprawdzeniu — bez zakładania konta, bez tarcia.',
+      'shotdocu-desc':'Zamienia zdjęcia dokumentów w czyste, przycięte pliki PDF — skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.',
+      'tinygifts-desc':'Cyfrowy kalendarz adwentowy — codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu okazji.',
+      'link-docs':'Dokumentacja ↗','link-docs2':'Dokumentacja ↗','link-docs3':'Dokumentacja ↗','link-docs4':'Dokumentacja ↗','link-docs5':'Dokumentacja ↗',
+      'link-product':'Strona produktu ↗',
+      'oss-tag':'Nauka &amp; Open Source','oss-title':'Projekty edukacyjne',
+      'oss1-desc':'Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.',
+      'oss2-desc':'Aplikacja stworzona w ramach Community App Challenge.',
+      'oss-link':'Zobacz na GitHub ↗','oss-link2':'Zobacz na GitHub ↗',
+      'stack-title':'Czym pracuję',
+      'stack-comment1':'// jezyki i frameworki','stack-comment2':'// narzedzia i procesy',
+      'stack-swift-comment':'// 5 &amp; 6, concurrency',
+      'stack-aso':'ASO &amp; lokalizacja (7 języków)',
+      'about-tag':'O mnie','about-title':'Krótko',
+      'about-p1':'Od kilku lat samodzielnie projektuję, buduję i wypuszczam aplikacje na iOS i macOS — od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale swobodnie poruszam się też w UIKit, gdy sytuacja tego wymaga.',
+      'about-p2':'Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na współpracę B2B przy projektach iOS — kontraktowo lub w modelu zdalnym.',
+      'foot-title':'Porozmawiajmy o projekcie',
+      'foot-sub':'Odpowiadam zwykle w ciągu jednego dnia roboczego.',
+      'copyright':'© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.'
+    },
+    en: {
+      'nav-apps':'Apps','nav-stack':'Stack','nav-about':'About','nav-contact':'Contact',
+      'nav-cta':'Get in touch',
+      'eyebrow':'Open for B2B projects · Warsaw, PL',
+      'hero-role':'I design and ship apps for <em>iOS &amp; macOS</em>',
+      'hero-lede':'5 apps live on the App Store, designed and built from scratch in SwiftUI — from concept, through architecture, to release. I handle the full cycle: UI, local/CloudKit data, App Store Connect integrations, and ASO.',
+      'hero-btn-apps':'See the apps ↓',
+      'apps-tag':'Portfolio','apps-title':'Shipped apps',
+      'apps-sub':'Tap an icon to see details, tech stack, and links.',
+      'pillmemo-desc':'Reminds you to take your medication and tracks how many doses are left, so you know when to reorder. Built for people on long-term treatment plans — PL/DE localization, push notifications, and a clean, readable interface.',
+      'aquavibe-desc':'Tracks hydration and daily health habits with simple, visual daily goals. Focused on motivation through small, consistent wins instead of overwhelming stats.',
+      'medscan-desc':'Scans medication packaging and checks interactions and contraindications before you take a dose. Built for a fast, one-off check — no account required, no friction.',
+      'shotdocu-desc':'Turns photos of documents into clean, cropped PDFs — scanning in seconds, with no fiddly settings. Built for a fast, repeatable workflow.',
+      'tinygifts-desc':'A digital advent calendar — a daily surprise unlocked at midnight. A light, seasonal app focused on polished animation and a sense of occasion.',
+      'link-docs':'Documentation ↗','link-docs2':'Documentation ↗','link-docs3':'Documentation ↗','link-docs4':'Documentation ↗','link-docs5':'Documentation ↗',
+      'link-product':'Product page ↗',
+      'oss-tag':'Learning &amp; Open Source','oss-title':'Learning projects',
+      'oss1-desc':'Open-source repository for practicing SwiftUI architecture and best practices.',
+      'oss2-desc':'App built as part of a Community App Challenge.',
+      'oss-link':'View on GitHub ↗','oss-link2':'View on GitHub ↗',
+      'stack-title':'What I work with',
+      'stack-comment1':'// languages &amp; frameworks','stack-comment2':'// tools &amp; process',
+      'stack-swift-comment':'// 5 &amp; 6, concurrency',
+      'stack-aso':'ASO &amp; localization (7 languages)',
+      'about-tag':'About','about-title':'Short version',
+      'about-p1':'For several years I\'ve been independently designing, building, and shipping iOS and macOS apps — from the first sketch in Figma, through architecture and code, to release and marketing on the App Store. SwiftUI is my go-to, but I\'m equally comfortable in UIKit when the situation calls for it.',
+      'about-p2':'I care about the whole product lifecycle: solid UX, clean architecture, ASO, and monetization. I\'m currently open to B2B collaboration on iOS projects — contract or remote.',
+      'foot-title':'Let\'s talk about your project',
+      'foot-sub':'I usually reply within one business day.',
+      'copyright':'© 2026 Marcin Jędrzejak. All rights reserved.'
+    }
+  };
+  const langBtn = document.getElementById('langToggle');
+  function applyLang(lang){
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(translations[lang][key] !== undefined){
+        el.innerHTML = translations[lang][key];
+      }
+    });
+    langBtn.textContent = lang.toUpperCase();
+    localStorage.setItem('mj-lang', lang);
+  }
+  const savedLang = localStorage.getItem('mj-lang') || 'pl';
+  applyLang(savedLang);
+  langBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('lang');
+    applyLang(current === 'pl' ? 'en' : 'pl');
+  });
+</script>
+
 </body>
-
 </html>
