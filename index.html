@@ -253,11 +253,11 @@
 
 <header class="hero" id="top">
   <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">Otwarty na projekty B2B · Warszawa, PL</span></div>
+    <div class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">Otwarty na umowę o pracę oraz projekty B2B · Bydgoszcz, PL</span></div>
     <h1 class="name">Marcin Jędrzejak
-      <span class="role" data-i18n="hero-role">Buduję i wypuszczam aplikacje na <em>iOS &amp; macOS</em></span>
+      <span class="role" data-i18n="hero-role">Buduję i publikuję aplikacje na <em>iOS</em></span>
     </h1>
-    <p class="lede" data-i18n="hero-lede">5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI — od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.</p>
+    <p class="lede" data-i18n="hero-lede">5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI. Od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.</p>
     <div class="hero-actions">
       <a href="#apps" class="btn btn-primary" data-i18n="hero-btn-apps">Zobacz aplikacje ↓</a>
       <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" class="btn btn-ghost" target="_blank" rel="noopener">CV</a>
@@ -270,7 +270,7 @@
   <div class="wrap">
     <div class="section-head">
       <span class="section-tag" data-i18n="apps-tag">Portfolio</span>
-      <h2 class="section-title" data-i18n="apps-title">Wypuszczone aplikacje</h2>
+      <h2 class="section-title" data-i18n="apps-title">Opublikowane aplikacje</h2>
       <p class="section-sub" data-i18n="apps-sub">Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i linki.</p>
     </div>
 
@@ -282,17 +282,17 @@
           </div>
           <span class="app-label">PillMemo</span>
         </button>
-        <button class="app-icon" data-app="aquavibe">
-          <div class="icon-square">
-            <img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy">
-          </div>
-          <span class="app-label">AquaVibe</span>
-        </button>
         <button class="app-icon" data-app="medscan">
           <div class="icon-square">
             <img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy">
           </div>
           <span class="app-label">MedScan</span>
+        </button>
+        <button class="app-icon" data-app="aquavibe">
+          <div class="icon-square">
+            <img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy">
+          </div>
+          <span class="app-label">AquaVibe</span>
         </button>
         <button class="app-icon" data-app="shotdocu">
           <div class="icon-square">
@@ -313,12 +313,25 @@
           <div class="icon-square"><img src="./assets/pillmemo-icon.png" alt="PillMemo" loading="lazy"></div>
           <div><div class="detail-title">PillMemo</div><div class="detail-tagline">Med Timer &amp; Pill Counter</div></div>
         </div>
-        <p class="detail-desc" data-i18n="pillmemo-desc">Przypomina o zażyciu leków i pilnuje zapasu opakowania, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii — lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">SwiftData</span><span class="tag">UserNotifications</span><span class="tag">App Store Connect API</span></div>
+        <p class="detail-desc" data-i18n="pillmemo-desc">Przypomina o zażyciu leków i pilnuje zapasu opakowań, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii. Lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Core Data</span><span class="tag">UserNotifications</span><span class="tag">CloudKit Sharing</span><span class="tag">VIPER</span></div>
         <div class="detail-links">
           <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener">App Store ↗</a>
           <a href="https://maartinj.github.io/AboutMe/pillmemo-docs.html" target="_blank" rel="noopener" data-i18n="link-docs">Dokumentacja ↗</a>
-          <a href="https://pillmemo.framer.ai/" target="_blank" rel="noopener" data-i18n="link-product">Strona produktu ↗</a>
+          <a href="https://trypillmemo.com/" target="_blank" rel="noopener" data-i18n="link-product">Strona produktu ↗</a>
+        </div>
+      </div>
+
+      <div class="detail-card" id="detail-medscan">
+        <div class="detail-top">
+          <div class="icon-square"><img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy"></div>
+          <div><div class="detail-title">MedScan</div><div class="detail-tagline">Check meds before you take</div></div>
+        </div>
+        <p class="detail-desc" data-i18n="medscan-desc">Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, efektywnym sprawdzeniu. Bez zakładania konta, ważne informacje natychmiast.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">GPT-4 Vision</span><span class="tag">MVVM</span></div>
+        <div class="detail-links">
+          <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener">App Store ↗</a>
+          <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank" rel="noopener" data-i18n="link-docs3">Dokumentacja ↗</a>
         </div>
       </div>
 
@@ -328,23 +341,10 @@
           <div><div class="detail-title">AquaVibe</div><div class="detail-tagline">Daily Goals, Healthy Life</div></div>
         </div>
         <p class="detail-desc" data-i18n="aquavibe-desc">Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Swift Charts</span><span class="tag">WidgetKit</span></div>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">HealthKit</span><span class="tag">State of Mind</span><span class="tag">Swift Charts</span><span class="tag">WidgetKit</span></div>
         <div class="detail-links">
           <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener">App Store ↗</a>
           <a href="https://maartinj.github.io/AboutMe/aquavibe-docs.html" target="_blank" rel="noopener" data-i18n="link-docs2">Dokumentacja ↗</a>
-        </div>
-      </div>
-
-      <div class="detail-card" id="detail-medscan">
-        <div class="detail-top">
-          <div class="icon-square"><img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy"></div>
-          <div><div class="detail-title">MedScan</div><div class="detail-tagline">Check meds before you take</div></div>
-        </div>
-        <p class="detail-desc" data-i18n="medscan-desc">Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, jednorazowym sprawdzeniu — bez zakładania konta, bez tarcia.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Vision</span><span class="tag">On-device ML</span></div>
-        <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener">App Store ↗</a>
-          <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank" rel="noopener" data-i18n="link-docs3">Dokumentacja ↗</a>
         </div>
       </div>
 
@@ -353,7 +353,7 @@
           <div class="icon-square"><img src="./assets/shotdocu-icon.png" alt="ShotDocu" loading="lazy"></div>
           <div><div class="detail-title">ShotDocu</div><div class="detail-tagline">Convert image into PDFs easily</div></div>
         </div>
-        <p class="detail-desc" data-i18n="shotdocu-desc">Zamienia zdjęcia dokumentów w czyste, przycięte pliki PDF — skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.</p>
+        <p class="detail-desc" data-i18n="shotdocu-desc">Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.</p>
         <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">VisionKit</span><span class="tag">PDFKit</span></div>
         <div class="detail-links">
           <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener">App Store ↗</a>
@@ -366,8 +366,8 @@
           <div class="icon-square"><img src="./assets/tinygifts-icon.png" alt="TinyGifts" loading="lazy"></div>
           <div><div class="detail-title">TinyGifts</div><div class="detail-tagline">Open daily advent surprises</div></div>
         </div>
-        <p class="detail-desc" data-i18n="tinygifts-desc">Cyfrowy kalendarz adwentowy — codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu okazji.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Custom Animations</span><span class="tag">StoreKit 2</span></div>
+        <p class="detail-desc" data-i18n="tinygifts-desc">Cyfrowy kalendarz adwentowy. Codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających się świąt.</p>
+        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">EventKit</span><span class="tag">AVFoundation</span></div>
         <div class="detail-links">
           <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener">App Store ↗</a>
           <a href="https://maartinj.notion.site/TinyGifts-2b287c79476f809980c9dacee4b2d1c0" target="_blank" rel="noopener" data-i18n="link-docs5">Dokumentacja ↗</a>
@@ -402,7 +402,7 @@
   <div class="wrap">
     <div class="section-head">
       <span class="section-tag">Stack</span>
-      <h2 class="section-title" data-i18n="stack-title">Czym pracuję</h2>
+      <h2 class="section-title" data-i18n="stack-title">Z czym pracuję</h2>
     </div>
     <div class="stack-panel">
       <div class="stack-header">
@@ -414,20 +414,23 @@
           <div><span class="kw">import</span> <span class="type">SwiftUI</span></div>
           <div><span class="kw">import</span> <span class="type">Swift</span> <span class="comment" data-i18n="stack-swift-comment">// 5 &amp; 6, concurrency</span></div>
           <div><span class="kw">import</span> <span class="type">SwiftData</span></div>
+          <div><span class="kw">import</span> <span class="type">CoreData</span></div>
           <div><span class="kw">import</span> <span class="type">CloudKit</span></div>
-          <div><span class="kw">import</span> <span class="type">GRDB</span></div>
-          <div><span class="kw">import</span> <span class="type">VisionKit</span></div>
+          <div><span class="kw">import</span> <span class="type">UserNotifications</span></div>
           <div><span class="kw">import</span> <span class="type">StoreKit2</span></div>
           <div><span class="kw">import</span> <span class="type">WidgetKit</span></div>
           <div><span class="kw">import</span> <span class="type">AlarmKit</span></div>
           <div><span class="kw">import</span> <span class="type">Charts</span></div>
+          <div><span class="kw">import</span> <span class="type">ActivityKit</span></div>
+          <div><span class="kw">import</span> <span class="type">TipKit</span></div>
+          <div><span class="kw">import</span> <span class="type">Supabase</span></div>
         </div>
         <div class="comment" style="margin-top:16px;" data-i18n="stack-comment2">// narzedzia i procesy</div>
         <div class="stack-grid">
           <div>App Store Connect API</div>
-          <div data-i18n="stack-aso">ASO &amp; lokalizacja (7 języków)</div>
-          <div>VIPER, TCA, MVVM</div>
-          <div>Xcode Cloud / fastlane</div>
+          <div data-i18n="stack-aso">ASO &amp; lokalizacja</div>
+          <div>Vanilla SwiftUI, MVVM, VIPER, TCA, Clean code</div>
+          <div>Xcode Cloud</div>
         </div>
       </div>
     </div>
@@ -441,8 +444,8 @@
       <h2 class="section-title" data-i18n="about-title">Krótko</h2>
     </div>
     <div class="about-text">
-      <p data-i18n="about-p1">Od kilku lat samodzielnie projektuję, buduję i wypuszczam aplikacje na iOS i macOS — od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale swobodnie poruszam się też w UIKit, gdy sytuacja tego wymaga.</p>
-      <p data-i18n="about-p2">Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na współpracę B2B przy projektach iOS — kontraktowo lub w modelu zdalnym.</p>
+      <p data-i18n="about-p1">Od kilku lat samodzielnie projektuję oraz buduję aplikacje na iOS. Od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale potrafię poruszać się też w UIKit, gdy sytuacja tego wymaga.</p>
+      <p data-i18n="about-p2">Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na umowę o pracę oraz współpracę B2B przy projektach iOS. Kontraktowo lub w modelu zdalnym.</p>
     </div>
   </div>
 </section>
@@ -451,7 +454,7 @@
   <div class="wrap">
     <div class="foot-row">
       <div>
-        <h2 class="section-title" style="margin-bottom:6px;" data-i18n="foot-title">Porozmawiajmy o projekcie</h2>
+        <h2 class="section-title" style="margin-bottom:6px;" data-i18n="foot-title">Porozmawiajmy o współpracy</h2>
         <p class="section-sub" data-i18n="foot-sub">Odpowiadam zwykle w ciągu jednego dnia roboczego.</p>
       </div>
       <a href="mailto:mjedrzejak@icloud.com" class="btn btn-primary">
@@ -522,48 +525,48 @@
     pl: {
       'nav-apps':'Aplikacje','nav-stack':'Stack','nav-about':'O mnie','nav-contact':'Kontakt',
       'nav-cta':'Napisz do mnie',
-      'eyebrow':'Otwarty na projekty B2B · Warszawa, PL',
-      'hero-role':'Buduję i wypuszczam aplikacje na <em>iOS &amp; macOS</em>',
-      'hero-lede':'5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI — od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.',
+      'eyebrow':'Otwarty na umowę o pracę oraz projekty B2B · Bydgoszcz, PL',
+      'hero-role':'Buduję i publikuję aplikacje na <em>iOS</em>',
+      'hero-lede':'5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI. Od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.',
       'hero-btn-apps':'Zobacz aplikacje ↓',
       'apps-tag':'Portfolio','apps-title':'Wypuszczone aplikacje',
       'apps-sub':'Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i linki.',
-      'pillmemo-desc':'Przypomina o zażyciu leków i pilnuje zapasu opakowania, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii — lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.',
+      'pillmemo-desc':'Przypomina o zażyciu leków i pilnuje zapasu opakowań, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii. Lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.',
+      'medscan-desc':'Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, efektywnym sprawdzeniu. Bez zakładania konta, ważne informacje natychmiast.',
       'aquavibe-desc':'Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.',
-      'medscan-desc':'Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, jednorazowym sprawdzeniu — bez zakładania konta, bez tarcia.',
-      'shotdocu-desc':'Zamienia zdjęcia dokumentów w czyste, przycięte pliki PDF — skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.',
-      'tinygifts-desc':'Cyfrowy kalendarz adwentowy — codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu okazji.',
+      'shotdocu-desc':'Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.',
+      'tinygifts-desc':'Cyfrowy kalendarz adwentowy. Codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających się świąt.',
       'link-docs':'Dokumentacja ↗','link-docs2':'Dokumentacja ↗','link-docs3':'Dokumentacja ↗','link-docs4':'Dokumentacja ↗','link-docs5':'Dokumentacja ↗',
       'link-product':'Strona produktu ↗',
       'oss-tag':'Nauka &amp; Open Source','oss-title':'Projekty edukacyjne',
       'oss1-desc':'Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.',
       'oss2-desc':'Aplikacja stworzona w ramach Community App Challenge.',
       'oss-link':'Zobacz na GitHub ↗','oss-link2':'Zobacz na GitHub ↗',
-      'stack-title':'Czym pracuję',
+      'stack-title':'Z czym pracuję',
       'stack-comment1':'// jezyki i frameworki','stack-comment2':'// narzedzia i procesy',
       'stack-swift-comment':'// 5 &amp; 6, concurrency',
-      'stack-aso':'ASO &amp; lokalizacja (7 języków)',
-      'about-tag':'O mnie','about-title':'Krótko',
-      'about-p1':'Od kilku lat samodzielnie projektuję, buduję i wypuszczam aplikacje na iOS i macOS — od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale swobodnie poruszam się też w UIKit, gdy sytuacja tego wymaga.',
-      'about-p2':'Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na współpracę B2B przy projektach iOS — kontraktowo lub w modelu zdalnym.',
-      'foot-title':'Porozmawiajmy o projekcie',
+      'stack-aso':'ASO &amp; lokalizacja',
+      'about-tag':'O mnie','about-title':'Kilka słów',
+      'about-p1':'Od kilku lat samodzielnie projektuję oraz buduję aplikacje na iOS. Od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale potrafię poruszać się też w UIKit, gdy sytuacja tego wymaga.',
+      'about-p2':'Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na umowę o pracę oraz współpracę B2B przy projektach iOS. Kontraktowo lub w modelu zdalnym.',
+      'foot-title':'Porozmawiajmy o współpracy',
       'foot-sub':'Odpowiadam zwykle w ciągu jednego dnia roboczego.',
       'copyright':'© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.'
     },
     en: {
       'nav-apps':'Apps','nav-stack':'Stack','nav-about':'About','nav-contact':'Contact',
       'nav-cta':'Get in touch',
-      'eyebrow':'Open for B2B projects · Warsaw, PL',
-      'hero-role':'I design and ship apps for <em>iOS &amp; macOS</em>',
-      'hero-lede':'5 apps live on the App Store, designed and built from scratch in SwiftUI — from concept, through architecture, to release. I handle the full cycle: UI, local/CloudKit data, App Store Connect integrations, and ASO.',
+      'eyebrow':'Open to employment contracts and B2B projects · Bydgoszcz, PL',
+      'hero-role':'I design and ship apps for <em>iOS</em>',
+      'hero-lede':'5 apps live on the App Store, designed and built from scratch in SwiftUI. From concept, through architecture, to release. I handle the full cycle: UI, local/CloudKit data, App Store Connect integrations, and ASO.',
       'hero-btn-apps':'See the apps ↓',
       'apps-tag':'Portfolio','apps-title':'Shipped apps',
       'apps-sub':'Tap an icon to see details, tech stack, and links.',
-      'pillmemo-desc':'Reminds you to take your medication and tracks how many doses are left, so you know when to reorder. Built for people on long-term treatment plans — PL/DE localization, push notifications, and a clean, readable interface.',
+      'pillmemo-desc':'Reminds you to take your medication and tracks how many doses are left, so you know when to reorder. Built for people on long-term treatment plans. PL/DE localization, push notifications, and a clean, readable interface.',
+      'medscan-desc':'Scans medication packaging and checks interactions and contraindications before you take a dose. Focused on fast, efficient verification. No account required, immediate access to important information.',
       'aquavibe-desc':'Tracks hydration and daily health habits with simple, visual daily goals. Focused on motivation through small, consistent wins instead of overwhelming stats.',
-      'medscan-desc':'Scans medication packaging and checks interactions and contraindications before you take a dose. Built for a fast, one-off check — no account required, no friction.',
-      'shotdocu-desc':'Turns photos of documents into clean, cropped PDFs — scanning in seconds, with no fiddly settings. Built for a fast, repeatable workflow.',
-      'tinygifts-desc':'A digital advent calendar — a daily surprise unlocked at midnight. A light, seasonal app focused on polished animation and a sense of occasion.',
+      'shotdocu-desc':'Turns document photos into clear, cropped PDFs. Scans in seconds, with no unnecessary settings. Built for fast, repeatable workflows.',
+      'tinygifts-desc':'A digital Advent calendar. A daily surprise unlocks at midnight. A light, seasonal app focused on polished animation and a sense of the approaching holidays.',
       'link-docs':'Documentation ↗','link-docs2':'Documentation ↗','link-docs3':'Documentation ↗','link-docs4':'Documentation ↗','link-docs5':'Documentation ↗',
       'link-product':'Product page ↗',
       'oss-tag':'Learning &amp; Open Source','oss-title':'Learning projects',
@@ -573,11 +576,11 @@
       'stack-title':'What I work with',
       'stack-comment1':'// languages &amp; frameworks','stack-comment2':'// tools &amp; process',
       'stack-swift-comment':'// 5 &amp; 6, concurrency',
-      'stack-aso':'ASO &amp; localization (7 languages)',
-      'about-tag':'About','about-title':'Short version',
-      'about-p1':'For several years I\'ve been independently designing, building, and shipping iOS and macOS apps — from the first sketch in Figma, through architecture and code, to release and marketing on the App Store. SwiftUI is my go-to, but I\'m equally comfortable in UIKit when the situation calls for it.',
-      'about-p2':'I care about the whole product lifecycle: solid UX, clean architecture, ASO, and monetization. I\'m currently open to B2B collaboration on iOS projects — contract or remote.',
-      'foot-title':'Let\'s talk about your project',
+      'stack-aso':'ASO &amp; localization',
+      'about-tag':'About','about-title':'A few words',
+      'about-p1':'For several years I\'ve been independently designing and building iOS apps. From the first sketch in Figma, through architecture and code, to release and marketing on the App Store. SwiftUI is my go-to, but I can also navigate UIKit when the situation calls for it.',
+      'about-p2':'I care about the whole product lifecycle: solid UX, clean architecture, ASO, and monetization. I\'m currently open to employment contracts and B2B collaboration on iOS projects. Contract or remote.',
+      'foot-title':'Let\'s talk about cooperation',
       'foot-sub':'I usually reply within one business day.',
       'copyright':'© 2026 Marcin Jędrzejak. All rights reserved.'
     }
