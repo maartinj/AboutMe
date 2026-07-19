@@ -16,6 +16,24 @@
             --accent: #2f81f7;
             --success: #238636;
             --code-bg: #010409;
+            --bg-grad: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
+            --intro: #d0d7de;
+            --highlight-bg: rgba(35, 134, 54, 0.12);
+        }
+
+        html[data-theme="light"] {
+            --bg: #f6f8fa;
+            --surface: #ffffff;
+            --surface-2: #f6f8fa;
+            --border: #d0d7de;
+            --text: #1f2328;
+            --muted: #656d76;
+            --accent: #0969da;
+            --success: #1a7f37;
+            --code-bg: #f6f8fa;
+            --bg-grad: linear-gradient(180deg, #f6f8fa 0%, #eef2f6 100%);
+            --intro: #57606a;
+            --highlight-bg: rgba(26, 127, 55, 0.08);
         }
 
         * {
@@ -27,10 +45,11 @@
         body {
             font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             color: var(--text);
-            background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
+            background: var(--bg-grad);
             min-height: 100vh;
             line-height: 1.6;
             padding: 24px;
+            transition: background .25s ease, color .25s ease;
         }
 
         .wrap {
@@ -58,6 +77,43 @@
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background .2s, transform .15s;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .toggle-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .lang-btn {
+            width: auto;
+            padding: 0 12px;
         }
 
         .card {
@@ -99,7 +155,8 @@
         }
 
         h1,
-        h2 {
+        h2,
+        h3 {
             margin-bottom: 12px;
             line-height: 1.3;
         }
@@ -114,6 +171,11 @@
             margin-top: 30px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-top: 22px;
         }
 
         p {
@@ -134,25 +196,62 @@
 
         .intro {
             font-size: 18px;
-            color: #d0d7de;
+            color: var(--intro);
         }
 
         .repo-highlights {
             border: 1px solid var(--border);
-            background: rgba(35, 134, 54, 0.12);
+            background: var(--highlight-bg);
             border-left: 4px solid var(--success);
             border-radius: 8px;
             padding: 12px 14px;
             margin-top: 10px;
         }
 
-        pre {
+        .code-block {
+            position: relative;
             margin-top: 12px;
+        }
+
+        pre {
             background: var(--code-bg);
             border: 1px solid var(--border);
             border-radius: 10px;
             overflow-x: auto;
             padding: 14px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background .2s, color .2s, border-color .2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .copy-btn.copied {
+            color: var(--success);
+            border-color: var(--success);
         }
 
         code {
@@ -219,193 +318,153 @@
 <body>
     <div class="wrap">
         <div class="topbar">
-            <a class="back" href="./index.html" aria-label="Back to portfolio">← Back to portfolio</a>
+            <a class="back" href="./index.html" aria-label="Back to portfolio"><span data-i18n="back">← Back to portfolio</span></a>
+            <div class="topbar-actions">
+                <button class="toggle-btn lang-btn" id="langToggle" aria-label="Switch language">EN</button>
+                <button class="toggle-btn" id="themeToggle" aria-label="Switch theme">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+                </button>
+            </div>
         </div>
 
         <article class="card">
             <header class="repo-header">
                 <div class="repo-title">💊 PillMemo</div>
-                <span class="badge">App Store: v1.4.6 · 2025-09</span>
+                <span class="badge">App Store: v2.0.0 · 2026-07</span>
             </header>
 
             <section class="content">
                 <h1>💊 PillMemo</h1>
-                <p class="intro">PillMemo is an easy-to-use medication reminder app, currently published in the App Store as Medisafe Carezone: PillMemo 🏥</p>
-                <p>The application allows users to set reminders for different types of medicine and at different times of the
-                    day/week/month 📅</p>
+                <p class="intro" data-i18n="intro">PillMemo is an easy-to-use iOS application that helps users remember to take their medicine, track their treatment, and stay connected with people who care about them 🏥</p>
+                <p class="intro" data-i18n="intro-2">The application allows users to set smart reminders for different types of medicine, log every dose, monitor daily progress, track refills, and generate doctor-ready reports 📅</p>
 
-                <h2>👨‍💻 Technology Used</h2>
+                <h2 data-i18n="h-tech">👨‍💻 Technology Used</h2>
                 <ul>
                     <li>SwiftUI</li>
                     <li>Core Data</li>
-                    <li>CloudKit</li>
+                    <li>CloudKit / iCloud Sync</li>
+                    <li>HealthKit</li>
                     <li>User Notifications</li>
-                    <li>UICalendarView</li>
+                    <li>AlarmKit</li>
+                    <li>WidgetKit</li>
+                    <li>ActivityKit / Live Activities</li>
+                    <li>App Intents</li>
+                    <li>TipKit</li>
+                    <li>StoreKit / In-App Purchases</li>
+                    <li>Supabase</li>
+                    <li>AI-powered medicine scanning</li>
+                    <li>PDF generation</li>
+                    <li>VIPER Architecture</li>
                 </ul>
 
-                <h2>📌 What Changed In The Repo</h2>
-                <div class="repo-highlights">
-                    The key change was introducing unique medicine identity and separate save paths for entries with reminder vs
-                    without reminder. This removed duplicate-reference collisions and fixed crashes when saving multiple pills for the
-                    same date.
-                </div>
-
-                <h2>🎥 PillMemo In Action</h2>
+                <h2 data-i18n="h-action">🎥 PillMemo 'in action'</h2>
                 <div class="media media--phone">
                     <video controls preload="metadata" playsinline>
-                        <source src="./assets/pillmemo-demo.m4v" type="video/mp4">
-                        <source src="./assets/pillmemo-demo.mov" type="video/quicktime">
+                        <source src="./assets/portfolioVideo.mp4" type="video/mp4">
                         Your browser does not support embedded video.
                     </video>
-                    <div class="media__caption">PillMemo demo video</div>
+                    <div class="media__caption" data-i18n="caption-video">PillMemo demo video</div>
                 </div>
 
-                <h2>🏆 Standout Success</h2>
-                <p>Distinguish to save pill data with and without notifications.</p>
-                <p>Sounds trivial, but the real challenge was to create functionality to save pill data in Core Data and be read
-                    correctly by app, where each pill needed to be unique. Why? Because earlier, every next pill was saved, but
-                    remembered with the same reference, for the same date, where for the same date can be taken more than one pill.
-                    Without this change, app crashed every time when I wanted to save new pill with the same exact date.</p>
+                <h2 data-i18n="h-success">🏆 My standout success is...</h2>
+                <p data-i18n="success-1">PillMemo 2.0 is no longer just a simple medicine reminder. It became a complete medication companion for
+                    individuals, families, and caregivers.</p>
+                <p data-i18n="success-2">The biggest achievement was rebuilding the app around real medication behavior: users can now take, skip,
+                    snooze, track, share, and report doses in a way that works even when the app is closed.</p>
+                <p data-i18n="success-3">Sounds simple, but the real challenge was to connect local data, iCloud sharing, notifications, widgets,
+                    Live Activities, refill logic, and reports into one reliable flow. A medicine reminder app cannot be "almost
+                    correct". If a dose is missed, duplicated, or not synced, the app loses trust. That is why the new version
+                    focuses heavily on reliability, clear dose states, and better data flow.</p>
 
-                <pre><code class="language-swift">func addMedicine(context: NSManagedObjectContext) async -&gt; Bool {
-
-    // MARK: Editing Data
-    var medicine: Medicine!
-    if let editMedicines = editMedicines {
-        await context.perform {
-            medicine = editMedicines
-
-            // MARK: Remove All Pending Notifications
-            UNUserNotificationCenter.current()
-                .removePendingNotificationRequests(withIdentifiers: medicine.medicineNotificationIDs ?? [])
-            medicine.medicineTitle = self.title
-            medicine.medicineColor = self.medicineColor
-            medicine.medicineWeekdays = self.weekDays
-            medicine.medicineType = self.medicineType
-            medicine.medicineTakePartOne = self.takeMedicinePartOne
-            medicine.medicineTakePartTwo = self.takeMedicinePartTwo
-            medicine.medicineIsReminderOn = self.isReminderOn
-            medicine.medicineReminderText = self.title
-            medicine.medicineNotificationDate = self.reminderDate
-            medicine.medicineNotificationIDs = []
-            medicine.medicineQuantity = self.quantityMedicine
-            medicine.medicineCalendarIcon = self.calendarIcon
-        }
-
-        // Check if reminder is turn on here
-        if isReminderOn {
-
-            // MARK: Notifications Are Going To Be Scheduled
-            if let ids = try? await scheduleNotification() {
-                await context.perform {
-                    medicine.medicineNotificationIDs = ids
-                    try? context.save()
-                    TelemetryManager.send("Edited medicine with reminder", with: ["Name": self.title])
-                }
-                return true
-            }
-        } else {
-
-            // MARK: Add Data To Be Saved Without Reminder
-            await context.perform {
-                try? context.save()
-                TelemetryManager.send("Edited medicine without reminder", with: ["Name": self.title])
-            }
-            return true
-        }
-    } else {
-        await context.perform {
-
-            // MARK: Fetch Existing Event Records
-            let fetchRequest: NSFetchRequest&lt;Medicine&gt; = Medicine.fetchRequest()
-
-            do {
-                let existingMedicines = try self.moc.fetch(fetchRequest)
-
-                // Determine the count of existing medicine
-                let medicineCount = existingMedicines.count
-                print(medicineCount)
-
-                medicine = Medicine(context: context)
-
-                // Add a number to be as a uniqal reference for each medicine
-                medicine.medicineNumber = Int32(medicineCount + 1)
-
-                medicine.medicineTitle = self.title
-                medicine.medicineColor = self.medicineColor
-                medicine.medicineWeekdays = self.weekDays
-                medicine.medicineType = self.medicineType
-                medicine.medicineTakePartOne = self.takeMedicinePartOne
-                medicine.medicineTakePartTwo = self.takeMedicinePartTwo
-                medicine.medicineIsReminderOn = self.isReminderOn
-                medicine.medicineReminderText = self.title
-                medicine.medicineNotificationDate = self.reminderDate
-                medicine.medicineNotificationIDs = []
-                medicine.medicineQuantity = self.quantityMedicine
-                medicine.medicineCalendarIcon = self.calendarIcon
-            } catch {
-                print("Failed to insert event: \\(error.localizedDescription)")
-            }
-        }
-
-        // Check if reminder is turn on here
-        if isReminderOn {
-
-            // MARK: Notifications Are Going To Be Scheduled
-            if let ids = try? await scheduleNotification() {
-                await context.perform {
-                    medicine.medicineNotificationIDs = ids
-                    try? context.save()
-                    self.medicines.append(medicine)
-                    self.changedMedicine = medicine
-                    TelemetryManager.send("Added medicine with reminder", with: ["Name": self.title])
-                }
-                return true
-            }
-        } else {
-
-            // MARK: Add Data To Be Saved Without Reminder
-            await context.perform {
-                try? context.save()
-                self.medicines.append(medicine)
-                self.changedMedicine = medicine
-                TelemetryManager.send("Added medicine without reminder", with: ["Name": self.title])
-            }
-            return true
-        }
-    }
-    return false
-}</code></pre>
-
-                <div class="media media--phone">
-                    <img src="./assets/pillmemo-screenshot.png"
-                        alt="PillMemo app screenshot">
-                    <div class="media__caption">PillMemo UI preview</div>
+                <div class="media">
+                    <img src="./assets/portfolioImage.png" alt="PillMemo application preview">
                 </div>
 
-                <h2>🧩 Entireness</h2>
-                <p>Nevertheless, while creating this simple medicine reminder app, I have also included the following:</p>
+                <h2 data-i18n="h-whatsnew">✨ What's new in PillMemo 2.0</h2>
+                <ul>
+                    <li data-i18n="wn-1">Family Care &amp; caregiver support with shared medication tracking</li>
+                    <li data-i18n="wn-2">AI medicine scanner to fill medicine name, dosage, and form faster</li>
+                    <li data-i18n="wn-3">Doctor-ready PDF reports with intake history</li>
+                    <li data-i18n="wn-4">Weekly medication reports</li>
+                    <li data-i18n="wn-5">Daily progress dashboard on the Home screen</li>
+                    <li data-i18n="wn-6">Apple Health integration for symptom logging</li>
+                    <li data-i18n="wn-7">Strong dose alarms powered by AlarmKit for important reminders</li>
+                    <li data-i18n="wn-8">Live Activities for snoozed reminders on the Lock Screen and Dynamic Island</li>
+                    <li data-i18n="wn-9">Interactive Home Screen widgets</li>
+                    <li data-i18n="wn-10">Multiple daily doses with individual reminder times</li>
+                    <li data-i18n="wn-11">Refill tracking and low-stock alerts</li>
+                    <li data-i18n="wn-12">Medicine notes for instructions, side effects, or other medicine details</li>
+                    <li data-i18n="wn-13">Smart early-dose warning</li>
+                    <li data-i18n="wn-14">Notification actions: Take, Skip, and Remind Later</li>
+                    <li data-i18n="wn-15">Redesigned calendar with color-coded intake status</li>
+                    <li data-i18n="wn-16">BMI calculator with health insights</li>
+                    <li data-i18n="wn-17">New onboarding experience</li>
+                    <li data-i18n="wn-18">Community roadmap for feature requests and voting</li>
+                    <li data-i18n="wn-19">Liquid Glass-inspired interface for newer iOS versions</li>
+                </ul>
+
+                <h2 data-i18n="h-entireness">🧩 Entireness</h2>
+                <p data-i18n="entireness-intro">Nevertheless, while creating this medicine reminder app, I have also included the following:</p>
                 <ul>
                     <li>In-App Purchases</li>
                     <li>TipKit</li>
                     <li>WishKit</li>
+                    <li>App Intents</li>
+                    <li>Widget Extension</li>
+                    <li>Live Activities</li>
+                    <li data-i18n="li-alarmkit">AlarmKit integration</li>
+                    <li>HealthKit</li>
+                    <li data-i18n="li-cloudkit">CloudKit and iCloud sharing</li>
+                    <li data-i18n="li-supabase">Supabase backend</li>
+                    <li data-i18n="li-push">Push notifications</li>
+                    <li data-i18n="li-fallback">Strong alarm fallback to normal notifications when permission or OS support is missing</li>
                     <li>Concurrency</li>
-                    <li>Error handling &amp; alerts</li>
+                    <li data-i18n="li-errors">Error handling &amp; alerts</li>
                     <li>Onboarding</li>
-                    <li>PDF Generator</li>
-                    <li>Unit Tests</li>
-                    <li>UI Tests</li>
+                    <li data-i18n="li-pdf">PDF Generator</li>
+                    <li data-i18n="li-refill">Refill alerts</li>
+                    <li data-i18n="li-history">Medicine intake history</li>
+                    <li data-i18n="li-calendar">Calendar insights</li>
+                    <li data-i18n="li-bmi">BMI tracking</li>
+                    <li data-i18n="li-ai">AI scanner</li>
+                    <li data-i18n="li-unit">Unit Tests</li>
+                    <li data-i18n="li-ui">UI Tests</li>
                     <li>CI/CD (Xcode Cloud)</li>
-                    <li>Project organization (VOODO Architecture)</li>
+                    <li data-i18n="li-arch">Project organization (VIPER Architecture)</li>
                     <li>Privacy Manifest</li>
-                    <li>Current App Store release: v1.4.6 (09/2025)</li>
+                    <li data-i18n="li-loc">Localization: English, Polish, and German</li>
+                    <li data-i18n="li-release">Published in App Store (04/2024)</li>
                 </ul>
 
-                <h2>ℹ️ License</h2>
-                <p>PillMemo is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this
+                <h2 data-i18n="h-tests">🧪 Tests</h2>
+                <p data-i18n="tests-intro">PillMemo uses XCTest for unit tests and UI tests.</p>
+
+                <h3 data-i18n="h-unit">Unit Tests</h3>
+                <p data-i18n="unit-intro">Unit tests check app logic without clicking through the real interface.</p>
+                <p data-i18n="unit-cover">Current unit tests cover:</p>
+                <ul>
+                    <li data-i18n="ut-1"><code>MedicineFrequencyTests</code> - checks default reminder times for medicines, for example once a day, twice a day, three times a day, and custom reminders.</li>
+                    <li data-i18n="ut-2"><code>ScheduleLogicTests</code> - checks schedule logic: sorting reminder times, removing duplicates, keeping times inside one day, and converting time to minutes.</li>
+                    <li data-i18n="ut-3"><code>AddNewMedicinePresenterTests</code> - checks the logic for adding a new medicine: default reminder times, required fields for the Done button, default reminder delivery method, and saving strong alarms as normal notifications for free users.</li>
+                    <li data-i18n="ut-4"><code>AutoMissedIntakesTests</code> - checks automatic marking of missed doses and prevents duplicate intake records for the same scheduled dose.</li>
+                    <li data-i18n="ut-5"><code>WidgetMedicinePersistenceTests</code> - checks widget medicine logging, duplicate protection, package quantity updates, replacing missed doses with taken doses, and choosing the correct scheduled dose.</li>
+                    <li data-i18n="ut-6"><code>SupabaseOnboardingAnswersClientTests</code> - checks if onboarding answers are correctly prepared before sending to Supabase, including goal answers, pain points, headers, and JSON body.</li>
+                </ul>
+
+                <h3 data-i18n="h-uitests">UI Tests</h3>
+                <p data-i18n="uitests-intro">UI tests launch the app and test real user flows.</p>
+                <p data-i18n="uitests-cover">Current UI tests cover:</p>
+                <ul>
+                    <li data-i18n="uit-1"><code>BasicUITests</code> - checks that the app launches correctly in UI testing mode.</li>
+                    <li data-i18n="uit-2"><code>AppFlowUITests</code> - checks adding a medicine and showing it on the Home screen.</li>
+                    <li data-i18n="uit-3"><code>AppFlowUITests</code> - checks adding patient details and showing them on the Medical ID Card screen.</li>
+                </ul>
+
+                <h2 data-i18n="h-license">ℹ️ License</h2>
+                <p data-i18n="license">The PillMemo is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this
                     application is strictly prohibited.</p>
 
-                <p class="footer">®️ 2026 All rights reserved by Marcin Jędrzejak.</p>
+                <p class="footer" data-i18n="copyright">®️ 2026 All rights reserved by Marcin Jędrzejak.</p>
             </section>
         </article>
     </div>
@@ -446,6 +505,257 @@
                 }
 
                 window.location.href = "./index.html";
+            });
+        })();
+
+        /* ---- THEME TOGGLE ---- */
+        (function () {
+            const sunIcon = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>';
+            const moonIcon = '<path d="M21 11.966A6.5 6.5 0 1 1 12.035 3H12a9 9 0 1 0 9 9z"></path>';
+            const themeBtn = document.getElementById("themeToggle");
+            const themeIcon = document.getElementById("themeIcon");
+
+            function applyTheme(theme) {
+                document.documentElement.setAttribute("data-theme", theme);
+                themeIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
+                localStorage.setItem("mj-theme", theme);
+            }
+
+            const savedTheme = localStorage.getItem("mj-theme") ||
+                (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            applyTheme(savedTheme);
+
+            themeBtn.addEventListener("click", function () {
+                const current = document.documentElement.getAttribute("data-theme");
+                applyTheme(current === "dark" ? "light" : "dark");
+            });
+        })();
+
+        /* ---- COPY CODE ---- */
+        (function () {
+            const labels = {
+                en: { copy: "Copy", copied: "Copied!" },
+                pl: { copy: "Kopiuj", copied: "Skopiowano!" }
+            };
+            const btn = document.getElementById("copyCode");
+            const label = document.getElementById("copyCodeLabel");
+            if (!btn) return;
+            let resetTimer = null;
+
+            function currentLabels() {
+                return labels[document.documentElement.getAttribute("lang")] || labels.en;
+            }
+
+            // Keep the label in sync when the language is toggled
+            window.updateCopyLabel = function () {
+                if (!btn.classList.contains("copied")) {
+                    label.textContent = currentLabels().copy;
+                }
+            };
+
+            btn.addEventListener("click", function () {
+                const code = document.querySelector(".code-block pre code");
+                if (!code) return;
+
+                function onCopied() {
+                    btn.classList.add("copied");
+                    label.textContent = currentLabels().copied;
+                    clearTimeout(resetTimer);
+                    resetTimer = setTimeout(function () {
+                        btn.classList.remove("copied");
+                        label.textContent = currentLabels().copy;
+                    }, 2000);
+                }
+
+                function fallbackCopy() {
+                    const range = document.createRange();
+                    range.selectNodeContents(code);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    document.execCommand("copy");
+                    selection.removeAllRanges();
+                    onCopied();
+                }
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(code.innerText).then(onCopied).catch(fallbackCopy);
+                } else {
+                    fallbackCopy();
+                }
+            });
+        })();
+
+        /* ---- LANGUAGE TOGGLE ---- */
+        (function () {
+            const translations = {
+                en: {
+                    'back': '← Back to portfolio',
+                    'intro': 'PillMemo is an easy-to-use iOS application that helps users remember to take their medicine, track their treatment, and stay connected with people who care about them 🏥',
+                    'intro-2': 'The application allows users to set smart reminders for different types of medicine, log every dose, monitor daily progress, track refills, and generate doctor-ready reports 📅',
+                    'h-tech': '👨‍💻 Technology Used',
+                    'h-action': '🎥 PillMemo \'in action\'',
+                    'caption-video': 'PillMemo demo video',
+                    'h-success': '🏆 My standout success is...',
+                    'success-1': 'PillMemo 2.0 is no longer just a simple medicine reminder. It became a complete medication companion for individuals, families, and caregivers.',
+                    'success-2': 'The biggest achievement was rebuilding the app around real medication behavior: users can now take, skip, snooze, track, share, and report doses in a way that works even when the app is closed.',
+                    'success-3': 'Sounds simple, but the real challenge was to connect local data, iCloud sharing, notifications, widgets, Live Activities, refill logic, and reports into one reliable flow. A medicine reminder app cannot be "almost correct". If a dose is missed, duplicated, or not synced, the app loses trust. That is why the new version focuses heavily on reliability, clear dose states, and better data flow.',
+                    'caption-ui': 'PillMemo UI preview',
+                    'h-whatsnew': '✨ What\'s new in PillMemo 2.0',
+                    'wn-1': 'Family Care &amp; caregiver support with shared medication tracking',
+                    'wn-2': 'AI medicine scanner to fill medicine name, dosage, and form faster',
+                    'wn-3': 'Doctor-ready PDF reports with intake history',
+                    'wn-4': 'Weekly medication reports',
+                    'wn-5': 'Daily progress dashboard on the Home screen',
+                    'wn-6': 'Apple Health integration for symptom logging',
+                    'wn-7': 'Strong dose alarms powered by AlarmKit for important reminders',
+                    'wn-8': 'Live Activities for snoozed reminders on the Lock Screen and Dynamic Island',
+                    'wn-9': 'Interactive Home Screen widgets',
+                    'wn-10': 'Multiple daily doses with individual reminder times',
+                    'wn-11': 'Refill tracking and low-stock alerts',
+                    'wn-12': 'Medicine notes for instructions, side effects, or other medicine details',
+                    'wn-13': 'Smart early-dose warning',
+                    'wn-14': 'Notification actions: Take, Skip, and Remind Later',
+                    'wn-15': 'Redesigned calendar with color-coded intake status',
+                    'wn-16': 'BMI calculator with health insights',
+                    'wn-17': 'New onboarding experience',
+                    'wn-18': 'Community roadmap for feature requests and voting',
+                    'wn-19': 'Liquid Glass-inspired interface for newer iOS versions',
+                    'h-entireness': '🧩 Entireness',
+                    'entireness-intro': 'Nevertheless, while creating this medicine reminder app, I have also included the following:',
+                    'li-alarmkit': 'AlarmKit integration',
+                    'li-cloudkit': 'CloudKit and iCloud sharing',
+                    'li-supabase': 'Supabase backend',
+                    'li-push': 'Push notifications',
+                    'li-fallback': 'Strong alarm fallback to normal notifications when permission or OS support is missing',
+                    'li-errors': 'Error handling &amp; alerts',
+                    'li-pdf': 'PDF Generator',
+                    'li-refill': 'Refill alerts',
+                    'li-history': 'Medicine intake history',
+                    'li-calendar': 'Calendar insights',
+                    'li-bmi': 'BMI tracking',
+                    'li-ai': 'AI scanner',
+                    'li-unit': 'Unit Tests',
+                    'li-ui': 'UI Tests',
+                    'li-arch': 'Project organization (VIPER Architecture)',
+                    'li-loc': 'Localization: English, Polish, and German',
+                    'li-release': 'Published in App Store (04/2024)',
+                    'h-tests': '🧪 Tests',
+                    'tests-intro': 'PillMemo uses XCTest for unit tests and UI tests.',
+                    'h-unit': 'Unit Tests',
+                    'unit-intro': 'Unit tests check app logic without clicking through the real interface.',
+                    'unit-cover': 'Current unit tests cover:',
+                    'ut-1': '<code>MedicineFrequencyTests</code> — checks default reminder times for medicines, for example once a day, twice a day, three times a day, and custom reminders.',
+                    'ut-2': '<code>ScheduleLogicTests</code> — checks schedule logic: sorting reminder times, removing duplicates, keeping times inside one day, and converting time to minutes.',
+                    'ut-3': '<code>AddNewMedicinePresenterTests</code> — checks the logic for adding a new medicine: default reminder times, required fields for the Done button, default reminder delivery method, and saving strong alarms as normal notifications for free users.',
+                    'ut-4': '<code>AutoMissedIntakesTests</code> — checks automatic marking of missed doses and prevents duplicate intake records for the same scheduled dose.',
+                    'ut-5': '<code>WidgetMedicinePersistenceTests</code> — checks widget medicine logging, duplicate protection, package quantity updates, replacing missed doses with taken doses, and choosing the correct scheduled dose.',
+                    'ut-6': '<code>SupabaseOnboardingAnswersClientTests</code> — checks if onboarding answers are correctly prepared before sending to Supabase, including goal answers, pain points, headers, and JSON body.',
+                    'h-uitests': 'UI Tests',
+                    'uitests-intro': 'UI tests launch the app and test real user flows.',
+                    'uitests-cover': 'Current UI tests cover:',
+                    'uit-1': '<code>BasicUITests</code> — checks that the app launches correctly in UI testing mode.',
+                    'uit-2': '<code>AppFlowUITests</code> — checks adding a medicine and showing it on the Home screen.',
+                    'uit-3': '<code>AppFlowUITests</code> — checks adding patient details and showing them on the Medical ID Card screen.',
+                    'h-license': 'ℹ️ License',
+                    'license': 'The PillMemo is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this application is strictly prohibited.',
+                    'copyright': '®️ 2026 All rights reserved by Marcin Jędrzejak.'
+                },
+                pl: {
+                    'back': '← Wróć do portfolio',
+                    'intro': 'PillMemo to prosta w obsłudze aplikacja na iOS, która pomaga użytkownikom pamiętać o zażywaniu leków, śledzić leczenie i pozostawać w kontakcie z osobami, którym na nich zależy 🏥',
+                    'intro-2': 'Aplikacja pozwala użytkownikom ustawiać inteligentne przypomnienia dla różnych rodzajów leków, rejestrować każdą dawkę, monitorować dzienne postępy, śledzić zapasy opakowań i generować raporty gotowe do pokazania lekarzowi 📅',
+                    'h-tech': '👨‍💻 Użyte technologie',
+                    'h-action': '🎥 PillMemo w akcji',
+                    'caption-video': 'Wideo demonstracyjne PillMemo',
+                    'h-success': '🏆 Mój największy sukces to...',
+                    'success-1': 'PillMemo 2.0 nie jest już tylko prostym przypominaczem o lekach. Stał się kompletnym towarzyszem terapii dla pojedynczych użytkowników, rodzin i opiekunów.',
+                    'success-2': 'Największym osiągnięciem była przebudowa aplikacji wokół rzeczywistych zachowań związanych z przyjmowaniem leków: użytkownicy mogą teraz przyjmować, pomijać, odkładać, śledzić, udostępniać i raportować dawki w sposób, który działa nawet wtedy, gdy aplikacja jest zamknięta.',
+                    'success-3': 'Brzmi prosto, ale prawdziwym wyzwaniem było połączenie danych lokalnych, udostępniania iCloud, powiadomień, widżetów, Live Activities, logiki zapasów i raportów w jeden niezawodny przepływ. Aplikacja przypominająca o lekach nie może być "prawie poprawna". Jeśli dawka zostanie pominięta, zduplikowana lub niezsynchronizowana, aplikacja traci zaufanie. Dlatego nowa wersja mocno stawia na niezawodność, czytelne stany dawek i lepszy przepływ danych.',
+                    'caption-ui': 'Podgląd interfejsu PillMemo',
+                    'h-whatsnew': '✨ Nowości w PillMemo 2.0',
+                    'wn-1': 'Opieka rodzinna i wsparcie opiekunów ze wspólnym śledzeniem leków',
+                    'wn-2': 'Skaner leków AI, który szybciej uzupełnia nazwę, dawkę i postać leku',
+                    'wn-3': 'Raporty PDF gotowe dla lekarza z historią przyjmowania leków',
+                    'wn-4': 'Cotygodniowe raporty lekowe',
+                    'wn-5': 'Panel dziennych postępów na ekranie głównym',
+                    'wn-6': 'Integracja z Apple Health do rejestrowania objawów',
+                    'wn-7': 'Mocne alarmy dawek oparte na AlarmKit dla ważnych przypomnień',
+                    'wn-8': 'Live Activities dla odłożonych przypomnień na ekranie blokady i w Dynamic Island',
+                    'wn-9': 'Interaktywne widżety na ekranie początkowym',
+                    'wn-10': 'Wiele dawek dziennie z osobnymi godzinami przypomnień',
+                    'wn-11': 'Śledzenie zapasów i alerty o kończących się opakowaniach',
+                    'wn-12': 'Notatki do leków na instrukcje, skutki uboczne lub inne szczegóły dotyczące leku',
+                    'wn-13': 'Inteligentne ostrzeżenie przed zbyt wczesną dawką',
+                    'wn-14': 'Akcje w powiadomieniach: Weź, Pomiń i Przypomnij później',
+                    'wn-15': 'Przeprojektowany kalendarz z kolorowym oznaczeniem statusu dawek',
+                    'wn-16': 'Kalkulator BMI ze wskazówkami zdrowotnymi',
+                    'wn-17': 'Nowy proces onboardingu',
+                    'wn-18': 'Publiczna roadmapa z propozycjami funkcji i głosowaniem społeczności',
+                    'wn-19': 'Interfejs inspirowany Liquid Glass dla nowszych wersji iOS',
+                    'h-entireness': '🧩 Całość',
+                    'entireness-intro': 'Ponadto, tworząc tę aplikację przypominającą o lekach, uwzględniłem również:',
+                    'li-alarmkit': 'Integracja z AlarmKit',
+                    'li-cloudkit': 'CloudKit i udostępnianie iCloud',
+                    'li-supabase': 'Backend Supabase',
+                    'li-push': 'Powiadomienia push',
+                    'li-fallback': 'Awaryjne przełączanie mocnych alarmów na zwykłe powiadomienia, gdy brakuje uprawnień lub wsparcia systemu',
+                    'li-errors': 'Obsługa błędów i alerty',
+                    'li-pdf': 'Generator PDF',
+                    'li-refill': 'Alerty o kończących się zapasach',
+                    'li-history': 'Historia przyjmowania leków',
+                    'li-calendar': 'Wgląd w dane w kalendarzu',
+                    'li-bmi': 'Śledzenie BMI',
+                    'li-ai': 'Skaner AI',
+                    'li-unit': 'Testy jednostkowe',
+                    'li-ui': 'Testy UI',
+                    'li-arch': 'Organizacja projektu (architektura VIPER)',
+                    'li-loc': 'Lokalizacja: angielski, polski i niemiecki',
+                    'li-release': 'Opublikowano w App Store (04/2024)',
+                    'h-tests': '🧪 Testy',
+                    'tests-intro': 'PillMemo używa XCTest do testów jednostkowych i testów UI.',
+                    'h-unit': 'Testy jednostkowe',
+                    'unit-intro': 'Testy jednostkowe sprawdzają logikę aplikacji bez klikania przez prawdziwy interfejs.',
+                    'unit-cover': 'Obecne testy jednostkowe obejmują:',
+                    'ut-1': '<code>MedicineFrequencyTests</code> — sprawdza domyślne godziny przypomnień dla leków, na przykład raz dziennie, dwa razy dziennie, trzy razy dziennie oraz przypomnienia niestandardowe.',
+                    'ut-2': '<code>ScheduleLogicTests</code> — sprawdza logikę harmonogramu: sortowanie godzin przypomnień, usuwanie duplikatów, utrzymywanie godzin w obrębie jednego dnia i konwersję czasu na minuty.',
+                    'ut-3': '<code>AddNewMedicinePresenterTests</code> — sprawdza logikę dodawania nowego leku: domyślne godziny przypomnień, wymagane pola dla przycisku Done, domyślny sposób dostarczania przypomnień oraz zapisywanie mocnych alarmów jako zwykłych powiadomień dla darmowych użytkowników.',
+                    'ut-4': '<code>AutoMissedIntakesTests</code> — sprawdza automatyczne oznaczanie pominiętych dawek i zapobiega duplikowaniu wpisów przyjęcia dla tej samej zaplanowanej dawki.',
+                    'ut-5': '<code>WidgetMedicinePersistenceTests</code> — sprawdza rejestrowanie leków w widżecie, ochronę przed duplikatami, aktualizację liczby sztuk w opakowaniu, zastępowanie pominiętych dawek przyjętymi oraz wybór właściwej zaplanowanej dawki.',
+                    'ut-6': '<code>SupabaseOnboardingAnswersClientTests</code> — sprawdza, czy odpowiedzi z onboardingu są poprawnie przygotowane przed wysłaniem do Supabase, w tym odpowiedzi o celach, problemy użytkownika, nagłówki i treść JSON.',
+                    'h-uitests': 'Testy UI',
+                    'uitests-intro': 'Testy UI uruchamiają aplikację i sprawdzają rzeczywiste przepływy użytkownika.',
+                    'uitests-cover': 'Obecne testy UI obejmują:',
+                    'uit-1': '<code>BasicUITests</code> — sprawdza, czy aplikacja uruchamia się poprawnie w trybie testów UI.',
+                    'uit-2': '<code>AppFlowUITests</code> — sprawdza dodawanie leku i wyświetlanie go na ekranie głównym.',
+                    'uit-3': '<code>AppFlowUITests</code> — sprawdza dodawanie danych pacjenta i wyświetlanie ich na ekranie Medical ID Card.',
+                    'h-license': 'ℹ️ Licencja',
+                    'license': 'PillMemo jest własnością Marcina Jędrzejaka. Nieautoryzowane kopiowanie, rozpowszechnianie lub modyfikowanie tej aplikacji jest surowo zabronione.',
+                    'copyright': '®️ 2026 Wszystkie prawa zastrzeżone przez Marcina Jędrzejaka.'
+                }
+            };
+
+            const langBtn = document.getElementById("langToggle");
+
+            function applyLang(lang) {
+                document.documentElement.setAttribute("lang", lang);
+                document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                    const key = el.getAttribute("data-i18n");
+                    if (translations[lang][key] !== undefined) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+                langBtn.textContent = lang.toUpperCase();
+                localStorage.setItem("mj-lang", lang);
+                if (window.updateCopyLabel) window.updateCopyLabel();
+            }
+
+            const savedLang = localStorage.getItem("mj-lang") || "pl";
+            applyLang(savedLang);
+
+            langBtn.addEventListener("click", function () {
+                const current = document.documentElement.getAttribute("lang");
+                applyLang(current === "pl" ? "en" : "pl");
             });
         })();
     </script>

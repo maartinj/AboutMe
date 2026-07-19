@@ -223,7 +223,7 @@
             <section class="content">
                 <h1>😎💧 AquaVibe</h1>
                 <p class="intro">Track your wellness journey with AquaVibe, now published in the App Store as Mood Water Tracker: AquaVibe 😊💦</p>
-                <p>The application allows users to set up to 3 daily reminders for consistent tracking and visualize their well-being with beautiful, interactive charts 📈</p>
+                <p class="intro">The application allows users to set up to 3 daily reminders for consistent tracking and visualize their well-being with beautiful, interactive charts 📈</p>
 
                 <h2>👨‍💻 Technology Used</h2>
                 <ul>
@@ -325,32 +325,16 @@
                 if (window.opener && !window.opener.closed) {
                     try {
                         window.opener.focus();
-                        window.close();
-                        setTimeout(function () {
-                            if (!window.closed) {
-                                try {
-                                    window.opener.focus();
-                                } catch (error) {
-                                }
-                                window.location.href = "./index.html";
-                            }
-                        }, 80);
-                        return;
                     } catch (error) {
                     }
                 }
 
-                if (window.history.length > 1) {
-                    window.history.back();
-                    return;
-                }
-
-                if (document.referrer) {
-                    window.location.href = document.referrer;
-                    return;
-                }
-
-                window.location.href = "./index.html";
+                window.close();
+                setTimeout(function () {
+                    if (!window.closed) {
+                        window.location.href = back.href;
+                    }
+                }, 100);
             });
         })();
     </script>
