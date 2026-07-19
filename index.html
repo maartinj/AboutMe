@@ -1,629 +1,1201 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marcin Jędrzejak — iOS Developer</title>
-<link rel="icon" type="image/jpeg" href="./assets/avatar.jpg">
-<link rel="apple-touch-icon" href="./assets/avatar.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#F7F7F5;
-    --surface:#FFFFFF;
-    --ink:#1D1D1F;
-    --ink-soft:#6E6E73;
-    --line:#E5E5E2;
-    --swift:#FA7343;
-    --swift-tint:#FFF1EA;
-    --swift-tint-line:#FFDCC7;
-    --ios-blue:#0071E3;
-    --dark:#1E1E28;
-    --dark-2:#2A2A38;
-    --tag-bg:#F1F1EF;
-    --spring-1:#EDEDEA;
-    --spring-2:#E4E4E0;
-    --spring-line:#D8D8D4;
-    --nav-bg:rgba(247,247,245,0.85);
-  }
-  html[data-theme="dark"]{
-    --bg:#121214;
-    --surface:#1B1B1E;
-    --ink:#F2F2F2;
-    --ink-soft:#9B9BA1;
-    --line:#2C2C30;
-    --swift:#FF8A5C;
-    --swift-tint:#2A1D16;
-    --swift-tint-line:#4A2E1C;
-    --ios-blue:#4DA3FF;
-    --dark:#0C0C0E;
-    --dark-2:#18181B;
-    --tag-bg:#232326;
-    --spring-1:#1B1B1E;
-    --spring-2:#151517;
-    --spring-line:#2C2C30;
-    --nav-bg:rgba(18,18,20,0.85);
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-    transition:background .25s ease, color .25s ease;
-  }
-  h1,h2,h3{font-family:'Sora',sans-serif;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  a{color:inherit; text-decoration:none;}
-  .wrap{max-width:980px; margin:0 auto; padding:0 28px;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marcin Jędrzejak — iOS Developer</title>
+  <link rel="icon" type="image/jpeg" href="./assets/avatar.jpg">
+  <link rel="apple-touch-icon" href="./assets/avatar.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F7F5;
+      --surface: #FFFFFF;
+      --ink: #1D1D1F;
+      --ink-soft: #6E6E73;
+      --line: #E5E5E2;
+      --swift: #FA7343;
+      --swift-tint: #FFF1EA;
+      --swift-tint-line: #FFDCC7;
+      --ios-blue: #0071E3;
+      --dark: #1E1E28;
+      --dark-2: #2A2A38;
+      --tag-bg: #F1F1EF;
+      --spring-1: #EDEDEA;
+      --spring-2: #E4E4E0;
+      --spring-line: #D8D8D4;
+      --nav-bg: rgba(247, 247, 245, 0.85);
+    }
 
-  /* NAV */
-  nav{
-    position:sticky; top:0; z-index:50;
-    background:var(--nav-bg);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--line);
-  }
-  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px; gap:16px;}
-  .logo{
-    width:36px; height:36px; border-radius:10px; flex-shrink:0;
-    display:block; object-fit:cover;
-  }
-  .nav-links{display:flex; gap:28px; font-size:14px; font-weight:500; flex:1;}
-  .nav-links a{color:var(--ink-soft); transition:color .2s;}
-  .nav-links a:hover{color:var(--ink);}
-  .nav-right{display:flex; align-items:center; gap:10px;}
-  .toggle-btn{
-    width:36px; height:36px; border-radius:10px; border:1px solid var(--line);
-    background:var(--surface); color:var(--ink); cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600;
-    transition:background .2s, transform .15s;
-  }
-  .toggle-btn:hover{transform:translateY(-1px);}
-  .toggle-btn svg{width:18px; height:18px;}
-  .lang-btn{width:auto; padding:0 12px; gap:0;}
-  .nav-cta{
-    background:var(--ink); color:var(--bg) !important; padding:8px 16px; border-radius:20px;
-    font-size:13px; font-weight:600; white-space:nowrap;
-    display:inline-flex; align-items:center; gap:6px;
-  }
-  .nav-cta svg{width:14px; height:14px; flex-shrink:0;}
-  @media (max-width:640px){ .nav-links{display:none;} }
+    html[data-theme="dark"] {
+      --bg: #121214;
+      --surface: #1B1B1E;
+      --ink: #F2F2F2;
+      --ink-soft: #9B9BA1;
+      --line: #2C2C30;
+      --swift: #FF8A5C;
+      --swift-tint: #2A1D16;
+      --swift-tint-line: #4A2E1C;
+      --ios-blue: #4DA3FF;
+      --dark: #0C0C0E;
+      --dark-2: #18181B;
+      --tag-bg: #232326;
+      --spring-1: #1B1B1E;
+      --spring-2: #151517;
+      --spring-line: #2C2C30;
+      --nav-bg: rgba(18, 18, 20, 0.85);
+    }
 
-  /* HERO */
-  header.hero{padding:96px 0 64px;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--swift);
-    background:var(--swift-tint); border:1px solid var(--swift-tint-line); padding:6px 12px; border-radius:20px;
-    margin-bottom:24px;
-  }
-  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--swift); animation:pulse 2s infinite;}
-  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.3;}}
-  h1.name{font-size:clamp(38px,6vw,64px); font-weight:800; letter-spacing:-0.02em; line-height:1.05;}
-  h1.name .role{
-    display:block; font-size:0.55em; font-weight:700; color:var(--ink-soft); margin-top:10px;
-  }
-  h1.name .role em{
-    font-style:normal; color:var(--swift); border-bottom:3px solid var(--swift-tint-line);
-  }
-  .lede{
-    max-width:600px; margin-top:24px; font-size:17px; color:var(--ink-soft);
-  }
-  .hero-actions{display:flex; gap:12px; margin-top:32px; flex-wrap:wrap;}
-  .btn{
-    padding:12px 22px; border-radius:10px; font-weight:600; font-size:14px;
-    display:inline-flex; align-items:center; gap:8px; transition:transform .15s, box-shadow .15s;
-  }
-  .btn:hover{transform:translateY(-1px);}
-  .btn svg{width:16px; height:16px; flex-shrink:0;}
-  .btn-primary{background:var(--ink); color:var(--bg) !important; box-shadow:0 4px 14px rgba(0,0,0,.15);}
-  .btn-ghost{background:var(--surface); color:var(--ink) !important; border:1px solid var(--line);}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* SECTION LABEL */
-  .section{padding:64px 0;}
-  .section-head{margin-bottom:32px;}
-  .section-tag{
-    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft);
-    text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; display:block;
-  }
-  .section-title{font-size:28px; font-weight:700; letter-spacing:-0.01em;}
-  .section-sub{color:var(--ink-soft); margin-top:8px; font-size:15px; max-width:520px;}
+    html {
+      scroll-behavior: smooth;
+    }
 
-  /* SPRINGBOARD */
-  .springboard{
-    background:linear-gradient(180deg,var(--spring-1),var(--spring-2));
-    border-radius:28px; padding:36px 24px 20px;
-    border:1px solid var(--spring-line);
-  }
-  .grid{
-    display:grid; grid-template-columns:repeat(5,1fr); gap:32px 24px;
-  }
-  @media (max-width:640px){ .grid{grid-template-columns:repeat(3,1fr);} }
-  .app-icon{
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    cursor:pointer; background:none; border:none; font-family:inherit;
-  }
-  .icon-square{
-    width:100%; aspect-ratio:1; border-radius:23%;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 4px 10px rgba(0,0,0,.12);
-    transition:transform .18s ease;
-    position:relative;
-    overflow:hidden;
-  }
-  .app-icon:hover .icon-square, .app-icon.active .icon-square{transform:scale(1.08) translateY(-2px);}
-  .app-icon.active .icon-square{outline:3px solid var(--ink); outline-offset:3px;}
-  .icon-square img{width:100%; height:100%; object-fit:cover; display:block;}
-  .app-label{font-size:11px; font-weight:600; text-align:center; color:var(--ink-soft);}
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      transition: background .25s ease, color .25s ease;
+    }
 
-  .detail-card{
-    display:none; background:var(--surface); border-radius:16px; padding:24px;
-    margin-top:20px; border:1px solid var(--line); box-shadow:0 8px 24px rgba(0,0,0,.06);
-  }
-  .detail-card.open{display:block; animation:fade .25s ease;}
-  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
-  .detail-top{display:flex; align-items:flex-start; gap:16px; margin-bottom:12px;}
-  .detail-top .icon-square{width:56px; flex-shrink:0; box-shadow:none;}
-  .detail-title{font-size:19px; font-weight:700; font-family:'Sora',sans-serif;}
-  .detail-tagline{color:var(--ink-soft); font-size:14px; margin-top:2px;}
-  .detail-desc{font-size:14.5px; color:var(--ink); opacity:0.85; margin:14px 0;}
-  .tech-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
-  .tag{
-    font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--tag-bg);
-    border:1px solid var(--line); padding:4px 10px; border-radius:6px; color:var(--ink-soft);
-  }
-  .detail-links{display:flex; gap:10px; flex-wrap:wrap;}
-  .detail-links a{
-    font-size:13px; font-weight:600; padding:8px 14px; border-radius:8px;
-    background:var(--tag-bg); border:1px solid var(--line); display:inline-flex; align-items:center; gap:6px;
-  }
-  .detail-links a:hover{background:var(--line);}
+    h1,
+    h2,
+    h3 {
+      font-family: 'Sora', sans-serif;
+    }
 
-  /* OSS */
-  .oss-row{display:flex; gap:16px; flex-wrap:wrap;}
-  .oss-card{
-    flex:1; min-width:240px; background:var(--surface); border:1px solid var(--line);
-    border-radius:14px; padding:20px;
-  }
-  .oss-card h3{font-size:15px; margin-bottom:6px;}
-  .oss-card p{font-size:13.5px; color:var(--ink-soft); margin-bottom:12px;}
-  .oss-card a{font-size:13px; font-weight:600; color:var(--ios-blue); display:inline-flex; align-items:center; gap:4px;}
-  .ext-icon{width:13px; height:13px; flex-shrink:0;}
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-  /* STACK — Xcode style */
-  .stack-panel{
-    background:var(--dark); border-radius:16px; padding:0; overflow:hidden;
-    border:1px solid #34343f;
-  }
-  .stack-header{
-    background:var(--dark-2); padding:10px 18px; display:flex; align-items:center; gap:8px;
-    border-bottom:1px solid #34343f;
-  }
-  .stack-header span{width:11px; height:11px; border-radius:50%; display:inline-block;}
-  .stack-body{padding:22px 24px; font-family:'JetBrains Mono',monospace; font-size:13.5px; color:#D4D4E0;}
-  .stack-body .comment{color:#6A6A7C;}
-  .stack-body .kw{color:#FF7AB2;}
-  .stack-body .type{color:#7EE0C4;}
-  .stack-grid{display:grid; grid-template-columns:1fr 1fr; gap:4px 24px; margin-top:4px;}
-  @media (max-width:640px){ .stack-grid{grid-template-columns:1fr;} }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  /* ABOUT */
-  .about-text{font-size:16px; color:var(--ink); opacity:0.85; max-width:640px;}
-  .about-text p + p{margin-top:14px;}
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
 
-  /* FOOTER */
-  footer{padding:56px 0 48px; border-top:1px solid var(--line); margin-top:32px;}
-  .foot-row{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;}
-  .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
-  .foot-links a{font-size:14px; font-weight:600; color:var(--ink); display:inline-flex; align-items:center; gap:7px;}
-  .foot-links a span{color:var(--ink-soft); font-weight:400; font-family:'JetBrains Mono',monospace; font-size:12px;}
-  .foot-links a svg{width:17px; height:17px; flex-shrink:0;}
-  .copyright{font-size:12.5px; color:var(--ink-soft); margin-top:24px;}
-  .btn-primary svg{width:16px; height:16px; flex-shrink:0;}
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
 
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-  }
-</style>
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 16px;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: block;
+      object-fit: cover;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .nav-links a {
+      color: var(--ink-soft);
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toggle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      transition: background .2s, transform .15s;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .toggle-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .lang-btn {
+      width: auto;
+      padding: 0 12px;
+      gap: 0;
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--bg) !important;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-cta svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width:640px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* HERO */
+    header.hero {
+      padding: 96px 0 64px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--swift);
+      background: var(--swift-tint);
+      border: 1px solid var(--swift-tint-line);
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--swift);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .3;
+      }
+    }
+
+    h1.name {
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    h1.name .role {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 700;
+      color: var(--ink-soft);
+      margin-top: 10px;
+    }
+
+    h1.name .role em {
+      font-style: normal;
+      color: var(--swift);
+      border-bottom: 3px solid var(--swift-tint-line);
+    }
+
+    .lede {
+      max-width: 600px;
+      margin-top: 24px;
+      font-size: 17px;
+      color: var(--ink-soft);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--bg) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .15);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--ink) !important;
+      border: 1px solid var(--line);
+    }
+
+    /* SECTION LABEL */
+    .section {
+      padding: 64px 0;
+    }
+
+    .section-head {
+      margin-bottom: 32px;
+    }
+
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .section-sub {
+      color: var(--ink-soft);
+      margin-top: 8px;
+      font-size: 15px;
+      max-width: 520px;
+    }
+
+    /* SPRINGBOARD */
+    .springboard {
+      background: linear-gradient(180deg, var(--spring-1), var(--spring-2));
+      border-radius: 28px;
+      padding: 36px 24px 20px;
+      border: 1px solid var(--spring-line);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 32px 24px;
+    }
+
+    @media (max-width:640px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .app-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+    }
+
+    .icon-square {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 23%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .12);
+      transition: transform .18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-icon:hover .icon-square,
+    .app-icon.active .icon-square {
+      transform: scale(1.08) translateY(-2px);
+    }
+
+    .app-icon.active .icon-square {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .icon-square img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .app-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--ink-soft);
+    }
+
+    .detail-card {
+      display: none;
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+    }
+
+    .detail-card.open {
+      display: block;
+      animation: fade .25s ease;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .detail-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .detail-top .icon-square {
+      width: 56px;
+      flex-shrink: 0;
+      box-shadow: none;
+    }
+
+    .detail-title {
+      font-size: 19px;
+      font-weight: 700;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .detail-tagline {
+      color: var(--ink-soft);
+      font-size: 14px;
+      margin-top: 2px;
+    }
+
+    .detail-desc {
+      font-size: 14.5px;
+      color: var(--ink);
+      opacity: 0.85;
+      margin: 14px 0;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: var(--tag-bg);
+      border: 1px solid var(--line);
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: var(--ink-soft);
+    }
+
+    .detail-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .detail-links a {
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--line);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-links a:hover {
+      background: var(--line);
+    }
+
+    /* OSS */
+    .oss-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .oss-card {
+      flex: 1;
+      min-width: 240px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .oss-card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .oss-card p {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
+
+    .oss-card a {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ios-blue);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ext-icon {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    /* STACK — Xcode style */
+    .stack-panel {
+      background: var(--dark);
+      border-radius: 16px;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid #34343f;
+    }
+
+    .stack-header {
+      background: var(--dark-2);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #34343f;
+    }
+
+    .stack-header span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .stack-body {
+      padding: 22px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13.5px;
+      color: #D4D4E0;
+    }
+
+    .stack-body .comment {
+      color: #6A6A7C;
+    }
+
+    .stack-body .kw {
+      color: #FF7AB2;
+    }
+
+    .stack-body .type {
+      color: #7EE0C4;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 24px;
+      margin-top: 4px;
+    }
+
+    @media (max-width:640px) {
+      .stack-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ABOUT */
+    .about-text {
+      font-size: 16px;
+      color: var(--ink);
+      opacity: 0.85;
+      max-width: 640px;
+    }
+
+    .about-text p+p {
+      margin-top: 14px;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 56px 0 48px;
+      border-top: 1px solid var(--line);
+      margin-top: 32px;
+    }
+
+    .foot-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .foot-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .foot-links a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .foot-links a span {
+      color: var(--ink-soft);
+      font-weight: 400;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .foot-links a svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .copyright {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      margin-top: 24px;
+    }
+
+    .btn-primary svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="wrap">
-    <a href="#top"><img src="./assets/avatar.jpg" alt="Marcin Jędrzejak" class="logo"></a>
-    <div class="nav-links">
-      <a href="#apps" data-i18n="nav-apps">Aplikacje</a>
-      <a href="#stack" data-i18n="nav-stack">Stack</a>
-      <a href="#about" data-i18n="nav-about">O mnie</a>
-      <a href="#contact" data-i18n="nav-contact">Kontakt</a>
-    </div>
-    <div class="nav-right">
-      <button class="toggle-btn lang-btn" id="langToggle" aria-label="Switch language">PL</button>
-      <button class="toggle-btn" id="themeToggle" aria-label="Switch theme">
-        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
-      </button>
-      <a href="mailto:mjedrzejak@icloud.com" class="nav-cta">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5"/></svg>
-        <span data-i18n="nav-cta">Napisz do mnie</span>
-      </a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero" id="top">
-  <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">Otwarty na umowę o pracę oraz projekty B2B · Bydgoszcz, PL</span></div>
-    <h1 class="name">Marcin Jędrzejak
-      <span class="role" data-i18n="hero-role">Buduję i publikuję aplikacje na <em>iOS</em></span>
-    </h1>
-    <p class="lede" data-i18n="hero-lede">5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI. Od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.</p>
-    <div class="hero-actions">
-      <a href="#apps" class="btn btn-primary" data-i18n="hero-btn-apps">Zobacz aplikacje ↓</a>
-      <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" class="btn btn-ghost" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2.058V3.2c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C16.28 8 17.12 8 18.8 8h1.142M14 2.058C13.607 2 13.136 2 12.349 2H10.4c-2.24 0-3.36 0-4.216.436a4 4 0 0 0-1.748 1.748C4 5.04 4 6.16 4 8.4v7.2c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C7.04 22 8.16 22 10.4 22h3.2c2.24 0 3.36 0 4.216-.436a4 4 0 0 0 1.748-1.748C20 18.96 20 17.84 20 15.6V9.651c0-.787 0-1.257-.058-1.651M14 2.058q.143.02.277.053c.408.098.798.26 1.156.478.404.248.75.594 1.442 1.286l1.25 1.25c.692.692 1.038 1.038 1.286 1.442a4 4 0 0 1 .479 1.156q.031.134.052.277M8 13h8m-8 4h5"/></svg>
-        CV
-      </a>
-      <a href="https://github.com/maartinj" class="btn btn-ghost" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 15a3.72 3.72 0 0 0-1 2.58V21m5-6a3.72 3.72 0 0 1 1 2.58V21m-6-1.95a5.7 5.7 0 0 1-2.82.36c-1.52-.52-1.12-1.9-1.9-2.47A2.37 2.37 0 0 0 3 16.5m16-6.75c0 3-1.95 5.25-7 5.25s-7-2.25-7-5.25a6.3 6.3 0 0 1 .68-3c-.34-1.47-.21-3.28.52-3.64s2.27.3 3.54 1.15a13 13 0 0 1 2.26-.2 13 13 0 0 1 2.26.18c1.27-.85 2.88-1.48 3.54-1.15s.86 2.17.52 3.64A6.3 6.3 0 0 1 19 9.75Z"/></svg>
-        GitHub
-      </a>
-    </div>
-  </div>
-</header>
-
-<section class="section" id="apps">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag" data-i18n="apps-tag">Portfolio</span>
-      <h2 class="section-title" data-i18n="apps-title">Opublikowane aplikacje</h2>
-      <p class="section-sub" data-i18n="apps-sub">Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i linki.</p>
-    </div>
-
-    <div class="springboard">
-      <div class="grid">
-        <button class="app-icon" data-app="pillmemo">
-          <div class="icon-square">
-            <img src="./assets/pillmemo-icon.png" alt="PillMemo" loading="lazy">
-          </div>
-          <span class="app-label">PillMemo</span>
+  <nav>
+    <div class="wrap">
+      <a href="#top"><img src="./assets/avatar.jpg" alt="Marcin Jędrzejak" class="logo"></a>
+      <div class="nav-links">
+        <a href="#apps" data-i18n="nav-apps">Aplikacje</a>
+        <a href="#stack" data-i18n="nav-stack">Stack</a>
+        <a href="#about" data-i18n="nav-about">O mnie</a>
+        <a href="#contact" data-i18n="nav-contact">Kontakt</a>
+      </div>
+      <div class="nav-right">
+        <button class="toggle-btn lang-btn" id="langToggle" aria-label="Switch language">PL</button>
+        <button class="toggle-btn" id="themeToggle" aria-label="Switch theme">
+          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41">
+            </path>
+          </svg>
         </button>
-        <button class="app-icon" data-app="medscan">
-          <div class="icon-square">
-            <img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy">
+        <a href="mailto:mjedrzejak@icloud.com" class="nav-cta">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5" />
+          </svg>
+          <span data-i18n="nav-cta">Napisz do mnie</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">Otwarty na umowę o pracę oraz projekty B2B
+          · Bydgoszcz, PL</span></div>
+      <h1 class="name">Marcin Jędrzejak
+        <span class="role" data-i18n="hero-role">Buduję i publikuję aplikacje na <em>iOS</em></span>
+      </h1>
+      <p class="lede" data-i18n="hero-lede">5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI. Od
+        pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z
+        App Store Connect i ASO.</p>
+      <div class="hero-actions">
+        <a href="#apps" class="btn btn-primary" data-i18n="hero-btn-apps">Zobacz aplikacje ↓</a>
+        <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" class="btn btn-ghost" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M14 2.058V3.2c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C16.28 8 17.12 8 18.8 8h1.142M14 2.058C13.607 2 13.136 2 12.349 2H10.4c-2.24 0-3.36 0-4.216.436a4 4 0 0 0-1.748 1.748C4 5.04 4 6.16 4 8.4v7.2c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C7.04 22 8.16 22 10.4 22h3.2c2.24 0 3.36 0 4.216-.436a4 4 0 0 0 1.748-1.748C20 18.96 20 17.84 20 15.6V9.651c0-.787 0-1.257-.058-1.651M14 2.058q.143.02.277.053c.408.098.798.26 1.156.478.404.248.75.594 1.442 1.286l1.25 1.25c.692.692 1.038 1.038 1.286 1.442a4 4 0 0 1 .479 1.156q.031.134.052.277M8 13h8m-8 4h5" />
+          </svg>
+          CV
+        </a>
+        <a href="https://github.com/maartinj" class="btn btn-ghost" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 15a3.72 3.72 0 0 0-1 2.58V21m5-6a3.72 3.72 0 0 1 1 2.58V21m-6-1.95a5.7 5.7 0 0 1-2.82.36c-1.52-.52-1.12-1.9-1.9-2.47A2.37 2.37 0 0 0 3 16.5m16-6.75c0 3-1.95 5.25-7 5.25s-7-2.25-7-5.25a6.3 6.3 0 0 1 .68-3c-.34-1.47-.21-3.28.52-3.64s2.27.3 3.54 1.15a13 13 0 0 1 2.26-.2 13 13 0 0 1 2.26.18c1.27-.85 2.88-1.48 3.54-1.15s.86 2.17.52 3.64A6.3 6.3 0 0 1 19 9.75Z" />
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="apps">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag" data-i18n="apps-tag">Portfolio</span>
+        <h2 class="section-title" data-i18n="apps-title">Opublikowane aplikacje</h2>
+        <p class="section-sub" data-i18n="apps-sub">Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i
+          linki.</p>
+      </div>
+
+      <div class="springboard">
+        <div class="grid">
+          <button class="app-icon" data-app="pillmemo">
+            <div class="icon-square">
+              <img src="./assets/pillmemo-icon.png" alt="PillMemo" loading="lazy">
+            </div>
+            <span class="app-label">PillMemo</span>
+          </button>
+          <button class="app-icon" data-app="medscan">
+            <div class="icon-square">
+              <img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy">
+            </div>
+            <span class="app-label">MedScan</span>
+          </button>
+          <button class="app-icon" data-app="aquavibe">
+            <div class="icon-square">
+              <img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy">
+            </div>
+            <span class="app-label">AquaVibe</span>
+          </button>
+          <button class="app-icon" data-app="shotdocu">
+            <div class="icon-square">
+              <img src="./assets/shotdocu-icon.png" alt="ShotDocu" loading="lazy">
+            </div>
+            <span class="app-label">ShotDocu</span>
+          </button>
+          <button class="app-icon" data-app="tinygifts">
+            <div class="icon-square">
+              <img src="./assets/tinygifts-icon.png" alt="TinyGifts" loading="lazy">
+            </div>
+            <span class="app-label">TinyGifts</span>
+          </button>
+        </div>
+
+        <div class="detail-card" id="detail-pillmemo">
+          <div class="detail-top">
+            <div class="icon-square"><img src="./assets/pillmemo-icon.png" alt="PillMemo" loading="lazy"></div>
+            <div>
+              <div class="detail-title">PillMemo</div>
+              <div class="detail-tagline" data-i18n="pillmemo-tagline">Med Timer &amp; Pill Counter</div>
+            </div>
           </div>
-          <span class="app-label">MedScan</span>
-        </button>
-        <button class="app-icon" data-app="aquavibe">
-          <div class="icon-square">
-            <img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy">
+          <p class="detail-desc" data-i18n="pillmemo-desc">Przypomina o zażyciu leków i pilnuje zapasu opakowań, żeby
+            użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii. Lokalizacja
+            PL/DE, powiadomienia push i prosty, czytelny interfejs.</p>
+          <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Core Data</span><span
+              class="tag">UserNotifications</span><span class="tag">CloudKit Sharing</span><span
+              class="tag">VIPER</span></div>
+          <div class="detail-links">
+            <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener">App Store <svg
+                class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+            <a href="https://maartinj.github.io/AboutMe/pillmemo-docs.html" target="_blank" rel="noopener"
+              data-i18n="link-docs">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+            <a href="https://trypillmemo.com/" target="_blank" rel="noopener" data-i18n="link-product">Strona produktu
+              <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
           </div>
-          <span class="app-label">AquaVibe</span>
-        </button>
-        <button class="app-icon" data-app="shotdocu">
-          <div class="icon-square">
-            <img src="./assets/shotdocu-icon.png" alt="ShotDocu" loading="lazy">
+        </div>
+
+        <div class="detail-card" id="detail-medscan">
+          <div class="detail-top">
+            <div class="icon-square"><img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy"></div>
+            <div>
+              <div class="detail-title">MedScan</div>
+              <div class="detail-tagline" data-i18n="medscan-tagline">Check meds before you take</div>
+            </div>
           </div>
-          <span class="app-label">ShotDocu</span>
-        </button>
-        <button class="app-icon" data-app="tinygifts">
-          <div class="icon-square">
-            <img src="./assets/tinygifts-icon.png" alt="TinyGifts" loading="lazy">
+          <p class="detail-desc" data-i18n="medscan-desc">Skanuje opakowania leków i sprawdza interakcje oraz
+            przeciwwskazania przed zażyciem. Skupiony na szybkim, efektywnym sprawdzeniu. Bez zakładania konta, ważne
+            informacje natychmiast.</p>
+          <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">GPT-4 Vision</span><span
+              class="tag">MVVM</span></div>
+          <div class="detail-links">
+            <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener">App Store <svg
+                class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+            <a href="https://maartinj.github.io/AboutMe/medscan-docs.html" target="_blank" rel="noopener"
+              data-i18n="link-docs3">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
           </div>
-          <span class="app-label">TinyGifts</span>
-        </button>
-      </div>
+        </div>
 
-      <div class="detail-card" id="detail-pillmemo">
-        <div class="detail-top">
-          <div class="icon-square"><img src="./assets/pillmemo-icon.png" alt="PillMemo" loading="lazy"></div>
-          <div><div class="detail-title">PillMemo</div><div class="detail-tagline" data-i18n="pillmemo-tagline">Med Timer &amp; Pill Counter</div></div>
+        <div class="detail-card" id="detail-aquavibe">
+          <div class="detail-top">
+            <div class="icon-square"><img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy"></div>
+            <div>
+              <div class="detail-title">AquaVibe</div>
+              <div class="detail-tagline" data-i18n="aquavibe-tagline">Daily Goals, Healthy Life</div>
+            </div>
+          </div>
+          <p class="detail-desc" data-i18n="aquavibe-desc">Śledzenie nawodnienia i codziennych nawyków zdrowotnych z
+            prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast
+            przytłaczających statystyk.</p>
+          <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">HealthKit</span><span
+              class="tag">State of Mind</span><span class="tag">Swift Charts</span><span class="tag">WidgetKit</span>
+          </div>
+          <div class="detail-links">
+            <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener">App Store <svg
+                class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+            <a href="https://maartinj.github.io/AboutMe/aquavibe-docs.html" target="_blank" rel="noopener"
+              data-i18n="link-docs2">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+          </div>
         </div>
-        <p class="detail-desc" data-i18n="pillmemo-desc">Przypomina o zażyciu leków i pilnuje zapasu opakowań, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii. Lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Core Data</span><span class="tag">UserNotifications</span><span class="tag">CloudKit Sharing</span><span class="tag">VIPER</span></div>
-        <div class="detail-links">
-          <a href="https://apps.apple.com/pl/app/pillmemo/id6499107849" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-          <a href="https://maartinj.github.io/AboutMe/pillmemo-docs.html" target="_blank" rel="noopener" data-i18n="link-docs">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-          <a href="https://trypillmemo.com/" target="_blank" rel="noopener" data-i18n="link-product">Strona produktu <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-        </div>
-      </div>
 
-      <div class="detail-card" id="detail-medscan">
-        <div class="detail-top">
-          <div class="icon-square"><img src="./assets/medscan-icon.png" alt="MedScan" loading="lazy"></div>
-          <div><div class="detail-title">MedScan</div><div class="detail-tagline" data-i18n="medscan-tagline">Check meds before you take</div></div>
+        <div class="detail-card" id="detail-shotdocu">
+          <div class="detail-top">
+            <div class="icon-square"><img src="./assets/shotdocu-icon.png" alt="ShotDocu" loading="lazy"></div>
+            <div>
+              <div class="detail-title">ShotDocu</div>
+              <div class="detail-tagline" data-i18n="shotdocu-tagline">Convert image into PDFs easily</div>
+            </div>
+          </div>
+          <p class="detail-desc" data-i18n="shotdocu-desc">Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki
+            PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.</p>
+          <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">VisionKit</span><span
+              class="tag">PDFKit</span></div>
+          <div class="detail-links">
+            <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener">App Store <svg
+                class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+            <a href="https://maartinj.github.io/AboutMe/shotdocu-docs.html" target="_blank" rel="noopener"
+              data-i18n="link-docs4">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+          </div>
         </div>
-        <p class="detail-desc" data-i18n="medscan-desc">Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, efektywnym sprawdzeniu. Bez zakładania konta, ważne informacje natychmiast.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">GPT-4 Vision</span><span class="tag">MVVM</span></div>
-        <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6747271665" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-          <a href="https://maartinj.notion.site/MedScan-22187c79476f80acb66ff3101bdfc7fb" target="_blank" rel="noopener" data-i18n="link-docs3">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-        </div>
-      </div>
 
-      <div class="detail-card" id="detail-aquavibe">
-        <div class="detail-top">
-          <div class="icon-square"><img src="./assets/aquavibe-icon.png" alt="AquaVibe" loading="lazy"></div>
-          <div><div class="detail-title">AquaVibe</div><div class="detail-tagline" data-i18n="aquavibe-tagline">Daily Goals, Healthy Life</div></div>
-        </div>
-        <p class="detail-desc" data-i18n="aquavibe-desc">Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">HealthKit</span><span class="tag">State of Mind</span><span class="tag">Swift Charts</span><span class="tag">WidgetKit</span></div>
-        <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6673904865" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-          <a href="https://maartinj.github.io/AboutMe/aquavibe-docs.html" target="_blank" rel="noopener" data-i18n="link-docs2">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-        </div>
-      </div>
-
-      <div class="detail-card" id="detail-shotdocu">
-        <div class="detail-top">
-          <div class="icon-square"><img src="./assets/shotdocu-icon.png" alt="ShotDocu" loading="lazy"></div>
-          <div><div class="detail-title">ShotDocu</div><div class="detail-tagline" data-i18n="shotdocu-tagline">Convert image into PDFs easily</div></div>
-        </div>
-        <p class="detail-desc" data-i18n="shotdocu-desc">Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">VisionKit</span><span class="tag">PDFKit</span></div>
-        <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6749449366" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-          <a href="https://maartinj.notion.site/ShotDocu-28c87c79476f801690a2f080029095e5" target="_blank" rel="noopener" data-i18n="link-docs4">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-        </div>
-      </div>
-
-      <div class="detail-card" id="detail-tinygifts">
-        <div class="detail-top">
-          <div class="icon-square"><img src="./assets/tinygifts-icon.png" alt="TinyGifts" loading="lazy"></div>
-          <div><div class="detail-title">TinyGifts</div><div class="detail-tagline" data-i18n="tinygifts-tagline">Open daily advent surprises</div></div>
-        </div>
-        <p class="detail-desc" data-i18n="tinygifts-desc">Cyfrowy kalendarz adwentowy. Codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających się świąt.</p>
-        <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">EventKit</span><span class="tag">AVFoundation</span></div>
-        <div class="detail-links">
-          <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener">App Store <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-          <a href="https://maartinj.notion.site/TinyGifts-2b287c79476f809980c9dacee4b2d1c0" target="_blank" rel="noopener" data-i18n="link-docs5">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+        <div class="detail-card" id="detail-tinygifts">
+          <div class="detail-top">
+            <div class="icon-square"><img src="./assets/tinygifts-icon.png" alt="TinyGifts" loading="lazy"></div>
+            <div>
+              <div class="detail-title">TinyGifts</div>
+              <div class="detail-tagline" data-i18n="tinygifts-tagline">Open daily advent surprises</div>
+            </div>
+          </div>
+          <p class="detail-desc" data-i18n="tinygifts-desc">Cyfrowy kalendarz adwentowy. Codzienna niespodzianka
+            odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających
+            się świąt.</p>
+          <div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">EventKit</span><span
+              class="tag">AVFoundation</span></div>
+          <div class="detail-links">
+            <a href="https://apps.apple.com/app/apple-store/id6755598883" target="_blank" rel="noopener">App Store <svg
+                class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+            <a href="https://maartinj.github.io/AboutMe/tinygifts-docs.html" target="_blank" rel="noopener"
+              data-i18n="link-docs5">Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+              </svg></a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section" id="oss">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag" data-i18n="oss-tag">Nauka &amp; Open Source</span>
-      <h2 class="section-title" data-i18n="oss-title">Projekty edukacyjne</h2>
-    </div>
-    <div class="oss-row">
-      <div class="oss-card">
-        <h3>Basic Car Maintenance</h3>
-        <p data-i18n="oss1-desc">Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.</p>
-        <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener" data-i18n="oss-link">Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
+  <section class="section" id="oss">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag" data-i18n="oss-tag">Nauka &amp; Open Source</span>
+        <h2 class="section-title" data-i18n="oss-title">Projekty edukacyjne</h2>
       </div>
-      <div class="oss-card">
-        <h3>CarListingApp</h3>
-        <p data-i18n="oss2-desc">Aplikacja stworzona w ramach Community App Challenge.</p>
-        <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener" data-i18n="oss-link2">Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="stack">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag">Stack</span>
-      <h2 class="section-title" data-i18n="stack-title">Z czym pracuję</h2>
-    </div>
-    <div class="stack-panel">
-      <div class="stack-header">
-        <span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span style="background:#28C840"></span>
-      </div>
-      <div class="stack-body">
-        <div class="comment" data-i18n="stack-comment1">// jezyki i frameworki</div>
-        <div class="stack-grid">
-          <div><span class="kw">import</span> <span class="type">SwiftUI</span></div>
-          <div><span class="kw">import</span> <span class="type">Swift</span> <span class="comment" data-i18n="stack-swift-comment">// 5 &amp; 6, concurrency</span></div>
-          <div><span class="kw">import</span> <span class="type">SwiftData</span></div>
-          <div><span class="kw">import</span> <span class="type">CoreData</span></div>
-          <div><span class="kw">import</span> <span class="type">CloudKit</span></div>
-          <div><span class="kw">import</span> <span class="type">UserNotifications</span></div>
-          <div><span class="kw">import</span> <span class="type">StoreKit2</span></div>
-          <div><span class="kw">import</span> <span class="type">WidgetKit</span></div>
-          <div><span class="kw">import</span> <span class="type">AlarmKit</span></div>
-          <div><span class="kw">import</span> <span class="type">Charts</span></div>
-          <div><span class="kw">import</span> <span class="type">ActivityKit</span></div>
-          <div><span class="kw">import</span> <span class="type">TipKit</span></div>
-          <div><span class="kw">import</span> <span class="type">Supabase</span></div>
+      <div class="oss-row">
+        <div class="oss-card">
+          <h3>Basic Car Maintenance</h3>
+          <p data-i18n="oss1-desc">Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.</p>
+          <a href="https://github.com/maartinj/Basic-Car-Maintenance" target="_blank" rel="noopener"
+            data-i18n="oss-link">Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+            </svg></a>
         </div>
-        <div class="comment" style="margin-top:16px;" data-i18n="stack-comment2">// narzedzia i procesy</div>
-        <div class="stack-grid">
-          <div>App Store Connect API</div>
-          <div data-i18n="stack-aso">ASO &amp; lokalizacja</div>
-          <div>Vanilla SwiftUI, MVVM, VIPER, TCA, Clean code</div>
-          <div>Xcode Cloud</div>
+        <div class="oss-card">
+          <h3>CarListingApp</h3>
+          <p data-i18n="oss2-desc">Aplikacja stworzona w ramach Community App Challenge.</p>
+          <a href="https://github.com/maartinj/CarListingApp" target="_blank" rel="noopener"
+            data-i18n="oss-link2">Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z" />
+            </svg></a>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section" id="about">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag" data-i18n="about-tag">O mnie</span>
-      <h2 class="section-title" data-i18n="about-title">Krótko</h2>
-    </div>
-    <div class="about-text">
-      <p data-i18n="about-p1">Od kilku lat samodzielnie projektuję oraz buduję aplikacje na iOS. Od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale potrafię poruszać się też w UIKit, gdy sytuacja tego wymaga.</p>
-      <p data-i18n="about-p2">Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na umowę o pracę oraz współpracę B2B przy projektach iOS. Kontraktowo lub w modelu zdalnym.</p>
-    </div>
-  </div>
-</section>
-
-<footer id="contact">
-  <div class="wrap">
-    <div class="foot-row">
-      <div>
-        <h2 class="section-title" style="margin-bottom:6px;" data-i18n="foot-title">Porozmawiajmy o współpracy</h2>
-        <p class="section-sub" data-i18n="foot-sub">Odpowiadam zwykle w ciągu jednego dnia roboczego.</p>
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag">Stack</span>
+        <h2 class="section-title" data-i18n="stack-title">Z czym pracuję</h2>
       </div>
-      <a href="mailto:mjedrzejak@icloud.com" class="btn btn-primary">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5"/></svg>
-        mjedrzejak@icloud.com
-      </a>
+      <div class="stack-panel">
+        <div class="stack-header">
+          <span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span
+            style="background:#28C840"></span>
+        </div>
+        <div class="stack-body">
+          <div class="comment" data-i18n="stack-comment1">// jezyki i frameworki</div>
+          <div class="stack-grid">
+            <div><span class="kw">import</span> <span class="type">SwiftUI</span></div>
+            <div><span class="kw">import</span> <span class="type">Swift</span> <span class="comment"
+                data-i18n="stack-swift-comment">// 5 &amp; 6, concurrency</span></div>
+            <div><span class="kw">import</span> <span class="type">SwiftData</span></div>
+            <div><span class="kw">import</span> <span class="type">CoreData</span></div>
+            <div><span class="kw">import</span> <span class="type">CloudKit</span></div>
+            <div><span class="kw">import</span> <span class="type">UserNotifications</span></div>
+            <div><span class="kw">import</span> <span class="type">StoreKit2</span></div>
+            <div><span class="kw">import</span> <span class="type">WidgetKit</span></div>
+            <div><span class="kw">import</span> <span class="type">AlarmKit</span></div>
+            <div><span class="kw">import</span> <span class="type">Charts</span></div>
+            <div><span class="kw">import</span> <span class="type">ActivityKit</span></div>
+            <div><span class="kw">import</span> <span class="type">TipKit</span></div>
+            <div><span class="kw">import</span> <span class="type">Supabase</span></div>
+          </div>
+          <div class="comment" style="margin-top:16px;" data-i18n="stack-comment2">// narzedzia i procesy</div>
+          <div class="stack-grid">
+            <div>App Store Connect API</div>
+            <div data-i18n="stack-aso">ASO &amp; lokalizacja</div>
+            <div>Vanilla SwiftUI, MVVM, VIPER, TCA, Clean code</div>
+            <div>Xcode Cloud</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="foot-links" style="margin-top:36px;">
-      <a href="https://www.linkedin.com/in/marcinjedrzejak/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17v-3.5a2.5 2.5 0 0 0-5 0m0 0V17m0-3.5v-3m-4 0V17M8 7v.01"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.4c0-2.24 0-3.36.436-4.216a4 4 0 0 1 1.748-1.748C6.04 3 7.16 3 9.4 3h5.2c2.24 0 3.36 0 4.216.436a4 4 0 0 1 1.748 1.748C21 6.04 21 7.16 21 9.4v5.2c0 2.24 0 3.36-.436 4.216a4 4 0 0 1-1.748 1.748C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.436a4 4 0 0 1-1.748-1.748C3 17.96 3 16.84 3 14.6z"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://github.com/maartinj" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 15a3.72 3.72 0 0 0-1 2.58V21m5-6a3.72 3.72 0 0 1 1 2.58V21m-6-1.95a5.7 5.7 0 0 1-2.82.36c-1.52-.52-1.12-1.9-1.9-2.47A2.37 2.37 0 0 0 3 16.5m16-6.75c0 3-1.95 5.25-7 5.25s-7-2.25-7-5.25a6.3 6.3 0 0 1 .68-3c-.34-1.47-.21-3.28.52-3.64s2.27.3 3.54 1.15a13 13 0 0 1 2.26-.2 13 13 0 0 1 2.26.18c1.27-.85 2.88-1.48 3.54-1.15s.86 2.17.52 3.64A6.3 6.3 0 0 1 19 9.75Z"/></svg>
-        GitHub <span>@maartinj</span>
-      </a>
-      <a href="https://twitter.com/maartin_j" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m18.667 4-5.527 6.316M4.667 20l5.895-6.737m2.578-2.947L9.304 4.9c-.233-.33-.35-.494-.5-.613a1.3 1.3 0 0 0-.45-.233C8.169 4 7.967 4 7.564 4H6.063c-.667 0-1 0-1.18.138a.67.67 0 0 0-.26.502c-.009.227.184.499.57 1.043l5.369 7.58m2.578-2.947 5.668 8c.385.545.578.817.569 1.044a.67.67 0 0 1-.26.502c-.18.138-.513.138-1.18.138h-1.5c-.404 0-.606 0-.79-.054a1.3 1.3 0 0 1-.45-.233c-.151-.119-.268-.284-.501-.613l-4.134-5.837"/></svg>
-        X <span>@maartin_j</span>
-      </a>
-      <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2.058V3.2c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C16.28 8 17.12 8 18.8 8h1.142M14 2.058C13.607 2 13.136 2 12.349 2H10.4c-2.24 0-3.36 0-4.216.436a4 4 0 0 0-1.748 1.748C4 5.04 4 6.16 4 8.4v7.2c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C7.04 22 8.16 22 10.4 22h3.2c2.24 0 3.36 0 4.216-.436a4 4 0 0 0 1.748-1.748C20 18.96 20 17.84 20 15.6V9.651c0-.787 0-1.257-.058-1.651M14 2.058q.143.02.277.053c.408.098.798.26 1.156.478.404.248.75.594 1.442 1.286l1.25 1.25c.692.692 1.038 1.038 1.286 1.442a4 4 0 0 1 .479 1.156q.031.134.052.277M8 13h8m-8 4h5"/></svg>
-        CV
-      </a>
-    </div>
-    <p class="copyright" data-i18n="copyright">© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.</p>
-  </div>
-</footer>
+  </section>
 
-<script>
-  document.querySelectorAll('.app-icon').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.app;
-      const card = document.getElementById('detail-' + id);
-      const wasOpen = card.classList.contains('open');
-      document.querySelectorAll('.detail-card').forEach(c => c.classList.remove('open'));
-      document.querySelectorAll('.app-icon').forEach(b => b.classList.remove('active'));
-      if(!wasOpen){
-        card.classList.add('open');
-        btn.classList.add('active');
-        card.scrollIntoView({behavior:'smooth', block:'nearest'});
-      }
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag" data-i18n="about-tag">O mnie</span>
+        <h2 class="section-title" data-i18n="about-title">Krótko</h2>
+      </div>
+      <div class="about-text">
+        <p data-i18n="about-p1">Od kilku lat samodzielnie projektuję oraz buduję aplikacje na iOS. Od pierwszego szkicu
+          w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale potrafię poruszać
+          się też w UIKit, gdy sytuacja tego wymaga.</p>
+        <p data-i18n="about-p2">Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i
+          monetyzacja. Obecnie otwarty jestem na umowę o pracę oraz współpracę B2B przy projektach iOS. Kontraktowo lub
+          w modelu zdalnym.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-row">
+        <div>
+          <h2 class="section-title" style="margin-bottom:6px;" data-i18n="foot-title">Porozmawiajmy o współpracy</h2>
+          <p class="section-sub" data-i18n="foot-sub">Odpowiadam zwykle w ciągu jednego dnia roboczego.</p>
+        </div>
+        <a href="mailto:mjedrzejak@icloud.com" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5" />
+          </svg>
+          mjedrzejak@icloud.com
+        </a>
+      </div>
+      <div class="foot-links" style="margin-top:36px;">
+        <a href="https://www.linkedin.com/in/marcinjedrzejak/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 17v-3.5a2.5 2.5 0 0 0-5 0m0 0V17m0-3.5v-3m-4 0V17M8 7v.01" />
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 9.4c0-2.24 0-3.36.436-4.216a4 4 0 0 1 1.748-1.748C6.04 3 7.16 3 9.4 3h5.2c2.24 0 3.36 0 4.216.436a4 4 0 0 1 1.748 1.748C21 6.04 21 7.16 21 9.4v5.2c0 2.24 0 3.36-.436 4.216a4 4 0 0 1-1.748 1.748C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.436a4 4 0 0 1-1.748-1.748C3 17.96 3 16.84 3 14.6z" />
+          </svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/maartinj" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 15a3.72 3.72 0 0 0-1 2.58V21m5-6a3.72 3.72 0 0 1 1 2.58V21m-6-1.95a5.7 5.7 0 0 1-2.82.36c-1.52-.52-1.12-1.9-1.9-2.47A2.37 2.37 0 0 0 3 16.5m16-6.75c0 3-1.95 5.25-7 5.25s-7-2.25-7-5.25a6.3 6.3 0 0 1 .68-3c-.34-1.47-.21-3.28.52-3.64s2.27.3 3.54 1.15a13 13 0 0 1 2.26-.2 13 13 0 0 1 2.26.18c1.27-.85 2.88-1.48 3.54-1.15s.86 2.17.52 3.64A6.3 6.3 0 0 1 19 9.75Z" />
+          </svg>
+          GitHub <span>@maartinj</span>
+        </a>
+        <a href="https://twitter.com/maartin_j" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m18.667 4-5.527 6.316M4.667 20l5.895-6.737m2.578-2.947L9.304 4.9c-.233-.33-.35-.494-.5-.613a1.3 1.3 0 0 0-.45-.233C8.169 4 7.967 4 7.564 4H6.063c-.667 0-1 0-1.18.138a.67.67 0 0 0-.26.502c-.009.227.184.499.57 1.043l5.369 7.58m2.578-2.947 5.668 8c.385.545.578.817.569 1.044a.67.67 0 0 1-.26.502c-.18.138-.513.138-1.18.138h-1.5c-.404 0-.606 0-.79-.054a1.3 1.3 0 0 1-.45-.233c-.151-.119-.268-.284-.501-.613l-4.134-5.837" />
+          </svg>
+          X <span>@maartin_j</span>
+        </a>
+        <a href="https://mjedrzejak.craft.me/ENZBwC6aYq4zC4" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M14 2.058V3.2c0 1.68 0 2.52.327 3.162a3 3 0 0 0 1.311 1.311C16.28 8 17.12 8 18.8 8h1.142M14 2.058C13.607 2 13.136 2 12.349 2H10.4c-2.24 0-3.36 0-4.216.436a4 4 0 0 0-1.748 1.748C4 5.04 4 6.16 4 8.4v7.2c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C7.04 22 8.16 22 10.4 22h3.2c2.24 0 3.36 0 4.216-.436a4 4 0 0 0 1.748-1.748C20 18.96 20 17.84 20 15.6V9.651c0-.787 0-1.257-.058-1.651M14 2.058q.143.02.277.053c.408.098.798.26 1.156.478.404.248.75.594 1.442 1.286l1.25 1.25c.692.692 1.038 1.038 1.286 1.442a4 4 0 0 1 .479 1.156q.031.134.052.277M8 13h8m-8 4h5" />
+          </svg>
+          CV
+        </a>
+      </div>
+      <p class="copyright" data-i18n="copyright">© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.app-icon').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.app;
+        const card = document.getElementById('detail-' + id);
+        const wasOpen = card.classList.contains('open');
+        document.querySelectorAll('.detail-card').forEach(c => c.classList.remove('open'));
+        document.querySelectorAll('.app-icon').forEach(b => b.classList.remove('active'));
+        if (!wasOpen) {
+          card.classList.add('open');
+          btn.classList.add('active');
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
     });
-  });
-  document.getElementById('detail-pillmemo').classList.add('open');
-  document.querySelector('[data-app="pillmemo"]').classList.add('active');
+    document.getElementById('detail-pillmemo').classList.add('open');
+    document.querySelector('[data-app="pillmemo"]').classList.add('active');
 
-  /* ---- THEME TOGGLE ---- */
-  const sunIcon = '<g clip-path="url(#theme-icon-clip)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 23v-1m-7.778-2.222.707-.707M1 12h1m2.222-7.778.707.707M12 2V1m7.071 3.929.707-.707M22 12h1m-3.929 7.071.707.707M18 12a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" fill="none"/></g><defs><clipPath id="theme-icon-clip"><path fill="none" d="M0 0h24v24H0z"/></clipPath></defs>';
-  const moonIcon = '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 11.966A6.5 6.5 0 1 1 12.035 3H12a9 9 0 1 0 9 9z" fill="none"/>';
-  const themeBtn = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  function applyTheme(theme){
-    document.documentElement.setAttribute('data-theme', theme);
-    themeIcon.innerHTML = theme === 'dark' ? moonIcon : sunIcon;
-    localStorage.setItem('mj-theme', theme);
-  }
-  const savedTheme = localStorage.getItem('mj-theme') ||
-    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  applyTheme(savedTheme);
-  themeBtn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    applyTheme(current === 'dark' ? 'light' : 'dark');
-  });
-
-  /* ---- LANGUAGE TOGGLE ---- */
-  const translations = {
-    pl: {
-      'nav-apps':'Aplikacje','nav-stack':'Stack','nav-about':'O mnie','nav-contact':'Kontakt',
-      'nav-cta':'Napisz do mnie',
-      'eyebrow':'Otwarty na umowę o pracę oraz projekty B2B · Bydgoszcz, PL',
-      'hero-role':'Buduję i publikuję aplikacje na <em>iOS</em>',
-      'hero-lede':'5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI. Od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.',
-      'hero-btn-apps':'Zobacz aplikacje ↓',
-      'apps-tag':'Portfolio','apps-title':'Aplikacje w App Store',
-      'apps-sub':'Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i linki.',
-      'pillmemo-tagline':'Przypomnienia o lekach i licznik tabletek',
-      'medscan-tagline':'Sprawdź leki przed zażyciem',
-      'aquavibe-tagline':'Codzienne cele, zdrowsze życie',
-      'shotdocu-tagline':'Łatwo zamieniaj zdjęcia w PDF-y',
-      'tinygifts-tagline':'Odkrywaj codzienne niespodzianki adwentowe',
-      'pillmemo-desc':'Przypomina o zażyciu leków i pilnuje zapasu opakowań, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii. Lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.',
-      'medscan-desc':'Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, efektywnym sprawdzeniu. Bez zakładania konta, ważne informacje natychmiast.',
-      'aquavibe-desc':'Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.',
-      'shotdocu-desc':'Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.',
-      'tinygifts-desc':'Cyfrowy kalendarz adwentowy. Codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających się świąt.',
-      'link-docs':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs2':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs3':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs4':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs5':'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
-      'link-product':'Strona produktu <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
-      'oss-tag':'Nauka &amp; Open Source','oss-title':'Projekty edukacyjne',
-      'oss1-desc':'Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.',
-      'oss2-desc':'Aplikacja stworzona w ramach Community App Challenge.',
-      'oss-link':'Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','oss-link2':'Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
-      'stack-title':'Z czym pracuję',
-      'stack-comment1':'// jezyki i frameworki','stack-comment2':'// narzedzia i procesy',
-      'stack-swift-comment':'// 5 &amp; 6, concurrency',
-      'stack-aso':'ASO &amp; lokalizacja',
-      'about-tag':'O mnie','about-title':'Kilka słów',
-      'about-p1':'Od kilku lat samodzielnie projektuję oraz buduję aplikacje na iOS. Od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale potrafię poruszać się też w UIKit, gdy sytuacja tego wymaga.',
-      'about-p2':'Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na umowę o pracę oraz współpracę B2B przy projektach iOS. Kontraktowo lub w modelu zdalnym.',
-      'foot-title':'Porozmawiajmy o współpracy',
-      'foot-sub':'Odpowiadam zwykle w ciągu jednego dnia roboczego.',
-      'copyright':'© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.'
-    },
-    en: {
-      'nav-apps':'Apps','nav-stack':'Stack','nav-about':'About','nav-contact':'Contact',
-      'nav-cta':'Get in touch',
-      'eyebrow':'Open to employment contract and B2B projects · Bydgoszcz, PL',
-      'hero-role':'I design and ship apps for <em>iOS</em>',
-      'hero-lede':'5 apps live on the App Store, designed and built from scratch in SwiftUI. From concept, through architecture, to release. I handle the full cycle: UI, local/CloudKit data, App Store Connect integrations, and ASO.',
-      'hero-btn-apps':'See the apps ↓',
-      'apps-tag':'Portfolio','apps-title':'Apps in the App Store',
-      'apps-sub':'Tap an icon to see details, tech stack, and links.',
-      'pillmemo-tagline':'Med Timer &amp; Pill Counter',
-      'medscan-tagline':'Check meds before you take',
-      'aquavibe-tagline':'Daily Goals, Healthy Life',
-      'shotdocu-tagline':'Convert image into PDFs easily',
-      'tinygifts-tagline':'Open daily advent surprises',
-      'pillmemo-desc':'Reminds you to take your medication and tracks how many doses are left, so you know when to reorder. Built for people on long-term treatment plans. PL/DE localization, push notifications, and a clean, readable interface.',
-      'medscan-desc':'Scans medication packaging and checks interactions and contraindications before you take a dose. Focused on fast, efficient verification. No account required, immediate access to important information.',
-      'aquavibe-desc':'Tracks hydration and daily health habits with simple, visual daily goals. Focused on motivation through small, consistent wins instead of overwhelming stats.',
-      'shotdocu-desc':'Turns document photos into clear, cropped PDFs. Scans in seconds, with no unnecessary settings. Built for fast, repeatable workflows.',
-      'tinygifts-desc':'A digital Advent calendar. A daily surprise unlocks at midnight. A light, seasonal app focused on polished animation and a sense of the approaching holidays.',
-      'link-docs':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs2':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs3':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs4':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','link-docs5':'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
-      'link-product':'Product page <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
-      'oss-tag':'Learning &amp; Open Source','oss-title':'Learning projects',
-      'oss1-desc':'Open-source repository for practicing SwiftUI architecture and best practices.',
-      'oss2-desc':'App built as part of a Community App Challenge.',
-      'oss-link':'View on GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>','oss-link2':'View on GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
-      'stack-title':'What I work with',
-      'stack-comment1':'// languages &amp; frameworks','stack-comment2':'// tools &amp; process',
-      'stack-swift-comment':'// 5 &amp; 6, concurrency',
-      'stack-aso':'ASO &amp; localization',
-      'about-tag':'About','about-title':'A few words',
-      'about-p1':'For several years I\'ve been independently designing and building iOS apps. From the first sketch in Figma, through architecture and code, to release and marketing on the App Store. SwiftUI is my go-to, but I can also navigate UIKit when the situation calls for it.',
-      'about-p2':'I care about the whole product lifecycle: solid UX, clean architecture, ASO, and monetization. I\'m currently open to employment contract and B2B collaboration on iOS projects. Contract or remote.',
-      'foot-title':'Let\'s talk about cooperation',
-      'foot-sub':'I usually reply within one business day.',
-      'copyright':'© 2026 Marcin Jędrzejak. All rights reserved.'
+    /* ---- THEME TOGGLE ---- */
+    const sunIcon = '<g clip-path="url(#theme-icon-clip)"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 23v-1m-7.778-2.222.707-.707M1 12h1m2.222-7.778.707.707M12 2V1m7.071 3.929.707-.707M22 12h1m-3.929 7.071.707.707M18 12a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" fill="none"/></g><defs><clipPath id="theme-icon-clip"><path fill="none" d="M0 0h24v24H0z"/></clipPath></defs>';
+    const moonIcon = '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 11.966A6.5 6.5 0 1 1 12.035 3H12a9 9 0 1 0 9 9z" fill="none"/>';
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      themeIcon.innerHTML = theme === 'dark' ? moonIcon : sunIcon;
+      localStorage.setItem('mj-theme', theme);
     }
-  };
-  const langBtn = document.getElementById('langToggle');
-  function applyLang(lang){
-    document.documentElement.setAttribute('lang', lang);
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if(translations[lang][key] !== undefined){
-        el.innerHTML = translations[lang][key];
-      }
+    const savedTheme = localStorage.getItem('mj-theme') ||
+      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
     });
-    langBtn.textContent = lang.toUpperCase();
-    localStorage.setItem('mj-lang', lang);
-  }
-  const savedLang = localStorage.getItem('mj-lang') || 'pl';
-  applyLang(savedLang);
-  langBtn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('lang');
-    applyLang(current === 'pl' ? 'en' : 'pl');
-  });
-</script>
+
+    /* ---- LANGUAGE TOGGLE ---- */
+    const translations = {
+      pl: {
+        'nav-apps': 'Aplikacje', 'nav-stack': 'Stack', 'nav-about': 'O mnie', 'nav-contact': 'Kontakt',
+        'nav-cta': 'Napisz do mnie',
+        'eyebrow': 'Otwarty na umowę o pracę oraz projekty B2B · Bydgoszcz, PL',
+        'hero-role': 'Buduję i publikuję aplikacje na <em>iOS</em>',
+        'hero-lede': '5 aplikacji w App Store, zaprojektowanych i napisanych od zera w SwiftUI. Od pomysłu, przez architekturę, po publikację. Zajmuję się całym cyklem: UI, dane lokalne/CloudKit, integracje z App Store Connect i ASO.',
+        'hero-btn-apps': 'Zobacz aplikacje ↓',
+        'apps-tag': 'Portfolio', 'apps-title': 'Aplikacje w App Store',
+        'apps-sub': 'Kliknij ikonę, żeby zobaczyć szczegóły, stack technologiczny i linki.',
+        'pillmemo-tagline': 'Przypomnienia o lekach i licznik tabletek',
+        'medscan-tagline': 'Sprawdź leki przed zażyciem',
+        'aquavibe-tagline': 'Codzienne cele, zdrowsze życie',
+        'shotdocu-tagline': 'Łatwo zamieniaj zdjęcia w PDF-y',
+        'tinygifts-tagline': 'Odkrywaj codzienne niespodzianki adwentowe',
+        'pillmemo-desc': 'Przypomina o zażyciu leków i pilnuje zapasu opakowań, żeby użytkownik wiedział, kiedy zamówić kolejne. Zbudowany z myślą o osobach na stałej terapii. Lokalizacja PL/DE, powiadomienia push i prosty, czytelny interfejs.',
+        'medscan-desc': 'Skanuje opakowania leków i sprawdza interakcje oraz przeciwwskazania przed zażyciem. Skupiony na szybkim, efektywnym sprawdzeniu. Bez zakładania konta, ważne informacje natychmiast.',
+        'aquavibe-desc': 'Śledzenie nawodnienia i codziennych nawyków zdrowotnych z prostymi, wizualnymi celami dziennymi. Nacisk na motywację przez małe, regularne sukcesy zamiast przytłaczających statystyk.',
+        'shotdocu-desc': 'Zmienia zdjęcia dokumentów w przejrzyste, przycięte pliki PDF. Skanowanie w kilka sekund, bez zbędnych ustawień. Zbudowany pod szybki, powtarzalny workflow.',
+        'tinygifts-desc': 'Cyfrowy kalendarz adwentowy. Codzienna niespodzianka odblokowywana o północy. Lekka, sezonowa aplikacja skupiona na dopracowanej animacji i poczuciu zbliżających się świąt.',
+        'link-docs': 'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs2': 'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs3': 'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs4': 'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs5': 'Dokumentacja <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+        'link-product': 'Strona produktu <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+        'oss-tag': 'Nauka &amp; Open Source', 'oss-title': 'Projekty edukacyjne',
+        'oss1-desc': 'Repozytorium open source do nauki architektury i dobrych praktyk w SwiftUI.',
+        'oss2-desc': 'Aplikacja stworzona w ramach Community App Challenge.',
+        'oss-link': 'Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'oss-link2': 'Zobacz na GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+        'stack-title': 'Z czym pracuję',
+        'stack-comment1': '// jezyki i frameworki', 'stack-comment2': '// narzedzia i procesy',
+        'stack-swift-comment': '// 5 &amp; 6, concurrency',
+        'stack-aso': 'ASO &amp; lokalizacja',
+        'about-tag': 'O mnie', 'about-title': 'Kilka słów',
+        'about-p1': 'Od kilku lat samodzielnie projektuję oraz buduję aplikacje na iOS. Od pierwszego szkicu w Figmie, przez architekturę i kod, po publikację i marketing w App Store. Wolę SwiftUI, ale potrafię poruszać się też w UIKit, gdy sytuacja tego wymaga.',
+        'about-p2': 'Interesuje mnie cały cykl życia produktu: dobre UX, czysta architektura, ASO i monetyzacja. Obecnie otwarty jestem na umowę o pracę oraz współpracę B2B przy projektach iOS. Kontraktowo lub w modelu zdalnym.',
+        'foot-title': 'Porozmawiajmy o współpracy',
+        'foot-sub': 'Odpowiadam zwykle w ciągu jednego dnia roboczego.',
+        'copyright': '© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.'
+      },
+      en: {
+        'nav-apps': 'Apps', 'nav-stack': 'Stack', 'nav-about': 'About', 'nav-contact': 'Contact',
+        'nav-cta': 'Get in touch',
+        'eyebrow': 'Open to employment contract and B2B projects · Bydgoszcz, PL',
+        'hero-role': 'I design and ship apps for <em>iOS</em>',
+        'hero-lede': '5 apps live on the App Store, designed and built from scratch in SwiftUI. From concept, through architecture, to release. I handle the full cycle: UI, local/CloudKit data, App Store Connect integrations, and ASO.',
+        'hero-btn-apps': 'See the apps ↓',
+        'apps-tag': 'Portfolio', 'apps-title': 'Apps in the App Store',
+        'apps-sub': 'Tap an icon to see details, tech stack, and links.',
+        'pillmemo-tagline': 'Med Timer &amp; Pill Counter',
+        'medscan-tagline': 'Check meds before you take',
+        'aquavibe-tagline': 'Daily Goals, Healthy Life',
+        'shotdocu-tagline': 'Convert image into PDFs easily',
+        'tinygifts-tagline': 'Open daily advent surprises',
+        'pillmemo-desc': 'Reminds you to take your medication and tracks how many doses are left, so you know when to reorder. Built for people on long-term treatment plans. PL/DE localization, push notifications, and a clean, readable interface.',
+        'medscan-desc': 'Scans medication packaging and checks interactions and contraindications before you take a dose. Focused on fast, efficient verification. No account required, immediate access to important information.',
+        'aquavibe-desc': 'Tracks hydration and daily health habits with simple, visual daily goals. Focused on motivation through small, consistent wins instead of overwhelming stats.',
+        'shotdocu-desc': 'Turns document photos into clear, cropped PDFs. Scans in seconds, with no unnecessary settings. Built for fast, repeatable workflows.',
+        'tinygifts-desc': 'A digital Advent calendar. A daily surprise unlocks at midnight. A light, seasonal app focused on polished animation and a sense of the approaching holidays.',
+        'link-docs': 'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs2': 'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs3': 'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs4': 'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'link-docs5': 'Documentation <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+        'link-product': 'Product page <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+        'oss-tag': 'Learning &amp; Open Source', 'oss-title': 'Learning projects',
+        'oss1-desc': 'Open-source repository for practicing SwiftUI architecture and best practices.',
+        'oss2-desc': 'App built as part of a Community App Challenge.',
+        'oss-link': 'View on GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>', 'oss-link2': 'View on GitHub <svg class="ext-icon" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5.236 16.784 1.98 1.98c.396.396.594.594.823.668a1 1 0 0 0 .618 0c.228-.074.426-.272.822-.668l7.017-7.017a61 61 0 0 1 2.595 3.062 35.3 35.3 0 0 0 .177-9.096 1.11 1.11 0 0 0-.98-.98 35.3 35.3 0 0 0-9.097.177 61 61 0 0 1 3.062 2.594l-7.017 7.017c-.396.396-.594.594-.668.823a1 1 0 0 0 0 .618c.074.228.272.426.668.822Z"/></svg>',
+        'stack-title': 'What I work with',
+        'stack-comment1': '// languages &amp; frameworks', 'stack-comment2': '// tools &amp; process',
+        'stack-swift-comment': '// 5 &amp; 6, concurrency',
+        'stack-aso': 'ASO &amp; localization',
+        'about-tag': 'About', 'about-title': 'A few words',
+        'about-p1': 'For several years I\'ve been independently designing and building iOS apps. From the first sketch in Figma, through architecture and code, to release and marketing on the App Store. SwiftUI is my go-to, but I can also navigate UIKit when the situation calls for it.',
+        'about-p2': 'I care about the whole product lifecycle: solid UX, clean architecture, ASO, and monetization. I\'m currently open to employment contract and B2B collaboration on iOS projects. Contract or remote.',
+        'foot-title': 'Let\'s talk about cooperation',
+        'foot-sub': 'I usually reply within one business day.',
+        'copyright': '© 2026 Marcin Jędrzejak. All rights reserved.'
+      }
+    };
+    const langBtn = document.getElementById('langToggle');
+    function applyLang(lang) {
+      document.documentElement.setAttribute('lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key] !== undefined) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+      langBtn.textContent = lang.toUpperCase();
+      localStorage.setItem('mj-lang', lang);
+    }
+    const savedLang = localStorage.getItem('mj-lang') || 'pl';
+    applyLang(savedLang);
+    langBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('lang');
+      applyLang(current === 'pl' ? 'en' : 'pl');
+    });
+  </script>
 
 </body>
+
 </html>
