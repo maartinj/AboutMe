@@ -18,6 +18,16 @@
             --code-bg: #010409;
         }
 
+        html[data-theme="light"] {
+            --bg: #f6f8fa;
+            --surface: #ffffff;
+            --surface-2: #f6f8fa;
+            --border: #d0d7de;
+            --text: #1f2328;
+            --muted: #57606a;
+            --code-bg: #f6f8fa;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,7 +37,7 @@
         body {
             font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             color: var(--text);
-            background: linear-gradient(180deg, #0d1117 0%, #0b1220 100%);
+            background: var(--bg);
             min-height: 100vh;
             line-height: 1.6;
             padding: 24px;
@@ -59,6 +69,26 @@
             font-size: 14px;
             font-weight: 600;
         }
+
+        .topbar-actions { display: flex; gap: 8px; }
+        .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 36px;
+            padding: 0 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .toggle-btn:hover { background: var(--surface-2); }
+        .toggle-btn svg { width: 18px; height: 18px; }
 
         .card {
             background: var(--surface);
@@ -130,7 +160,7 @@
 
         .intro {
             font-size: 18px;
-            color: #d0d7de;
+            color: var(--text);
         }
 
         .repo-highlights {
@@ -212,6 +242,12 @@
     <div class="wrap">
         <div class="topbar">
             <a class="back" href="./index.html" aria-label="Back to portfolio">← Back to portfolio</a>
+            <div class="topbar-actions">
+                <button class="toggle-btn" id="langToggle" aria-label="Switch language">PL</button>
+                <button class="toggle-btn" id="themeToggle" aria-label="Switch theme">
+                    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+                </button>
+            </div>
         </div>
 
         <article class="card">
@@ -222,8 +258,8 @@
 
             <section class="content">
                 <h1>😎💧 AquaVibe</h1>
-                <p class="intro">Track your wellness journey with AquaVibe, now published in the App Store as Mood Water Tracker: AquaVibe 😊💦</p>
-                <p class="intro">The application allows users to set up to 3 daily reminders for consistent tracking and visualize their well-being with beautiful, interactive charts 📈</p>
+                <p class="intro" data-i18n="intro-1">Track your wellness journey with AquaVibe, now published in the App Store as Mood Water Tracker: AquaVibe 😊💦</p>
+                <p class="intro" data-i18n="intro-2">The application allows users to set up to 3 daily reminders for consistent tracking and visualize their well-being with beautiful, interactive charts 📈</p>
 
                 <h2>👨‍💻 Technology Used</h2>
                 <ul>
@@ -237,24 +273,24 @@
                     <li>AVKit, AVFoundation</li>
                 </ul>
 
-                <h2>📌 What Changed In The Repo</h2>
-                <div class="repo-highlights">
+                <h2 data-i18n="h-repo">📌 What Changed In The Repo</h2>
+                <div class="repo-highlights" data-i18n="repo-highlights">
                     Biggest evolution was shipping AquaVibe from zero to production app during RevenueCat Ship-a-ton, and implementing reliable State of Mind fetching/saving with HealthKit for iOS 18+.
                 </div>
 
-                <h2>🎥 AquaVibe In Action</h2>
+                <h2 data-i18n="h-action">🎥 AquaVibe In Action</h2>
                 <div class="media media--phone">
                     <video controls preload="metadata" playsinline>
                         <source src="./assets/aquavibe-demo.m4v" type="video/mp4">
                         <source src="./assets/aquavibe-demo.mov" type="video/quicktime">
                         Your browser does not support embedded video.
                     </video>
-                    <div class="media__caption">AquaVibe demo video</div>
+                    <div class="media__caption" data-i18n="caption-video">AquaVibe demo video</div>
                 </div>
 
-                <h2>🏆 Standout Success</h2>
-                <p>AquaVibe was created from scratch to a fully working iOS application during RevenueCat Ship-a-ton competition.</p>
-                <p>AquaVibe won a Participation Prize in RevenueCat Ship-a-ton competition.</p>
+                <h2 data-i18n="h-success">🏆 Standout Success</h2>
+                <p data-i18n="success-1">AquaVibe was created from scratch to a fully working iOS application during RevenueCat Ship-a-ton competition.</p>
+                <p data-i18n="success-2">AquaVibe won a Participation Prize in RevenueCat Ship-a-ton competition.</p>
                 <p>The most challenging part was understanding State of Mind logic. Documentation and sample projects were not enough, so extensive testing was needed to verify how to correctly fetch and save mood/emotion data to Apple HealthKit.</p>
                 <p>State of Mind is also new from iOS 18, so high-quality implementation references were limited.</p>
 
@@ -297,8 +333,8 @@
                     <div class="media__caption">AquaVibe UI preview</div>
                 </div>
 
-                <h2>✅ Entireness</h2>
-                <p>Nevertheless, while creating this mood and water intake reminder app, I have also included:</p>
+                <h2 data-i18n="h-entire">✅ Entireness</h2>
+                <p data-i18n="entire-intro">Nevertheless, while creating this mood and water intake reminder app, I have also included:</p>
                 <ul>
                     <li>Concurrency</li>
                     <li>Error handling &amp; alerts</li>
@@ -307,8 +343,8 @@
                     <li>Current App Store release: v1.0.4 (08/2025)</li>
                 </ul>
 
-                <h2>ℹ️ License</h2>
-                <p>AquaVibe is the property of Marcin Jędrzejak. Unauthorized copying, distribution, or modification of this application is strictly prohibited.</p>
+                <h2 data-i18n="h-license">ℹ️ License</h2>
+                <p data-i18n="license">AquaVibe is the property of Marcin Jędrzejaka. Unauthorized copying, distribution, or modification of this application is strictly prohibited.</p>
 
                 <p class="footer">®️ 2026 All rights reserved by Marcin Jędrzejak.</p>
             </section>
@@ -335,6 +371,65 @@
                         window.location.href = back.href;
                     }
                 }, 100);
+            });
+        })();
+
+        (function () {
+            const translations = {
+                en: {
+                    "intro-1": "Track your wellness journey with AquaVibe, now published in the App Store as Mood Water Tracker: AquaVibe 😊💦",
+                    "intro-2": "The application allows users to set up to 3 daily reminders for consistent tracking and visualize their well-being with beautiful, interactive charts 📈",
+                    "h-repo": "📌 What Changed In The Repo", "repo-highlights": "Biggest evolution was shipping AquaVibe from zero to production app during RevenueCat Ship-a-ton, and implementing reliable State of Mind fetching/saving with HealthKit for iOS 18+.",
+                    "h-action": "🎥 AquaVibe In Action", "caption-video": "AquaVibe demo video", "h-success": "🏆 Standout Success",
+                    "success-1": "AquaVibe was created from scratch to a fully working iOS application during RevenueCat Ship-a-ton competition.", "success-2": "AquaVibe won a Participation Prize in RevenueCat Ship-a-ton competition.",
+                    "h-entire": "✅ Entireness", "entire-intro": "Nevertheless, while creating this mood and water intake reminder app, I have also included:", "h-license": "ℹ️ License", "license": "AquaVibe is the property of Marcin Jędrzejaka. Unauthorized copying, distribution, or modification of this application is strictly prohibited."
+                },
+                pl: {
+                    "intro-1": "Śledź swoją drogę do lepszego samopoczucia z AquaVibe, dostępnym w App Store jako Mood Water Tracker: AquaVibe 😊💦",
+                    "intro-2": "Aplikacja pozwala ustawić do 3 codziennych przypomnień i wizualizować samopoczucie na pięknych, interaktywnych wykresach 📈",
+                    "h-repo": "📌 Co zmieniło się w repozytorium", "repo-highlights": "Największym krokiem było doprowadzenie AquaVibe od zera do produkcyjnej aplikacji podczas RevenueCat Ship-a-ton oraz wdrożenie niezawodnego zapisu i odczytu danych State of Mind w HealthKit dla iOS 18+.",
+                    "h-action": "🎥 AquaVibe w akcji", "caption-video": "Film demonstracyjny AquaVibe", "h-success": "🏆 Największy sukces",
+                    "success-1": "AquaVibe powstało od zera jako w pełni działająca aplikacja iOS podczas konkursu RevenueCat Ship-a-ton.", "success-2": "AquaVibe zdobyło nagrodę za uczestnictwo w konkursie RevenueCat Ship-a-ton.",
+                    "h-entire": "✅ Całość", "entire-intro": "Tworząc tę aplikację do śledzenia nastroju i nawodnienia, uwzględniłem również:", "h-license": "ℹ️ Licencja", "license": "AquaVibe jest własnością Marcina Jędrzejaka. Nieautoryzowane kopiowanie, rozpowszechnianie lub modyfikowanie tej aplikacji jest surowo zabronione."
+                }
+            };
+            const langBtn = document.getElementById("langToggle");
+            function applyLang(lang) {
+                document.documentElement.setAttribute("lang", lang);
+                document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                    el.textContent = translations[lang][el.dataset.i18n];
+                });
+                const nextLang = lang === "pl" ? "en" : "pl";
+                langBtn.textContent = nextLang.toUpperCase();
+                langBtn.setAttribute("aria-label", `Switch to ${nextLang === "pl" ? "Polish" : "English"}`);
+                localStorage.setItem("mj-lang", lang);
+            }
+            applyLang(localStorage.getItem("mj-lang") || "pl");
+            langBtn.addEventListener("click", function () {
+                applyLang(document.documentElement.getAttribute("lang") === "pl" ? "en" : "pl");
+            });
+        })();
+
+        (function () {
+            const sunIcon = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>';
+            const moonIcon = '<path d="M21 11.966A6.5 6.5 0 1 1 12.035 3H12a9 9 0 1 0 9 9z"></path>';
+            const themeBtn = document.getElementById("themeToggle");
+            const themeIcon = document.getElementById("themeIcon");
+
+            function applyTheme(theme) {
+                document.documentElement.setAttribute("data-theme", theme);
+                const nextTheme = theme === "dark" ? "light" : "dark";
+                themeIcon.innerHTML = nextTheme === "dark" ? moonIcon : sunIcon;
+                themeBtn.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
+                localStorage.setItem("mj-theme", theme);
+            }
+
+            const savedTheme = localStorage.getItem("mj-theme") ||
+                (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            applyTheme(savedTheme);
+            themeBtn.addEventListener("click", function () {
+                const current = document.documentElement.getAttribute("data-theme");
+                applyTheme(current === "dark" ? "light" : "dark");
             });
         })();
     </script>

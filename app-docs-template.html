@@ -494,7 +494,9 @@
 
             function applyTheme(theme) {
                 document.documentElement.setAttribute("data-theme", theme);
-                themeIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
+                const nextTheme = theme === "dark" ? "light" : "dark";
+                themeIcon.innerHTML = nextTheme === "dark" ? moonIcon : sunIcon;
+                themeBtn.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
                 localStorage.setItem("mj-theme", theme);
             }
 
@@ -639,7 +641,9 @@
                         el.innerHTML = translations[lang][key];
                     }
                 });
-                langBtn.textContent = lang.toUpperCase();
+                const nextLang = lang === "pl" ? "en" : "pl";
+                langBtn.textContent = nextLang.toUpperCase();
+                langBtn.setAttribute("aria-label", `Switch to ${nextLang === "pl" ? "Polish" : "English"}`);
                 localStorage.setItem("mj-lang", lang);
                 if (window.updateCopyLabel) window.updateCopyLabel();
             }
