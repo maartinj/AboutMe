@@ -479,32 +479,16 @@
                 if (window.opener && !window.opener.closed) {
                     try {
                         window.opener.focus();
-                        window.close();
-                        setTimeout(function () {
-                            if (!window.closed) {
-                                try {
-                                    window.opener.focus();
-                                } catch (error) {
-                                }
-                                window.location.href = "./index.html";
-                            }
-                        }, 80);
-                        return;
                     } catch (error) {
                     }
                 }
 
-                if (window.history.length > 1) {
-                    window.history.back();
-                    return;
-                }
-
-                if (document.referrer) {
-                    window.location.href = document.referrer;
-                    return;
-                }
-
-                window.location.href = "./index.html";
+                window.close();
+                setTimeout(function () {
+                    if (!window.closed) {
+                        window.location.href = back.href;
+                    }
+                }, 100);
             });
         })();
 
@@ -517,7 +501,9 @@
 
             function applyTheme(theme) {
                 document.documentElement.setAttribute("data-theme", theme);
-                themeIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
+                const nextTheme = theme === "dark" ? "light" : "dark";
+                themeIcon.innerHTML = nextTheme === "dark" ? moonIcon : sunIcon;
+                themeBtn.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
                 localStorage.setItem("mj-theme", theme);
             }
 
@@ -745,7 +731,9 @@
                         el.innerHTML = translations[lang][key];
                     }
                 });
-                langBtn.textContent = lang.toUpperCase();
+                const nextLang = lang === "pl" ? "en" : "pl";
+                langBtn.textContent = nextLang.toUpperCase();
+                langBtn.setAttribute("aria-label", `Switch to ${nextLang === "pl" ? "Polish" : "English"}`);
                 localStorage.setItem("mj-lang", lang);
                 if (window.updateCopyLabel) window.updateCopyLabel();
             }
