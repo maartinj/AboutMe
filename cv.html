@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — Marcin Jędrzejak, iOS Developer</title>
+  <meta name="description"
+    content="CV Marcina Jędrzejaka, iOS Developera: SwiftUI, aplikacje w App Store, doświadczenie i certyfikaty.">
+  <link rel="icon" type="image/jpeg" href="./assets/avatar.jpg">
+  <link rel="apple-touch-icon" href="./assets/avatar.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script>
+    /* Apply the saved theme before the first paint so the page never flashes. */
+    try {
+      const t = localStorage.getItem('mj-theme') ||
+        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (e) { }
+  </script>
+  <style>
+    :root {
+      --bg: #F7F7F5;
+      --surface: #FFFFFF;
+      --ink: #1D1D1F;
+      --ink-soft: #6E6E73;
+      --line: #E5E5E2;
+      --swift: #FA7343;
+      --swift-strong: #D9551F;
+      --swift-tint: #FFF1EA;
+      --swift-tint-line: #FFDCC7;
+      --tag-bg: #F1F1EF;
+      --raised: #EFEFEC;
+      --nav-bg: rgba(247, 247, 245, 0.85);
+    }
+
+    html[data-theme="dark"] {
+      --bg: #121214;
+      --surface: #1B1B1E;
+      --ink: #F2F2F2;
+      --ink-soft: #9B9BA1;
+      --line: #2C2C30;
+      --swift: #FF8A5C;
+      --swift-strong: #FF8A5C;
+      --swift-tint: #2A1D16;
+      --swift-tint-line: #4A2E1C;
+      --tag-bg: #232326;
+      --raised: #17171A;
+      --nav-bg: rgba(18, 18, 20, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      transition: background .25s ease, color .25s ease;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Sora', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul,
+    ol {
+      list-style: none;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* NAV (same as the home page) */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 16px;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .nav-links a {
+      color: var(--ink-soft);
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toggle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      transition: background .2s, transform .15s;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .toggle-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .lang-btn {
+      width: auto;
+      padding: 0 12px;
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--bg) !important;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-cta svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    @media (max-width:760px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width:420px) {
+      .nav-cta span {
+        display: none;
+      }
+    }
+
+    /* HERO */
+    .hero {
+      padding: 72px 0 56px;
+    }
+
+    .identity {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(250, 115, 67, .25);
+    }
+
+    .identity-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .identity-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .identity-role {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--swift);
+    }
+
+    .hero-title {
+      margin-top: 36px;
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--swift);
+      display: block;
+    }
+
+    .summary {
+      max-width: 660px;
+      margin-top: 22px;
+      font-size: 17px;
+      color: var(--ink-soft);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 13px;
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    a.chip:hover {
+      border-color: var(--swift-tint-line);
+    }
+
+    .chip svg {
+      width: 15px;
+      height: 15px;
+      color: var(--swift);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--bg) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .15);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--ink) !important;
+      border: 1px solid var(--line);
+    }
+
+    /* SECTIONS */
+    .band {
+      padding: 64px 0;
+    }
+
+    .band.raised {
+      background: var(--raised);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--swift);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tags li {
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 7px;
+      background: var(--swift-tint);
+      color: var(--swift-strong);
+      border: 1px solid var(--swift-tint-line);
+    }
+
+    /* Technologies */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .skill-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .skill-title svg {
+      width: 20px;
+      height: 20px;
+      color: var(--swift);
+    }
+
+    /* Experience timeline */
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .job {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 20px;
+    }
+
+    .job-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--swift);
+      padding-top: 24px;
+    }
+
+    .job-role {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .job-org {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin-top: 2px;
+    }
+
+    .points {
+      margin-top: 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .points li {
+      position: relative;
+      padding-left: 18px;
+      font-size: 14.5px;
+    }
+
+    .points li::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: .62em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--swift);
+    }
+
+    /* Projects */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .project-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .project-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 13px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+    }
+
+    .project-name {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .project-meta {
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .project-points {
+      margin: 12px 0;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      margin-top: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+
+    .project-links a {
+      color: var(--swift-strong);
+    }
+
+    .project-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Credentials */
+    .cred-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .column-label {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .column-label svg {
+      width: 18px;
+      height: 18px;
+      color: var(--swift);
+    }
+
+    .cred-list li {
+      padding: 9px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .cred-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .cred-detail {
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .consent {
+      margin-top: 36px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      max-width: 760px;
+    }
+
+    footer {
+      padding: 36px 0 44px;
+      border-top: 1px solid var(--line);
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+
+    @media (max-width:820px) {
+
+      .skill-grid,
+      .cred-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width:560px) {
+      .wrap {
+        padding: 0 16px;
+      }
+
+      .hero {
+        padding: 48px 0 40px;
+      }
+
+      .skill-grid,
+      .cred-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .job {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .job-period {
+        padding-top: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    /* ============ PRINT: one A4 page, always light ============ */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+
+      html,
+      html[data-theme="dark"] {
+        --bg: #FFFFFF;
+        --surface: #F4F4F2;
+        --ink: #111113;
+        --ink-soft: #55555C;
+        --line: #E3E3E0;
+        --swift: #E8622F;
+        --swift-strong: #C2491B;
+        --swift-tint: #FFF1EA;
+        --swift-tint-line: #FFDCC7;
+        --raised: #FFFFFF;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      body {
+        width: 210mm;
+        height: 296mm;
+        padding: 9mm 11mm 7mm;
+        display: flex;
+        flex-direction: column;
+        font-size: 8pt;
+        line-height: 1.32;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      nav,
+      footer,
+      .hero-actions,
+      .screen-only {
+        display: none !important;
+      }
+
+      .print-only {
+        display: inline-flex;
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wrap {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero {
+        padding: 0;
+      }
+
+      .identity {
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        box-shadow: none;
+      }
+
+      .identity-eyebrow {
+        display: none;
+      }
+
+      .monogram {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #FF9B6A 0%, #FA7343 45%, #D9451A 100%);
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        font-size: 15pt;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .identity-name {
+        font-size: 16pt;
+      }
+
+      .identity-role {
+        font-size: 10pt;
+      }
+
+      .hero-title {
+        margin-top: 6px;
+        font-size: 14pt;
+      }
+
+      .hero-title em {
+        display: inline;
+      }
+
+      .summary {
+        max-width: none;
+        margin-top: 3px;
+        font-size: 8.2pt;
+      }
+
+      .chips {
+        gap: 5px;
+        margin-top: 7px;
+      }
+
+      .chip {
+        padding: 1px 7px;
+        font-size: 7.3pt;
+        gap: 4px;
+        border: none;
+        background: var(--surface);
+      }
+
+      .chip svg {
+        width: 10px;
+        height: 10px;
+      }
+
+      .band {
+        padding: 0;
+        margin-top: 7px;
+        border: none !important;
+      }
+
+      .band:last-of-type {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .band:last-of-type>.wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .section-tag {
+        display: none;
+      }
+
+      .section-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 8.6pt;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--swift-strong);
+        margin-bottom: 5px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .card {
+        background: var(--surface);
+        border: none;
+        border-radius: 7px;
+        padding: 5px 8px;
+        break-inside: avoid;
+      }
+
+      .tags {
+        gap: 3px;
+      }
+
+      .tags li {
+        font-size: 6.9pt;
+        padding: 0 4px;
+        border-radius: 4px;
+        border: none;
+      }
+
+      .skill-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+      }
+
+      .skill-title {
+        font-size: 8.6pt;
+        margin-bottom: 4px;
+        gap: 5px;
+      }
+
+      .skill-title svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      .timeline {
+        gap: 5px;
+      }
+
+      .job {
+        grid-template-columns: 22mm 1fr;
+        gap: 6px;
+      }
+
+      .job-period {
+        font-size: 7.6pt;
+        padding-top: 6px;
+      }
+
+      .job-role {
+        font-size: 9pt;
+      }
+
+      .job-org {
+        font-size: 7.6pt;
+        margin-top: 0;
+      }
+
+      .points {
+        margin-top: 3px;
+        gap: 1px;
+      }
+
+      .points li {
+        font-size: 7.9pt;
+        padding-left: 11px;
+      }
+
+      .points li::before {
+        width: 4px;
+        height: 4px;
+        left: 1px;
+      }
+
+      .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+      }
+
+      .project-head {
+        gap: 7px;
+      }
+
+      .project-icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 5px;
+      }
+
+      .project-name {
+        font-size: 9pt;
+      }
+
+      .project-meta {
+        font-size: 7.4pt;
+      }
+
+      .project-points {
+        margin: 2px 0 2px;
+      }
+
+      .project-grid .card {
+        position: relative;
+      }
+
+      .project-links {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        margin: 0 !important;
+        font-size: 7.6pt;
+        gap: 2px 10px;
+      }
+
+      .cred-grid {
+        grid-template-columns: 1.5fr 1fr .7fr;
+        gap: 12px;
+      }
+
+      .column-label {
+        font-size: 8.4pt;
+        margin-bottom: 2px;
+      }
+
+      .column-label svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      .cred-list li {
+        padding: 1.5px 0;
+      }
+
+      .cred-title,
+      .cred-detail {
+        display: inline;
+      }
+
+      .cred-detail::before {
+        content: " · ";
+      }
+
+      .project-grid .tags {
+        display: none;
+      }
+
+      .cred-title {
+        font-size: 8.2pt;
+      }
+
+      .cred-detail {
+        font-size: 7.6pt;
+      }
+
+      /* Consent sits at the bottom of the page. */
+      .consent {
+        margin-top: auto;
+        padding-top: 6px;
+        font-size: 6.6pt;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="wrap">
+      <a href="./index.html" aria-label="Portfolio"><img src="./assets/avatar.jpg" alt="Marcin Jędrzejak"
+          class="logo"></a>
+      <div class="nav-links">
+        <a href="./index.html" data-i18n="nav-portfolio">Portfolio</a>
+        <a href="#skills" data-i18n="nav-skills">Technologie</a>
+        <a href="#experience" data-i18n="nav-experience">Doświadczenie</a>
+        <a href="#projects" data-i18n="nav-projects">Projekty</a>
+      </div>
+      <div class="nav-right">
+        <button class="toggle-btn lang-btn" id="langToggle" aria-label="Switch language">EN</button>
+        <button class="toggle-btn" id="themeToggle" aria-label="Switch theme">
+          <svg id="themeIcon" viewBox="0 0 24 24" fill="none"></svg>
+        </button>
+        <a href="mailto:mjedrzejak@icloud.com" class="nav-cta">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5" />
+          </svg>
+          <span data-i18n="nav-cta">Napisz do mnie</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero" id="top">
+      <div class="wrap">
+        <div class="identity">
+          <img src="./assets/avatar.jpg" alt="" class="avatar screen-only">
+          <span class="monogram print-only" aria-hidden="true">MJ</span>
+          <div>
+            <p class="identity-eyebrow">Curriculum Vitae</p>
+            <p class="identity-name">Marcin Jędrzejak</p>
+            <p class="identity-role">iOS Developer</p>
+          </div>
+        </div>
+        <h1 class="hero-title" data-i18n="title"></h1>
+        <p class="summary" data-i18n="profile"></p>
+        <ul class="chips" id="contacts"></ul>
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="pdfLink" href="./assets/cv/CV_Marcin_Jedrzejak_PL.pdf" download>
+            <svg viewBox="0 0 24 24" fill="none">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M4 17v.6c0 1.344 0 2.016.262 2.53a2.4 2.4 0 0 0 1.048 1.048C5.824 21.44 6.496 21.44 7.84 21.44h8.32c1.344 0 2.016 0 2.53-.262a2.4 2.4 0 0 0 1.048-1.048C20 19.616 20 18.944 20 17.6V17" />
+            </svg>
+            <span data-i18n="download">Pobierz PDF</span>
+          </a>
+          <a class="btn btn-ghost" href="./index.html">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20 12H4m0 0 6-6m-6 6 6 6" />
+            </svg>
+            Portfolio
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section class="band raised" id="skills">
+      <div class="wrap">
+        <span class="section-tag" data-i18n="skills-tag"></span>
+        <h2 class="section-title" data-i18n="skills-title"></h2>
+        <ul class="skill-grid" id="skillGrid"></ul>
+      </div>
+    </section>
+
+    <section class="band" id="experience">
+      <div class="wrap">
+        <span class="section-tag" data-i18n="exp-tag"></span>
+        <h2 class="section-title" data-i18n="exp-title"></h2>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
+    </section>
+
+    <section class="band raised" id="projects">
+      <div class="wrap">
+        <span class="section-tag" data-i18n="proj-tag"></span>
+        <h2 class="section-title" data-i18n="proj-title"></h2>
+        <ul class="project-grid" id="projectGrid"></ul>
+      </div>
+    </section>
+
+    <section class="band" id="credentials">
+      <div class="wrap">
+        <span class="section-tag" data-i18n="cred-tag"></span>
+        <h2 class="section-title" data-i18n="cred-title"></h2>
+        <div class="cred-grid" id="credGrid"></div>
+        <p class="consent" data-i18n="consent"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" data-i18n="copyright"></div>
+  </footer>
+
+  <script>
+    const EMAIL = 'mjedrzejak@icloud.com';
+    const SITE = 'https://maartinj.github.io/AboutMe/';
+
+    const ICON = {
+      mail: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20h10c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 16.2 22 14.8 22 12c0-1.994 0-3.278-.197-4.238m0 0-5.508 3.505c-1.557.99-2.335 1.486-3.171 1.678a5 5 0 0 1-2.248 0c-.836-.192-1.614-.688-3.171-1.678l-4.587-2.92c-.555-.352-.872-1.031-.573-1.617A5 5 0 0 1 4.73 4.545C5.8 4 7.2 4 10 4h4c2.8 0 4.2 0 5.27.545a5 5 0 0 1 2.185 2.185c.157.308.269.643.348 1.032ZM1 12h1m0 4h5"/>',
+      linkedin: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17v-3.5a2.5 2.5 0 0 0-5 0m0 0V17m0-3.5v-3m-4 0V17M8 7v.01"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.4c0-2.24 0-3.36.436-4.216a4 4 0 0 1 1.748-1.748C6.04 3 7.16 3 9.4 3h5.2c2.24 0 3.36 0 4.216.436a4 4 0 0 1 1.748 1.748C21 6.04 21 7.16 21 9.4v5.2c0 2.24 0 3.36-.436 4.216a4 4 0 0 1-1.748 1.748C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.436a4 4 0 0 1-1.748-1.748C3 17.96 3 16.84 3 14.6z"/>',
+      github: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 15a3.72 3.72 0 0 0-1 2.58V21m5-6a3.72 3.72 0 0 1 1 2.58V21m-6-1.95a5.7 5.7 0 0 1-2.82.36c-1.52-.52-1.12-1.9-1.9-2.47A2.37 2.37 0 0 0 3 16.5m16-6.75c0 3-1.95 5.25-7 5.25s-7-2.25-7-5.25a6.3 6.3 0 0 1 .68-3c-.34-1.47-.21-3.28.52-3.64s2.27.3 3.54 1.15a13 13 0 0 1 2.26-.2 13 13 0 0 1 2.26.18c1.27-.85 2.88-1.48 3.54-1.15s.86 2.17.52 3.64A6.3 6.3 0 0 1 19 9.75Z"/>',
+      globe: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c2.21 0 4-4.03 4-9s-1.79-9-4-9m0 18c-2.21 0-4-4.03-4-9s1.79-9 4-9m-9 9a9 9 0 0 1 9-9"/>',
+      pin: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21s-7-6.2-7-11.5a7 7 0 1 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="2"/>',
+      phone: '<rect x="6" y="2" width="12" height="20" rx="3" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M11 18h2"/>',
+      layers: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 3 9 5-9 5-9-5 9-5Z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 13 9 5 9-5"/>',
+      cloud: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 18a4 4 0 0 1-.5-7.97A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9H7Z"/>',
+      check: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11.5 11 13.5 15.5 9M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>',
+      coin: '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.6 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5V8m0 8v1.5"/>',
+      chart: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20V10m6 10V4m6 16v-7m4 7H3"/>',
+      tool: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-2.5-2.5M14.7 6.3 13 4.5l-8 8L7.5 15m7.2-8.7-7.2 8.7m0 0L11 18.5"/>',
+      grad: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 9.5 12 5l10 4.5L12 14 2 9.5Zm4 2v4.5c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5M22 9.5V15"/>',
+      award: '<circle cx="12" cy="9" r="6" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8.5 14 -1.5 7 5-2.5 5 2.5-1.5-7"/>',
+      lang: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h9M8.5 3v2m2.5 0c-.8 4-3.6 7.3-7 9m2.5-6.5c1 2 2.8 3.6 5 4.5M13 21l4-9 4 9m-6.8-2.5h5.6"/>',
+      sun: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 23v-1m-7.778-2.222.707-.707M1 12h1m2.222-7.778.707.707M12 2V1m7.071 3.929.707-.707M22 12h1m-3.929 7.071.707.707M18 12a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z"/>',
+      moon: '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 11.966A6.5 6.5 0 1 1 12.035 3H12a9 9 0 1 0 9 9z"/>'
+    };
+    const svg = (name) => `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">${ICON[name]}</svg>`;
+
+    const APP_STORE = {
+      pillmemo: 'https://apps.apple.com/pl/app/pillmemo/id6499107849',
+      aquavibe: 'https://apps.apple.com/app/apple-store/id6673904865',
+      medscan: 'https://apps.apple.com/app/apple-store/id6747271665',
+      shotdocu: 'https://apps.apple.com/app/apple-store/id6749449366'
+    };
+    const WEBSITE = {
+      pillmemo: 'https://trypillmemo.com/',
+      aquavibe: SITE + 'aquavibe-docs.html',
+      medscan: SITE + 'medscan-docs.html',
+      shotdocu: SITE + 'shotdocu-docs.html'
+    };
+
+    /* Shared, language-independent parts of the CV. */
+    const SKILLS = [
+      { icon: 'phone', items: ['Swift', 'SwiftUI', 'UIKit', 'async/await', 'Core Data', 'SwiftData', 'CloudKit Sharing', 'HealthKit', 'User Notifications', 'TipKit', 'Charts', 'Xcode'] },
+      { icon: 'layers', items: ['MVVM', '@Observable services', 'VIPER', 'TCA'] },
+      { icon: 'cloud', items: ['URLSession', 'REST API', 'JSON', 'GPT-4 Vision'] },
+      { icon: 'check', items: ['Unit Tests', 'UI Tests', 'Error Handling', 'Git', 'Xcode Cloud', 'SwiftLint'] },
+      { icon: 'coin', items: ['StoreKit', 'RevenueCat', 'App Store Connect', 'ASO'] },
+      { icon: 'chart', items: ['WishKit', 'TelemetryDeck', 'Mixpanel', 'Aptabase', 'Figma', 'VBA', 'Power Automate', 'SQL', 'Microsoft Office'] }
+    ];
+
+    const CV = {
+      pl: {
+        'nav-portfolio': 'Portfolio', 'nav-skills': 'Technologie', 'nav-experience': 'Doświadczenie',
+        'nav-projects': 'Projekty', 'nav-cta': 'Napisz do mnie',
+        title: 'Aplikacje na iOS <em>od pomysłu do App Store.</em>',
+        profile: 'iOS Developer z ponad 3-letnim doświadczeniem w projektowaniu, budowaniu i utrzymaniu aplikacji opublikowanych w App Store. Pracuję w SwiftUI, nowoczesnych architekturach (MVVM, VIPER, TCA) i prowadzę pełny cykl życia aplikacji: od koncepcji po wydanie.',
+        location: 'Bydgoszcz',
+        download: 'Pobierz PDF',
+        pdf: './assets/cv/CV_Marcin_Jedrzejak_PL.pdf',
+        'skills-tag': 'Technologie', 'skills-title': 'Z czym pracuję',
+        skills: ['Frameworki Apple', 'Architektura', 'Sieć i API', 'Testy i CI/CD', 'Monetyzacja', 'Produkt i narzędzia'],
+        'exp-tag': 'Doświadczenie', 'exp-title': 'Doświadczenie zawodowe',
+        jobs: [
+          {
+            period: '2023 — obecnie', role: 'Niezależny iOS Developer', org: 'Własne aplikacje · App Store',
+            points: [
+              'Zaprojektowałem, napisałem i utrzymuję 4 aplikacje iOS opublikowane w App Store (PillMemo, AquaVibe, MedScan, ShotDocu).',
+              'Wydałem ponad 20 aktualizacji, utrzymując średnią ocenę 4,3+ w App Store.',
+              'Wyróżnienie: nagroda w konkursie RevenueCat Ship-a-ton (AquaVibe).'
+            ]
+          },
+          {
+            period: '12.2023 — obecnie', role: 'Open Source Contributor', org: 'Basic Car Maintenance (iOS) · GitHub',
+            points: [
+              'Dodałem polską lokalizację, zaprojektowałem ekrany onboardingu i wpiąłem je w przepływ aplikacji.',
+              'Code review i współpraca z innymi programistami w procesie open source (Git, Pull Requests).'
+            ]
+          },
+          {
+            period: '2017 — obecnie', role: 'Koordynator — Systemy Celne', org: 'Livingston Poland Sp. z o.o. · Bydgoszcz',
+            points: [
+              'Wdrożenie nowego systemu importu, eksportu i tranzytu do składania brytyjskich zgłoszeń celnych.',
+              'Automatyzacja procesów w VBA i Power Automate, ograniczająca pracę ręczną i podnosząca wydajność o co najmniej 20%.',
+              'Współpraca z zespołami z różnych działów przy testowaniu i usprawnianiu procesów biznesowych.'
+            ]
+          }
+        ],
+        'proj-tag': 'Portfolio', 'proj-title': 'Aplikacje w App Store',
+        projects: [
+          {
+            id: 'pillmemo', name: 'PillMemo', kind: 'Przypomnienia o lekach', period: '2023 — obecnie', tags: ['CloudKit Sharing', 'AlarmKit', 'Live Activities', 'VIPER'], points: [
+              'CloudKit Sharing: wspólne leki dla rodziny i opiekunów; migracja MVVM → VIPER w działającej aplikacji bez utraty danych.',
+              'AlarmKit, Live Activities (Dynamic Island) i interaktywne widżety z akcjami dawki.',
+              'Backend Supabase, testy jednostkowe i UI w Xcode Cloud, lokalizacja PL/EN/DE.'
+            ]
+          },
+          {
+            id: 'aquavibe', name: 'AquaVibe', kind: 'Nawodnienie i nastrój', period: '08.2024 — obecnie', tags: ['HealthKit', 'State of Mind', 'Swift Charts', 'RevenueCat'], points: [
+              'HealthKit State of Mind API (iOS 18): zapis i odczyt nastroju oraz emocji w aplikacji Zdrowie.',
+              'Interaktywne wykresy samopoczucia i nawodnienia w Swift Charts.',
+              'Zbudowana od zera w konkursie RevenueCat Ship-a-ton: subskrypcje RevenueCat, analityka TelemetryDeck.'
+            ]
+          },
+          {
+            id: 'medscan', name: 'MedScan', kind: 'Analiza leków z AI', period: '07.2025 — obecnie', tags: ['GPT-4 Vision', 'REST API', 'StoreKit 2', 'MVVM'], points: [
+              'Rozpoznawanie leków ze zdjęcia przez GPT-4 Vision: wysyłanie obrazów do REST API i parsowanie odpowiedzi JSON.',
+              'Obsługa błędów sieci i bezpieczne przechowywanie kluczy API; subskrypcje StoreKit 2 z darmowym limitem skanów.'
+            ]
+          },
+          {
+            id: 'shotdocu', name: 'ShotDocu', kind: 'Zdjęcia do PDF', period: '08.2025 — obecnie', tags: ['VisionKit', 'PDFKit', 'iCloud', 'Aptabase'], points: [
+              'Skanowanie dokumentów kamerą przez VisionKit.',
+              'PDFKit: łączenie wielu zdjęć w jeden plik, zmiana kolejności stron i wybór jakości pod rozmiar pliku.',
+              'Synchronizacja dokumentów przez iCloud, analityka Aptabase.'
+            ]
+          }
+        ],
+        website: 'Strona', docs: 'Dokumentacja',
+        'cred-tag': 'Kwalifikacje', 'cred-title': 'Certyfikaty, wykształcenie i języki',
+        certLabel: 'Certyfikaty i społeczność', eduLabel: 'Wykształcenie', langLabel: 'Języki',
+        certs: [
+          { title: 'SwiftUI Advanced Architecture', detail: 'Swiftful Thinking · 2025' },
+          { title: 'Microsoft Power Up Program — Low-Code Maker (Cohort 012)', detail: 'Microsoft / Credly · 2024' },
+          { title: 'Kurs programowania iOS w Swift — poziom zaawansowany', detail: 'Swift Academy · 2022' },
+          { title: 'Członek społeczności Indie App Accelerator', detail: 'Skool' }
+        ],
+        edu: [{ title: 'Magister Zarządzania', detail: 'Politechnika Bydgoska · 2015' }],
+        langs: [{ title: 'Polski', detail: 'Ojczysty' }, { title: 'Angielski', detail: 'B2' }],
+        consent: 'Wyrażam zgodę na przetwarzanie moich danych osobowych w celu przeprowadzenia rekrutacji na stanowisko, o które się ubiegam, oraz wszelkich przyszłych procesów rekrutacyjnych.',
+        copyright: '© 2026 Marcin Jędrzejak. Wszystkie prawa zastrzeżone.',
+        metaTitle: 'CV — Marcin Jędrzejak, iOS Developer'
+      },
+      en: {
+        'nav-portfolio': 'Portfolio', 'nav-skills': 'Skills', 'nav-experience': 'Experience',
+        'nav-projects': 'Projects', 'nav-cta': 'Get in touch',
+        title: 'iOS apps <em>from idea to the App Store.</em>',
+        profile: 'iOS Developer with 3+ years of experience designing, building and maintaining App Store-published applications. Skilled in SwiftUI, modern architectures (MVVM, VIPER, TCA) and the full application lifecycle from concept to release.',
+        location: 'Bydgoszcz, PL',
+        download: 'Download PDF',
+        pdf: './assets/cv/CV_Marcin_Jedrzejak_EN.pdf',
+        'skills-tag': 'Skills', 'skills-title': 'What I work with',
+        skills: ['Apple frameworks', 'Architecture', 'Networking', 'Testing & CI/CD', 'Monetization', 'Product & tools'],
+        'exp-tag': 'Experience', 'exp-title': 'Work experience',
+        jobs: [
+          {
+            period: '2023 — present', role: 'Independent iOS Developer', org: 'Own apps · App Store',
+            points: [
+              'Designed, developed and maintained 4 iOS applications published on the App Store (PillMemo, AquaVibe, MedScan, ShotDocu).',
+              'Shipped 20+ updates, maintaining a 4.3+ average App Store rating.',
+              'Distinction: won RevenueCat Ship-a-ton competition swag (AquaVibe).'
+            ]
+          },
+          {
+            period: '12.2023 — present', role: 'Open Source Contributor', org: 'Basic Car Maintenance (iOS) · GitHub',
+            points: [
+              'Implemented Polish localization, designed the onboarding UI and integrated it into the app flow.',
+              'Code review and collaboration with other developers in an open-source workflow (Git, Pull Requests).'
+            ]
+          },
+          {
+            period: '2017 — present', role: 'Coordinator — Customs Systems', org: 'Livingston Poland Sp. z o.o. · Bydgoszcz',
+            points: [
+              'Implemented a new import, export and transit system for submitting UK customs declarations.',
+              'Process automation with VBA and Power Automate that reduces manual work and improves efficiency by at least 20%.',
+              'Collaborated with cross-functional teams to test and refine business processes.'
+            ]
+          }
+        ],
+        'proj-tag': 'Portfolio', 'proj-title': 'Apps on the App Store',
+        projects: [
+          {
+            id: 'pillmemo', name: 'PillMemo', kind: 'Medication reminder', period: '2023 — present', tags: ['CloudKit Sharing', 'AlarmKit', 'Live Activities', 'VIPER'], points: [
+              'CloudKit Sharing: shared medications for families and caregivers; MVVM → VIPER migration in a live app without data loss.',
+              'AlarmKit, Live Activities (Dynamic Island) and interactive widgets with dose actions.',
+              'Supabase backend, unit and UI tests on Xcode Cloud, PL/EN/DE localization.'
+            ]
+          },
+          {
+            id: 'aquavibe', name: 'AquaVibe', kind: 'Water & mood tracker', period: '08.2024 — present', tags: ['HealthKit', 'State of Mind', 'Swift Charts', 'RevenueCat'], points: [
+              'HealthKit State of Mind API (iOS 18): saving and reading mood and emotions in the Health app.',
+              'Interactive well-being and hydration charts built with Swift Charts.',
+              'Built from scratch during RevenueCat Ship-a-ton: RevenueCat subscriptions, TelemetryDeck analytics.'
+            ]
+          },
+          {
+            id: 'medscan', name: 'MedScan', kind: 'AI medicine analysis', period: '07.2025 — present', tags: ['GPT-4 Vision', 'REST API', 'StoreKit 2', 'MVVM'], points: [
+              'Pill identification from a photo with GPT-4 Vision: sending images to a REST API and parsing JSON responses.',
+              'Network error handling and secure API key storage; StoreKit 2 subscriptions with a free scan limit.'
+            ]
+          },
+          {
+            id: 'shotdocu', name: 'ShotDocu', kind: 'Photo to PDF converter', period: '08.2025 — present', tags: ['VisionKit', 'PDFKit', 'iCloud', 'Aptabase'], points: [
+              'Camera document scanning with VisionKit.',
+              'PDFKit: merging many photos into one file, reordering pages and choosing quality to fit the file size.',
+              'Document sync via iCloud, Aptabase analytics.'
+            ]
+          }
+        ],
+        website: 'Website', docs: 'Docs',
+        'cred-tag': 'Credentials', 'cred-title': 'Certifications, education and languages',
+        certLabel: 'Certifications & community', eduLabel: 'Education', langLabel: 'Languages',
+        certs: [
+          { title: 'SwiftUI Advanced Architecture', detail: 'Swiftful Thinking · 2025' },
+          { title: 'Microsoft Power Up Program — Low-Code Maker (Cohort 012)', detail: 'Microsoft / Credly · 2024' },
+          { title: 'iOS app programming course in Swift — advanced level', detail: 'Swift Academy · 2022' },
+          { title: 'Member of the Indie App Accelerator community', detail: 'Skool' }
+        ],
+        edu: [{ title: 'Master of Arts in Management', detail: 'Bydgoszcz University of Technology · 2015' }],
+        langs: [{ title: 'Polish', detail: 'Native' }, { title: 'English', detail: 'B2' }],
+        consent: 'I hereby give consent for my personal data to be processed for the purpose of conducting recruitment for the position for which I am applying and any future recruitment processes.',
+        copyright: '© 2026 Marcin Jędrzejak. All rights reserved.',
+        metaTitle: 'CV — Marcin Jędrzejak, iOS Developer'
+      }
+    };
+
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const tagList = (items) => `<ul class="tags">${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
+    const credList = (items) => `<ul class="cred-list">${items.map((i) => `<li><p class="cred-title">${esc(i.title)}</p><p class="cred-detail">${esc(i.detail)}</p></li>`).join('')}</ul>`;
+
+    function render(lang) {
+      const t = CV[lang];
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const v = t[el.getAttribute('data-i18n')];
+        if (v !== undefined) el.innerHTML = v;
+      });
+      document.title = t.metaTitle;
+
+      /* Email is a link on screen; the PDF gets plain text so it stays copyable. */
+      document.getElementById('contacts').innerHTML = [
+        `<li><a class="chip screen-only" href="mailto:${EMAIL}">${svg('mail')}${EMAIL}</a><span class="chip print-only">${svg('mail')}${EMAIL}</span></li>`,
+        `<li><a class="chip" href="https://www.linkedin.com/in/marcinjedrzejak/" target="_blank" rel="noopener">${svg('linkedin')}linkedin.com/in/marcinjedrzejak</a></li>`,
+        `<li><a class="chip" href="https://github.com/maartinj" target="_blank" rel="noopener">${svg('github')}github.com/maartinj</a></li>`,
+        `<li><a class="chip" href="${SITE}">${svg('globe')}maartinj.github.io/AboutMe</a></li>`,
+        `<li><span class="chip">${svg('pin')}${esc(t.location)}</span></li>`
+      ].join('');
+
+      const pdf = document.getElementById('pdfLink');
+      pdf.href = t.pdf;
+
+      document.getElementById('skillGrid').innerHTML = SKILLS.map((g, i) =>
+        `<li class="card"><h3 class="skill-title">${svg(g.icon)}${esc(t.skills[i])}</h3>${tagList(g.items)}</li>`).join('');
+
+      document.getElementById('timeline').innerHTML = t.jobs.map((j) =>
+        `<li class="job"><p class="job-period">${esc(j.period)}</p><div class="card"><h3 class="job-role">${esc(j.role)}</h3><p class="job-org">${esc(j.org)}</p><ul class="points">${j.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ul></div></li>`).join('');
+
+      document.getElementById('projectGrid').innerHTML = t.projects.map((p) => {
+        const siteLabel = p.id === 'pillmemo' ? t.website : t.docs;
+        return `<li class="card"><div class="project-head"><img class="project-icon" src="./assets/${p.id}-icon.png" alt=""><div><h3 class="project-name">${esc(p.name)}</h3><p class="project-meta">${esc(p.kind)} · ${esc(p.period)}</p></div></div><ul class="points project-points">${p.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${tagList(p.tags)}<p class="project-links"><a href="${APP_STORE[p.id]}" target="_blank" rel="noopener">App Store ↗</a><a href="${WEBSITE[p.id]}" target="_blank" rel="noopener">${siteLabel} ↗</a></p></li>`;
+      }).join('');
+
+      document.getElementById('credGrid').innerHTML =
+        `<section><h3 class="column-label">${svg('award')}${esc(t.certLabel)}</h3>${credList(t.certs)}</section>` +
+        `<section><h3 class="column-label">${svg('grad')}${esc(t.eduLabel)}</h3>${credList(t.edu)}</section>` +
+        `<section><h3 class="column-label">${svg('lang')}${esc(t.langLabel)}</h3>${credList(t.langs)}</section>`;
+    }
+
+    /* ---- THEME (shared key with the home page) ---- */
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const next = theme === 'dark' ? 'light' : 'dark';
+      themeIcon.innerHTML = ICON[next === 'dark' ? 'moon' : 'sun'];
+      themeBtn.setAttribute('aria-label', `Switch to ${next} theme`);
+      try { localStorage.setItem('mj-theme', theme); } catch (e) { }
+    }
+    applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+    themeBtn.addEventListener('click', () => {
+      applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    /* ---- LANGUAGE (shared key with the home page; ?lang=en|pl overrides) ---- */
+    const langBtn = document.getElementById('langToggle');
+    function applyLang(lang, persist = true) {
+      document.documentElement.setAttribute('lang', lang);
+      render(lang);
+      const next = lang === 'pl' ? 'en' : 'pl';
+      langBtn.textContent = next.toUpperCase();
+      langBtn.setAttribute('aria-label', `Switch to ${next === 'pl' ? 'Polish' : 'English'}`);
+      if (persist) {
+        try { localStorage.setItem('mj-lang', lang); } catch (e) { }
+      }
+    }
+    const urlLang = new URLSearchParams(location.search).get('lang');
+    let savedLang = null;
+    try { savedLang = localStorage.getItem('mj-lang'); } catch (e) { }
+    const startLang = CV[urlLang] ? urlLang : (CV[savedLang] ? savedLang : 'pl');
+    applyLang(startLang, !CV[urlLang]);
+    langBtn.addEventListener('click', () => {
+      applyLang(document.documentElement.getAttribute('lang') === 'pl' ? 'en' : 'pl');
+    });
+  </script>
+</body>
+
+</html>
