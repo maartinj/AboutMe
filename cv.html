@@ -388,7 +388,19 @@
       border: 1px solid var(--swift-tint-line);
     }
 
-    /* Technologies */
+    /* Technologies: the grid breaks out wider than the page column so more
+       tags fit on each row, while the heading stays aligned with the other
+       sections. Up to 1124px, never past a 28px gutter, never narrower. */
+    @media screen {
+      #skills {
+        overflow-x: clip;
+      }
+
+      #skills .skill-grid {
+        margin-inline: min(0px, calc(50% - min(562px, 50vw - 28px)));
+      }
+    }
+
     .skill-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -477,6 +489,11 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
+    }
+
+    /* An odd last app gets the full row instead of leaving a gap. */
+    .project-grid>.card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
     }
 
     .project-head {
@@ -755,7 +772,7 @@
 
       .band {
         padding: 0;
-        margin-top: 15px;
+        margin-top: 10px;
         border: none !important;
       }
 
@@ -850,7 +867,7 @@
       }
 
       .project-period {
-        margin-left: 7px;
+        margin-left: 5px;
         font-family: 'Inter', sans-serif;
         font-size: 7.6pt;
         font-weight: 400;
@@ -869,7 +886,12 @@
       }
 
       .timeline {
-        gap: 6px;
+        gap: 5px;
+      }
+
+      .timeline .card,
+      .project-grid .card {
+        padding: 4px 8px;
       }
 
       .job {
@@ -902,7 +924,7 @@
 
       .points {
         margin-top: 3px;
-        gap: 2px;
+        gap: 1px;
       }
 
       .points li {
@@ -918,11 +940,11 @@
 
       .project-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
+        gap: 4px;
       }
 
       .project-head {
-        gap: 7px;
+        gap: 6px;
       }
 
       .project-icon {
@@ -940,17 +962,21 @@
       }
 
       .project-points {
-        margin: 2px 0 2px;
+        margin: 2px 0 0;
       }
 
       .project-grid .card {
         position: relative;
       }
 
+      /* Links sit on the name row to save a line per card. */
       .project-links {
-        margin-top: 2px;
-        font-size: 7.6pt;
-        gap: 2px 10px;
+        position: absolute;
+        top: 5px;
+        right: 7px;
+        margin-top: 0;
+        font-size: 7.2pt;
+        gap: 2px 8px;
       }
 
       .cred-grid {
@@ -1132,21 +1158,23 @@
       pillmemo: 'https://apps.apple.com/pl/app/pillmemo/id6499107849',
       aquavibe: 'https://apps.apple.com/app/apple-store/id6673904865',
       medscan: 'https://apps.apple.com/app/apple-store/id6747271665',
-      shotdocu: 'https://apps.apple.com/app/apple-store/id6749449366'
+      shotdocu: 'https://apps.apple.com/app/apple-store/id6749449366',
+      sidefolk: 'https://apps.apple.com/app/apple-store/id6809647891'
     };
     const WEBSITE = {
       pillmemo: 'https://trypillmemo.com/',
       aquavibe: SITE + 'aquavibe-docs.html',
       medscan: SITE + 'medscan-docs.html',
-      shotdocu: SITE + 'shotdocu-docs.html'
+      shotdocu: SITE + 'shotdocu-docs.html',
+      sidefolk: 'https://www.sidefolk.site'
     };
 
     /* Shared, language-independent parts of the CV. */
     const SKILLS = [
-      { icon: 'phone', items: ['Swift', 'SwiftUI', 'UIKit', 'async/await', 'Core Data', 'SwiftData', 'CloudKit Sharing', 'HealthKit', 'User Notifications', 'TipKit', 'Charts', 'Xcode'] },
+      { icon: 'phone', items: ['Swift', 'SwiftUI', 'UIKit', 'async/await', 'Core Data', 'SwiftData', 'CloudKit Sharing', 'HealthKit', 'EventKit', 'Core Spotlight', 'Foundation Models', 'User Notifications', 'TipKit', 'Charts', 'Xcode'] },
       { icon: 'layers', items: ['MVVM', '@Observable services', 'VIPER', 'TCA'] },
-      { icon: 'cloud', items: ['URLSession', 'REST API', 'JSON', 'GPT-4 Vision'] },
-      { icon: 'check', items: ['Unit Tests', 'UI Tests', 'Error Handling', 'Git', 'Xcode Cloud', 'SwiftLint'] },
+      { icon: 'cloud', items: ['URLSession', 'REST API', 'JSON', 'GPT-4 Vision', 'Private Cloud Compute'] },
+      { icon: 'check', items: ['Unit Tests', 'Swift Testing', 'UI Tests', 'AI Evaluations', 'Error Handling', 'Git', 'Xcode Cloud', 'SwiftLint'] },
       { icon: 'coin', items: ['StoreKit', 'RevenueCat', 'App Store Connect', 'ASO'] },
       { icon: 'chart', items: ['WishKit', 'TelemetryDeck', 'Mixpanel', 'Aptabase', 'Figma', 'Power Automate'] }
     ];
@@ -1167,7 +1195,7 @@
           {
             period: '2023 — obecnie', role: 'Niezależny iOS Developer', org: 'Własne aplikacje · App Store',
             points: [
-              'Zaprojektowałem, napisałem i utrzymuję 4 aplikacje iOS opublikowane w App Store (PillMemo, AquaVibe, MedScan, ShotDocu).',
+              'Zaprojektowałem, napisałem i utrzymuję 5 aplikacji iOS opublikowanych w App Store.',
               'Wydałem ponad 20 aktualizacji, utrzymując średnią ocenę 4,3+ w App Store.',
               'Wyróżnienie: nagroda w konkursie RevenueCat Ship-a-ton (AquaVibe).',
               'Członek społeczności twórców aplikacji Indie App Accelerator (Skool).'
@@ -1217,6 +1245,13 @@
               'PDFKit: łączenie wielu zdjęć w jeden plik, zmiana kolejności stron i wybór jakości pod rozmiar pliku.',
               'Synchronizacja dokumentów przez iCloud, analityka Aptabase.'
             ]
+          },
+          {
+            id: 'sidefolk', name: 'Sidefolk', kind: 'Agenci AI na urządzeniu', period: '11.2026 — obecnie', tags: ['Foundation Models', 'Private Cloud Compute', 'SwiftData', 'Swift 6'], points: [
+              'Foundation Models (iOS 27) na urządzeniu, trudniejsze zadania w Private Cloud Compute.',
+              'Tool calling: EventKit, kontakty, HealthKit, OCR i wyszukiwanie przez Core Spotlight.',
+              'SwiftData bez backendu, StoreKit 2, ponad 270 testów i ewaluacje promptów.'
+            ]
           }
         ],
         website: 'Strona', docs: 'Dokumentacja',
@@ -1247,7 +1282,7 @@
           {
             period: '2023 — present', role: 'Independent iOS Developer', org: 'Own apps · App Store',
             points: [
-              'Designed, developed and maintained 4 iOS applications published on the App Store (PillMemo, AquaVibe, MedScan, ShotDocu).',
+              'Designed, developed and maintained 5 iOS applications published on the App Store.',
               'Shipped 20+ updates, maintaining a 4.3+ average App Store rating.',
               'Distinction: won RevenueCat Ship-a-ton competition swag (AquaVibe).',
               'Member of the Indie App Accelerator app makers community (Skool).'
@@ -1296,6 +1331,13 @@
               'Camera document scanning with VisionKit.',
               'PDFKit: merging many photos into one file, reordering pages and choosing quality to fit the file size.',
               'Document sync via iCloud, Aptabase analytics.'
+            ]
+          },
+          {
+            id: 'sidefolk', name: 'Sidefolk', kind: 'On-device AI agents', period: '11.2026 — present', tags: ['Foundation Models', 'Private Cloud Compute', 'SwiftData', 'Swift 6'], points: [
+              'Foundation Models (iOS 27) on device, harder tasks on Private Cloud Compute.',
+              'Tool calling: EventKit, contacts, HealthKit, OCR and Core Spotlight search.',
+              'SwiftData with no backend, StoreKit 2, 270+ tests and prompt evaluations.'
             ]
           }
         ],
@@ -1353,7 +1395,7 @@
         `<li class="job"><p class="job-period">${esc(j.period)}</p><div class="card"><h3 class="job-role">${esc(j.role)}</h3><p class="job-org">${esc(j.org)}</p><ul class="points">${j.points.map(point).join('')}</ul></div></li>`).join('');
 
       document.getElementById('projectGrid').innerHTML = t.projects.map((p) => {
-        const siteLabel = p.id === 'pillmemo' ? t.website : t.docs;
+        const siteLabel = (p.id === 'pillmemo' || p.id === 'sidefolk') ? t.website : t.docs;
         return `<li class="card"><div class="project-head"><img class="project-icon" src="./assets/${p.id}-icon.png" alt=""><div><h3 class="project-name">${esc(p.name)}<span class="project-period print-only">${esc(p.period)}</span></h3><p class="project-meta">${esc(p.kind)} · ${esc(p.period)}</p></div></div><ul class="points project-points">${p.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${tagList(p.tags)}<p class="project-links"><a href="${APP_STORE[p.id]}" target="_blank" rel="noopener">App Store ↗</a><a href="${WEBSITE[p.id]}" target="_blank" rel="noopener">${siteLabel} ↗</a></p></li>`;
       }).join('');
 
